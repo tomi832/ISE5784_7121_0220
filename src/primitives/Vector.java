@@ -3,8 +3,9 @@ package primitives;
 import static primitives.Util.alignZero;
 
 /**
+ * Class Vector is the basic class representing a vector of Euclidean geometry in Cartesian
+ * 3-Dimensional coordinate system.
  * @author Tomere Kalman and Yosef Kornfeld
- * This class will create instances of vectors in space using the Point class
  */
 public class Vector extends Point{
 
@@ -88,7 +89,12 @@ public class Vector extends Point{
         return new Vector(xyz.scale(1/length));
     }
 
-
+    /**
+     * the function uses the current vector and another given vector to find a vector that is
+     * perpendicular to them.
+     * @param vector is the other vector we use to find the cross product
+     * @return the perpendicular vector to both vectors
+     */
     public Vector crossProduct(Vector vector) {
         return new Vector(
                 xyz.d2 * vector.xyz.d3 - xyz.d3 * vector.xyz.d2,
@@ -97,6 +103,11 @@ public class Vector extends Point{
         );
     }
 
+    /**
+     * the function calculates the dot product (= scalar product) of two vectors
+     * @param vector is the other vector we use to find the dot product
+     * @return a double number representing the dot product
+     */
     public double dotProduct(Vector vector) {
         return xyz.d1 * vector.xyz.d1 + xyz.d2 * vector.xyz.d2 + xyz.d3 * vector.xyz.d3;
     }

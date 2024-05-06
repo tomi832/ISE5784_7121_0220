@@ -1,10 +1,20 @@
 package primitives;
 
+/**
+ * Class Ray is the basic class representing a ray of Euclidean geometry in Cartesian
+ * * 3-Dimensional coordinate system.
+ * @author Yosef Kornfeld and Tomere Kalman
+ */
 public class Ray {
-    private final Double3 head;
+    private final Point head;
     private final Vector direction;
 
-    public Ray(Double3 head, Vector direction) {
+    /**
+     * constructor for Ray
+     * @param head a point representing the start of the ray
+     * @param direction a vector representing the direction of the ray
+     */
+    public Ray(Point head, Vector direction) {
         this.head = head;
         this.direction = direction.normalize();
     }
