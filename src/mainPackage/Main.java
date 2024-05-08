@@ -1,4 +1,4 @@
-package mainPackage;
+package test;
 
 import static java.lang.System.out;
 
