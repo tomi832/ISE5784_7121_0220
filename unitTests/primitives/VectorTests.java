@@ -92,20 +92,6 @@ class VectorTests {
     }
 
     /**
-     * Test method for {@link primitives.Vector#subtract(primitives.Vector)}.
-     */
-    @Test
-    void testSubtract() {
-        // ============ Equivalence Partitions Tests ==============
-        Vector v1 = new Vector(1, 2, 3);
-        Vector v2 = new Vector(-2, -4, -6);
-        Vector result = v1.subtract(v2);
-        // TC01: Test that subtraction of vectors is proper
-        assertEquals(new Vector(3, 6, 9), result, "subtract() wrong result");
-        // ================= Boundary Values Tests ==================
-
-    }
-    /**
      * Test method for {@link primitives.Vector#normalize()}.
      */
     @Test

@@ -28,13 +28,6 @@ public class Ray {
     }
 
     @Override
-    public int hashCode() {
-        int result = head.hashCode();
-        result = 31 * result + direction.hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Ray{" +
                 "head=" + head +
