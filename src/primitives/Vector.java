@@ -1,6 +1,7 @@
 package primitives;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * Class Vector is the basic class representing a vector of Euclidean geometry in Cartesian
@@ -16,9 +17,7 @@ public class Vector extends Point{
      * @param z Third coordinate
      */
     public Vector(double x, double y, double z) {
-        super(x, y, z);
-        if (xyz.equals(Double3.ZERO))
-            throw new IllegalArgumentException("Vector(0,0,0) isn't valid");
+        this(new Double3(x, y, z));
     }
 
     /**
@@ -59,6 +58,8 @@ public class Vector extends Point{
      * @return
      */
     public Vector scale(double scalar) {
+        if (isZero(scalar))
+            throw new IllegalArgumentException("Cannot scale a vector by 0");
         return new Vector(xyz.scale(scalar));
     }
 
@@ -86,7 +87,7 @@ public class Vector extends Point{
         double length = alignZero(length());
         if (length == 0)
             throw new ArithmeticException("Cannot normalize an empty vector");
-        return new Vector(xyz.scale(1/length));
+        return new Vector(xyz.scale(1d/length));
     }
 
     /**
@@ -96,6 +97,10 @@ public class Vector extends Point{
      * @return the perpendicular vector to both vectors
      */
     public Vector crossProduct(Vector vector) {
+        //TODO: optimize check
+        if (Math.abs(this.dotProduct(vector)) == Math.abs(this.length() * vector.length()))
+            throw new IllegalArgumentException("Cannot create a cross product from parallel vectors");
+
         return new Vector(
                 xyz.d2 * vector.xyz.d3 - xyz.d3 * vector.xyz.d2,
                 xyz.d3 * vector.xyz.d1 - xyz.d1 * vector.xyz.d3,

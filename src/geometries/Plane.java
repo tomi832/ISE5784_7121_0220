@@ -19,6 +19,7 @@ public class Plane implements Geometry{
      */
     public Plane(Point point1, Point point2, Point point3) {
         this.q = point1;
+
         this.normal = null;
     }
 

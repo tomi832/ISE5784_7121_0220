@@ -24,7 +24,7 @@ public class Point {
      * Constructor that gets a Double3 instance, which holds the 3 coordinates
      * @param xyz a Double3 instance
      */
-    public Point(Double3 xyz) {
+    Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
