@@ -11,8 +11,8 @@ class SphereTests {
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
-        Sphere s = new Sphere(Point.ZERO, 1);
-        Point pt = new Point(0, 0, 5);
+        Sphere s = new Sphere(Point.ZERO, 12);
+        Point pt = new Point(0, 0, 12);
         // TC01: Test that getNormal() returns the proper value
         assertEquals(new Vector(0, 0, 1), s.getNormal(pt), "getNormal() wrong result");
     }
