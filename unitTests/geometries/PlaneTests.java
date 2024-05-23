@@ -10,7 +10,6 @@ import primitives.Vector;
 
 class PlaneTests {
 
-    private final double DELTA = 0.000001;
 
     @Test
     void testConstructor() {

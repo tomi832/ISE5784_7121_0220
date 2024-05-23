@@ -19,8 +19,12 @@ public class Plane implements Geometry{
      */
     public Plane(Point point1, Point point2, Point point3) {
         this.q = point1;
-
-        this.normal = null;
+        /**
+         * "point1.subtract(point2)" -> first edge
+         * "point1.subtract(point3)" -> second edge
+         * cross product of the two gives you the normal vector, and we need to normalize it.
+         */
+        this.normal = point1.subtract(point2).crossProduct(point1.subtract(point3)).normalize();
     }
 
     /**

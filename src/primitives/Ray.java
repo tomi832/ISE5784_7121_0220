@@ -19,6 +19,15 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
+    public Point getHead() {
+        return head;
+    }
+
+    public Vector getDirection() {
+         return direction;
+    }
+
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
