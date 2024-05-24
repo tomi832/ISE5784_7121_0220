@@ -3,6 +3,7 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.isZero;
 
 /**
  * a class that represents a Tube in a 3-dimensional space
@@ -28,7 +29,7 @@ public class Tube extends RadialGeometry{
         Vector v = point.subtract(axis.getHead());
         double t = axis.getDirection().dotProduct(v);
         //checking if it's orthogonal to the head
-        if (t == 0)
+        if (isZero(t))
             return point.subtract(axis.getHead()).normalize();
         Point o = axis.getHead().add(axis.getDirection().scale(t));
         return point.subtract(o).normalize();
