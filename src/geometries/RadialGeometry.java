@@ -21,6 +21,12 @@ public class RadialGeometry implements Geometry{
         this.radius = radius;
     }
 
+    /**
+     * a non-functional method, since this isn't a real geometric body
+     * this function is here due to this class inheriting from Geometry
+     * @param point a point on the surface of the geometry
+     * @return the normal of the geometry
+     */
     @Override
     public Vector getNormal(Point point) {
         return null;

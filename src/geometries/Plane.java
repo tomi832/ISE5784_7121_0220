@@ -38,11 +38,20 @@ public class Plane implements Geometry{
         this.normal = normal.normalize();
     }
 
+    /**
+     * a method that returns the normal of the plane
+     * @param point a point on the surface of the plane
+     * @return the normal of the plane
+     */
     @Override
     public Vector getNormal(Point point) {
         return normal;
     }
 
+    /**
+     * a method that returns the normal of the plane
+     * @return the normal of the plane
+     */
     public Vector getNormal() {
         return normal;
     }

@@ -22,6 +22,11 @@ public class Cylinder extends Tube{
         this.height = height;
     }
 
+    /**
+     * a method that returns the normal of the cylinder at a certain point
+     * @param point a point on the surface of the Cylinder
+     * @return the normal of the cylinder
+     */
     @Override
     public Vector getNormal(Point point) {
         //calculating where the head would "hit" at the other side of the cylinder

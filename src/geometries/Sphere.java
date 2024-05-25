@@ -19,6 +19,11 @@ public class Sphere extends RadialGeometry{
         center = c;
     }
 
+    /**
+     * a method that returns the normal of the sphere at a certain point
+     * @param point a point on the surface of the sphere
+     * @return the normal of the sphere
+     */
     @Override
     public Vector getNormal(Point point) {
         return point.subtract(center).normalize();

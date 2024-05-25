@@ -24,6 +24,11 @@ public class Tube extends RadialGeometry{
         this.axis = axis;
     }
 
+    /**
+     * a method that returns the normal of the tube at a certain point
+     * @param point a point on the surface of the tube
+     * @return the normal of the at the passed point
+     */
     @Override
     public Vector getNormal(Point point) {
         Vector v = point.subtract(axis.getHead());
