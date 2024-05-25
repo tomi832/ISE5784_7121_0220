@@ -26,11 +26,10 @@ public class Cylinder extends Tube{
     public Vector getNormal(Point point) {
         //calculating where the head would "hit" at the other side of the cylinder
         Point otherBaseHead = axis.getHead().add(axis.getDirection().scale(height));
-        if (point.equals(axis.getHead()) || point.equals(otherBaseHead))
-            return axis.getDirection();
-        if (isZero(point.subtract(axis.getHead()).dotProduct(axis.getDirection())))
-            return axis.getDirection();
-        if (isZero(point.subtract(otherBaseHead).dotProduct(axis.getDirection())))
+        if (point.equals(axis.getHead()) ||
+            point.equals(otherBaseHead) ||
+            isZero(point.subtract(axis.getHead()).dotProduct(axis.getDirection())) ||
+            isZero(point.subtract(otherBaseHead).dotProduct(axis.getDirection())))
             return axis.getDirection();
         return super.getNormal(point);
     }
