@@ -6,9 +6,13 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
-
+/**
+ * Testing Tubes
+ * @author Tomere Kalman and Yosef Kornfield
+ */
 class TubeTests {
 
+    /**test method for {@link geometries.Tube#getNormal(primitives.Point)} */
     @Test
     void testGetNormal() {
         Tube tube = new Tube(10, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)));

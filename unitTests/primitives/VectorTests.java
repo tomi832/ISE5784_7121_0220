@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing Vectors
+ * @author Tomere Kalman and Yosef Kornfield
+ */
 class VectorTests {
 
     private static final double DELTA = 0.000001;

@@ -7,10 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import primitives.Point;
 import primitives.Vector;
 
-
+/**
+ * Testing Planes
+ * @author Tomere Kalman and Yosef Kornfeld
+ */
 class PlaneTests {
 
-
+    /** test method for {@link geometries.Plane#Plane(primitives.Point, primitives.Point, primitives.Point)} */
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
@@ -34,6 +37,7 @@ class PlaneTests {
                                             "constructs a plane with 2 points that are the same");
     }
 
+    /**test method for {@link geometries.Plane#getNormal(primitives.Point)} */
     @Test
     void testGetNormal() {
         //============ Equivalence Partitions Tests ==============

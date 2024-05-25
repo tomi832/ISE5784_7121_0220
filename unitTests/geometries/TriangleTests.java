@@ -7,10 +7,15 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
+/**
+ * Testing Triangles
+ * @author Tomere Kalman and Yosef Kornfield
+ */
 class TriangleTests {
 
+    /**
+     * test method for {@link geometries.Triangle#Triangle(primitives.Point, primitives.Point, primitives.Point)}
+     */
     @Test
     void testConstructor() {
         // ============ Equivalence Partitions Tests ==============
@@ -22,6 +27,9 @@ class TriangleTests {
 
     }
 
+    /**
+     * test method for {@link geometries.Triangle#getNormal(primitives.Point)}
+     */
     @Test
     void testGetNormal() {
         //============ Equivalence Partitions Tests ==============

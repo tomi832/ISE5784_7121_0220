@@ -6,8 +6,13 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing Spheres
+ * @author Tomere Kalman and Yosef Kornfield
+ */
 class SphereTests {
 
+    /** test method for {@link geometries.Sphere#getNormal(primitives.Point)} */
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============

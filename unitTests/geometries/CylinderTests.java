@@ -5,8 +5,13 @@ import primitives.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing Cylinders
+ * @author Tomer Kalman and Yosef Kornfeld
+ */
 class CylinderTests {
 
+    /**test method for {@link geometries.Cylinder#getNormal(primitives.Point)} */
     @Test
     void testGetNormal() {
         Cylinder cylinder = new Cylinder(10, new Ray(new Point(0, 0, 0), new Vector(0, 0, 1)), 10);
