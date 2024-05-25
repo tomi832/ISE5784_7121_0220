@@ -4,6 +4,11 @@ import static java.lang.System.out;
 
 import static primitives.Util.isZero;
 
+/*
+ *Tomere Kalman, 314837121, tomere832@gmail.com
+ * Yosef Kornfeld, 207960220, yosefk7@gmail.com
+ */
+
 /**
  * Test program for the 1st stage
  * @author Dan Zilberstein
