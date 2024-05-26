@@ -5,6 +5,8 @@ import primitives.Ray;
 import static primitives.Util.isZero;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * a class representing a cylinder in a 3-dimensional space
  */
@@ -37,5 +39,9 @@ public class Cylinder extends Tube{
             isZero(point.subtract(otherBaseHead).dotProduct(axis.getDirection())))
             return axis.getDirection();
         return super.getNormal(point);
+    }
+
+    public List<Point> findIntersections(Ray ray) {
+        return null;
     }
 }

@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * a class that implements the Geometry interface. it represents a radial shape in a
@@ -29,6 +32,10 @@ public class RadialGeometry implements Geometry{
      */
     @Override
     public Vector getNormal(Point point) {
+        return null;
+    }
+
+    public List<Point> findIntersections(Ray ray) {
         return null;
     }
 }

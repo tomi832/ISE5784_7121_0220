@@ -5,7 +5,7 @@ import primitives.Vector;
 
 import java.util.List;
 
-public interface Geometry {
+public interface Geometry extends Intersectable {
     /**
      * this function receives a point on the surface of the geometry
      * and returns a vector perpendicular to the surface at that point
@@ -13,4 +13,6 @@ public interface Geometry {
      * @return a vector perpendicular to the surface at that point
      */
     public Vector getNormal(Point point);
+
+    public List<Point> findIntersections(Ray ray);
 }
