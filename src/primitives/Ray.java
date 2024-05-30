@@ -46,6 +46,11 @@ public class Ray {
                 '}';
     }
 
+    /**
+     * Returns a point on the ray at a distance of t1 from the head of the ray
+     * @param t1 the distance from the head of the ray
+     * @return a point on the ray at a distance of t1 from the head of the ray
+     */
     public Point getPoint(double t1) {
         if (isZero(t1))
             throw new IllegalArgumentException("t1 cannot be 0");

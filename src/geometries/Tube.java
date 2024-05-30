@@ -39,7 +39,7 @@ public class Tube extends RadialGeometry{
         //checking if it's orthogonal to the head
         if (isZero(t))
             return point.subtract(axis.getHead()).normalize();
-        Point o = axis.getHead().add(axis.getDirection().scale(t));
+        Point o = axis.getPoint(t);
         return point.subtract(o).normalize();
     }
 
