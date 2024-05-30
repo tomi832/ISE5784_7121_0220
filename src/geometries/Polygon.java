@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 import primitives.Point;
@@ -92,7 +93,47 @@ public class Polygon implements Geometry {
         return plane.getNormal();
     }
 
+    /**
+     * findIntersections function finds the intersection points of a ray with the polygon
+     * @param ray the ray that intersects the polygon
+     * @return a list of the intersection points
+     */
     public List<Point> findIntersections(Ray ray) {
-        return null;
+        var intersectionPoint = plane.findIntersections(ray);
+        //if the ray doesn't intersect the plane, it doesn't intersect the polygon
+        if (intersectionPoint == null)
+            return null;
+        Point rayHead = ray.getHead();
+        Vector rayDir = ray.getDirection();
+        Vector[] v = new Vector[size];
+        Vector[] n = new Vector[size];
+        double[] s = new double[size];
+        //entering all the vertices of the polygon into the v array
+        for (var i = 0; i < size; ++i) {
+            v[i] = vertices.get(i).subtract(rayHead);
+        }
+        //entering all the normals of the polygon into the n array
+        for (var i = 0; i < size; ++i) {
+            n[i] = v[i].crossProduct(v[(i + 1) % size]).normalize();
+        }
+        //entering all the dot products of the normals and the ray direction into the s array
+        for (var i = 0; i < size; ++i) {
+            s[i] = alignZero(n[i].dotProduct(rayDir));
+        }
+
+        //checking if the ray intersects the polygon
+        //if the ray intersects the polygon, the dot products of the normals and the ray direction will have the same sign
+        if (s[0] < 0) {
+            for (var i = 1; i < size; ++i)
+                if (s[i] >= 0)
+                    return null;
+            return intersectionPoint;
+        } else if (s[0] > 0) {
+            for (var i = 1; i < size; ++i)
+                if (s[i] <= 0)
+                    return null;
+            return intersectionPoint;
+        }
+        return  null;
     }
 }

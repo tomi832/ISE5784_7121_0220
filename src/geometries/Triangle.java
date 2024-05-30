@@ -4,6 +4,8 @@ import primitives.*;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * a class that represents a flat Triangle (inherits from the Polygon class)
  */
@@ -20,6 +22,11 @@ public class Triangle extends Polygon {
         super(point1, point2, point3);
     }
 
+    /**
+     * a method that finds the intersections of a ray with the Triangle
+     * @param ray the ray that intersects the Triangle
+     * @return a list of the intersections
+     */
     public List<Point> findIntersections(Ray ray) {
         var intersectionPoint = plane.findIntersections(ray);
         // if the ray doesn't intersect the plane, return null

@@ -31,5 +31,9 @@ class CylinderTests {
         assertEquals(new Vector(0, 0, 1), cylinder.getNormal(middleTopBase), "wrong normal to cylinder");
         //TC12: testing point in the middle of the bottom base
         assertEquals(new Vector(0, 0, 1), cylinder.getNormal(middleBottomBase), "wrong normal to cylinder");
+        //TC13: testing point at the edge of top base
+        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(new Point(10, 0, 10)), "wrong normal to cylinder");
+        //TC14: testing point at the edge of bottom base
+        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(new Point(10, 0, 0)), "wrong normal to cylinder");
     }
 }

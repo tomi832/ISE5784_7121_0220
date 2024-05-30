@@ -34,6 +34,8 @@ public class Sphere extends RadialGeometry{
     }
 
     public List<Point> findIntersections(Ray ray) {
+        if (center == ray.getHead())
+            return List.of(ray.getPoint(radius));
         Vector u = center.subtract(ray.getHead());
         double tm = alignZero(ray.getDirection().dotProduct(u));
         double d = alignZero(Math.sqrt(u.lengthSquared() - tm * tm));

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import geometries.Polygon;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 /**
@@ -87,4 +88,52 @@ public class PolygonTests {
                       "Polygon's normal is not orthogonal to one of the edges");
    }
 
+    /**
+     * Test method for {@link Polygon#findIntersections(Ray)}.
+     */
+    @Test
+    public void testFindIntersections() {
+        Polygon polygon = new Polygon(new Point(0, 0, 0),
+                new Point(4, 0, 0),
+                new Point(4, 4, 0),
+                new Point(0, 4, 0));
+        // Expected intersection points
+        final Point gp1 = new Point(2, 2, 0);
+
+        // Vectors for rays
+        final Vector v001 = new Vector(0, 0, -1);
+
+        // Ray starting points
+        //EP:
+        final Point p01 = new Point(2, 2, 2);
+        final Point p02 = new Point(2, 6, 1);
+        final Point p03 = new Point(-1, -1, 1);
+        //BVA:
+        final Point p04 = new Point(2, 0, 1);
+        final Point p05 = new Point(0, 0, 1);
+        final Point p06 = new Point(5, 0, 1);
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Inside Polygon
+        final var result01 = polygon.findIntersections(new Ray(p01, v001));
+        assertEquals(1, result01.size(), "ray should pass only 1 point");
+        assertEquals(gp1, result01.getFirst(), "Ray crosses polygon");
+        // TC02: Outside against edge
+        final var result02 = polygon.findIntersections(new Ray(p02, v001));
+        assertNull(result02, "Ray starts outside the polygon, against an edge and doesn't intersect it");
+        // TC03: Outside against vertex
+        final var result03 = polygon.findIntersections(new Ray(p03, v001));
+        assertNull(result03, "Ray starts outside the polygon, against a vertex and doesn't intersect it");
+
+        // =============== Boundary Values Tests ==================
+        // TC11: On edge
+        final var result11 = polygon.findIntersections(new Ray(p04, v001));
+        assertNull(result11, "Ray intersects on edge of polygon");
+        //TC12: In vertex
+        final var result12 = polygon.findIntersections(new Ray(p05, v001));
+        assertNull(result12, "Ray intersects in vertex of triangle");
+        // TC13: On edge's continuation
+        final var result13 = polygon.findIntersections(new Ray(p06, v001));
+        assertNull(result13, "Ray intersects on edge's continuation of polygon");
+    }
 }

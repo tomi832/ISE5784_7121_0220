@@ -6,6 +6,8 @@ import primitives.Point;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * a class that represents a plane (plane as in a 2-dimensional shape in 3-dimensions)
  * @author Yosef Kornfeld and Tomere Kalman
@@ -59,7 +61,18 @@ public class Plane implements Geometry{
         return normal;
     }
 
+    /**
+     * a method that finds the intersections of a ray with the plane
+     * @param ray a ray that intersects the plane
+     * @return a list of points that the ray intersects with the plane
+     */
     public List<Point> findIntersections(Ray ray) {
-        return null;
+        // if the ray starts on the plane or is parallel to the plane, there are no intersections
+        if (ray.getHead().equals(q) || normal.dotProduct(ray.getDirection()) == 0) {
+            return null;
+        }
+        Vector edge = q.subtract(ray.getHead());
+        double t = alignZero(normal.dotProduct(edge) / normal.dotProduct(ray.getDirection()));
+        return t <= 0 ? null : List.of(ray.getPoint(t));
     }
 }
