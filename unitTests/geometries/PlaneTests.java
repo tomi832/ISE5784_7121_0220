@@ -83,7 +83,7 @@ class PlaneTests {
         assertEquals(1, result01.size(), "ray should pass only 1 point");
         assertEquals(gp01, result01.getFirst(), "Ray starts outside the plane");
         //TC02: Ray starts outside the plane and doesn't intersect it (0 points)
-        final var result02 = plane.findIntersections(new Ray(p01, v101));
+        final var result02 = plane.findIntersections(new Ray(p02, v101));
         assertNull(result02, "Ray starts outside the plane and doesn't intersect it");
         // ================= Boundary Values Tests ==================
         //TC11: Ray is parallel to the plane outside of it (0 points)
