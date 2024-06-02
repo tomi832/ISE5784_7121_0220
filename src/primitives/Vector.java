@@ -97,10 +97,8 @@ public class Vector extends Point{
      * @return the perpendicular vector to both vectors
      */
     public Vector crossProduct(Vector vector) {
-        //TODO: optimize check
         if (Math.abs(this.dotProduct(vector)) == Math.abs(this.length() * vector.length()))
             throw new IllegalArgumentException("Cannot create a cross product from parallel vectors");
-
         return new Vector(
                 xyz.d2 * vector.xyz.d3 - xyz.d3 * vector.xyz.d2,
                 xyz.d3 * vector.xyz.d1 - xyz.d1 * vector.xyz.d3,
