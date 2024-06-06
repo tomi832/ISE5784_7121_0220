@@ -13,6 +13,7 @@ class GeometriesTests {
 
     @Test
     void testFindIntersections() {
+        //TODO: don't use point Zero
         //Geometrical bodies
         Triangle triangle = new Triangle(new Point(-1, -1, 0), new Point(1, -1, 0), new Point(0, 1, 0));
         Sphere sphere = new Sphere(new Point(0, 0, 0), 1);

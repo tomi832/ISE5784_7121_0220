@@ -58,6 +58,7 @@ class TriangleTests {
      */
     @Test
     void testFindIntersections() {
+        //TODO: don't use point Zero
         final Triangle triangle = new Triangle(
                 new Point(0, 0, 0),
                 new Point(4, 0, 0),

@@ -63,6 +63,7 @@ class PlaneTests {
      */
     @Test
     void testFindIntersections() {
+        //TODO: don't use point Zero
         final Vector v001 = new Vector(0,0,1);
         final Plane plane = new Plane(Point.ZERO, v001);
 
