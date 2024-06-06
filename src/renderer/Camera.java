@@ -7,32 +7,30 @@ import primitives.Vector;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.security.cert.CertPathBuilder;
+import java.util.MissingResourceException;
+import static primitives.Util.isZero;
 
 /**
  * Camera class represents a camera in the scene
  */
 public class Camera implements Cloneable {
+
+
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
     private Point location;
     private Vector vTo;
     private Vector vUp;
     private Vector vRight;
-    private  double distance;
-    private double width;
-    private final double height;
+    private double distance = 0;
+    private double width = 0;
+    private double height = 0;
 
-    public Camera(Builder builder) {
-        this.imageWriter = builder.imageWriter;
-        this.rayTracer = builder.rayTracer;
-        this.location = builder.location;
-        this.distance = builder.distance;
-        this.vRight = builder.vRight;
-        this.vTo = builder.vTo;
-        this.vUp = builder.vUp;
-        this.width = builder.width;
-        this.height = builder.height;
-    }
+
+    /**
+     * Camera constructor
+     */
+    private Camera() {}
 
     /**
      * Camera builder
@@ -88,37 +86,29 @@ public class Camera implements Cloneable {
      * @return Ray from the camera to the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        Point pC = location.add(vTo.scale(distance));
-        double rY = height / imageWriter.getNy();
-        double rX = width / imageWriter.getNx();
-
-        double yi = (i - nY / 2d) * rY + rY / 2d;
-        double xj = (j - nX / 2d) * rX + rX / 2d;
-        Point pIJ = pC;
-        if (yi != 0) {
-            pIJ = pIJ.add(vUp.scale(-yi));
-        }
-        if (xj != 0) {
-            pIJ = pIJ.add(vRight.scale(xj));
-        }
-        Vector vIJ = pIJ.subtract(location).normalize();
-        return new Ray(location, vIJ);
+//        Point pC = location.add(vTo.scale(distance));
+//        double rY = height / imageWriter.getNy();
+//        double rX = width / imageWriter.getNx();
+//
+//        double yi = (i - nY / 2d) * rY + rY / 2d;
+//        double xj = (j - nX / 2d) * rX + rX / 2d;
+//        Point pIJ = pC;
+//        if (yi != 0) {
+//            pIJ = pIJ.add(vUp.scale(-yi));
+//        }
+//        if (xj != 0) {
+//            pIJ = pIJ.add(vRight.scale(xj));
+//        }
+//        Vector vIJ = pIJ.subtract(location).normalize();
+//        return new Ray(location, vIJ);
+        return null;
     }
 
     /**
      * Camera builder class
      */
     public static class Builder {
-
-        private ImageWriter imageWriter;
-        private RayTracerBase rayTracer;
-        private Point location;
-        private Vector vTo;
-        private Vector vUp;
-        private Vector vRight;
-        private double distance;
-        private double width;
-        private double height;
+        private final Camera camera = new Camera();
 
         /**
          * Builder sets the rayTracer to the camera
@@ -199,8 +189,34 @@ public class Camera implements Cloneable {
          * Builder builds the camera
          */
         public Camera build() {
-            Camera camera = new Camera(this);
-            return camera;
+            if (camera.distance == 0)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing distance");
+            if (camera.height == 0)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing height");
+            if (camera.width == 0)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing width");
+            if (camera.location == null)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing location");
+            if (camera.vTo == null)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing vTo");
+            if (camera.vUp == null)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing vUp");
+            if (camera.vRight == null)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing vRight");
+            if (camera.imageWriter == null)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing imageWriter");
+            if (camera.rayTracer == null)
+                throw new MissingResourceException("missing rendering element", "Camera",
+                        "missing rayTracer");
+            return (Camera) camera.clone();
         }
     }
 
@@ -210,6 +226,21 @@ public class Camera implements Cloneable {
      */
     @Override
     public Camera clone() {
-        return null;
+        try{
+            Camera camera = (Camera) super.clone();
+            camera.imageWriter = this.imageWriter;
+            camera.rayTracer = this.rayTracer;
+            camera.location = this.location;
+            camera.vTo = this.vTo;
+            camera.vUp = this.vUp;
+            camera.vRight = this.vRight;
+            camera.distance = this.distance;
+            camera.width = this.width;
+            camera.height = this.height;
+            return camera;
+        } catch (CloneNotSupportedException e) {
+            throw new MissingResourceException("missing rendering element", "Camera",
+                    "missing clone");
+        }
     }
 }
