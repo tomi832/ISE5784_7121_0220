@@ -14,8 +14,6 @@ import static primitives.Util.isZero;
  * Camera class represents a camera in the scene
  */
 public class Camera implements Cloneable {
-
-
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
     private Point location;
