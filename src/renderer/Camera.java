@@ -138,8 +138,6 @@ public class Camera implements Cloneable {
         public Builder setLocation(Point point) {
             if (point == null)
                 throw new IllegalArgumentException("Location cannot be null");
-//            if (point.equals(Point.ZERO))
-//                throw new IllegalArgumentException("Location cannot be zero");
             camera.location = point;
             return this;
         }
