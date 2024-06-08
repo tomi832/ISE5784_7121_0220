@@ -5,12 +5,19 @@ import primitives.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing Geometries
+ * @author Tomere Kalman and Yosef Kornfeld
+ */
 class GeometriesTests {
 
     @Test
     void testAdd() {
     }
 
+    /**
+     * Test method for {@link geometries.Geometries#findIntersections(primitives.Ray)}.
+     */
     @Test
     void testFindIntersections() {
         //Geometrical bodies

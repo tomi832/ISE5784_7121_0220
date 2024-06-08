@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Testing the integration of Camera and Sphere
- * Authors: Tomer Kalman, Yosef Kornfeld
+ * @author Tomere Kalman and Yosef Kornfeld
  */
 class CameraSphereIntersections {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()

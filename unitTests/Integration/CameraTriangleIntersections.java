@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Testing the integration of Camera and Triangle
- * Authors: Tomer Kalman, Yosef Kornfeld
+ * @author Tomere Kalman and Yosef Kornfeld
  */
 public class CameraTriangleIntersections {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
