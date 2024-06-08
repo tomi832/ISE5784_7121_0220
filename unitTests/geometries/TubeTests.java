@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Testing Tubes
- * @author Tomere Kalman and Yosef Kornfield
+ * @author Tomere Kalman and Yosef Kornfeld
  */
 class TubeTests {
 

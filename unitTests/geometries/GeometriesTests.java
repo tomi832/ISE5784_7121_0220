@@ -13,12 +13,11 @@ class GeometriesTests {
 
     @Test
     void testFindIntersections() {
-        //TODO: don't use point Zero
         //Geometrical bodies
-        Triangle triangle = new Triangle(new Point(-1, -1, 0), new Point(1, -1, 0), new Point(0, 1, 0));
-        Sphere sphere = new Sphere(new Point(0, 0, 0), 1);
-        Polygon quadPoly1 = new Polygon(new Point(5, 5, 0), new Point(5, 10, 0), new Point(10, 10, 0), new Point(10, 5, 0));
-        Polygon quadPoly2 = new Polygon(new Point(1,1,0), new Point(1,-1,0), new Point(-1,-1,0), new Point(-1, 1,0));
+        Triangle triangle = new Triangle(new Point(-1, -1, 1), new Point(1, -1, 1), new Point(0, 1, 1));
+        Sphere sphere = new Sphere(new Point(0, 0, 1), 1);
+        Polygon quadPoly1 = new Polygon(new Point(5, 5, 1), new Point(5, 10, 1), new Point(10, 10, 1), new Point(10, 5, 1));
+        Polygon quadPoly2 = new Polygon(new Point(1,1,1), new Point(1,-1,1), new Point(-1,-1,1), new Point(-1, 1,1));
 
         //geometries list
 

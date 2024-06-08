@@ -10,6 +10,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Testing the integration of Camera and Plane
+ * @author Tomere Kalman and Yosef Kornfeld
+ */
 class CameraPlaneIntersections {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setRayTracer(new SimpleRayTracer(new Scene("Test")))
@@ -18,7 +22,10 @@ class CameraPlaneIntersections {
             .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVpDistance(1);
 
-    //First Test Case
+    /**
+     * first test case
+     * plane is parallel to the view plane and the camera is looking straight at it
+     */
     @Test
     void testIntegrationPlane1() {
         Camera camera1 = cameraBuilder.setVpSize(3, 3).build();
@@ -35,7 +42,10 @@ class CameraPlaneIntersections {
         assertEquals(9, intersections.size(), "Wrong number of intersections with plane1");
     }
 
-    //Second Test Case
+    /**
+     * second test case
+     * plane is angled to the view plane and the camera is looking straight at it
+     */
     @Test
     void testIntegrationPlane2() {
         Camera camera2 = cameraBuilder.setVpSize(3, 3).build();
@@ -52,7 +62,11 @@ class CameraPlaneIntersections {
         assertEquals(9, intersections.size(), "Wrong number of intersections with plane2");
     }
 
-    //Third Test Case
+    /**
+     * third test case
+     * plane is angled to the view plane and the camera is looking straight at it
+     * the plane is angled in a way which escapes the lower rays from the camera
+     */
     @Test
     void testIntegrationPlane3() {
         Camera camera3 = cameraBuilder.setVpSize(3, 3).setLocation(new Point(0, 0, 1)).build();

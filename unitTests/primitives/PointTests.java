@@ -7,7 +7,7 @@ import static primitives.Util.isZero;
 
 /**
  * Testing Points
- * @author Tomere Kalman and Yosef Kornfield
+ * @author Tomere Kalman and Yosef Kornfeld
  */
 class PointTests {
     /**

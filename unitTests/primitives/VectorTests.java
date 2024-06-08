@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testing Vectors
- * @author Tomere Kalman and Yosef Kornfield
+ * @author Tomere Kalman and Yosef Kornfeld
  */
 class VectorTests {
 

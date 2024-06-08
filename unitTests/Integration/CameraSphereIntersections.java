@@ -10,7 +10,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+/**
+ * Testing the integration of Camera and Sphere
+ * Authors: Tomer Kalman, Yosef Kornfeld
+ */
 class CameraSphereIntersections {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setRayTracer(new SimpleRayTracer(new Scene("Test")))
@@ -19,7 +22,10 @@ class CameraSphereIntersections {
             .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVpDistance(1);
 
-    //First Test Case
+    /**
+     * First test case
+     * Sphere is in front of a single pixel's ray
+     */
     @Test
     void testIntegrationSphere1() {
         Camera camera1 = cameraBuilder.setVpSize(3, 3).build();
@@ -36,7 +42,10 @@ class CameraSphereIntersections {
         assertEquals(2, intersections.size(), "Wrong number of intersections with sphere1");
     }
 
-    //Second Test Case
+    /**
+     * Second test case
+     * Sphere is in front of a 3x3 grid of rays
+     */
     @Test
     void testIntegrationSphere2() {
         Camera camera2 = cameraBuilder.setVpSize(3, 3).setLocation(new Point(0, 0, 0.5)).build();
@@ -53,7 +62,10 @@ class CameraSphereIntersections {
         assertEquals(18, intersections.size(), "Wrong number of intersections with sphere2");
     }
 
-    //Third Test Case
+    /**
+     * Third test case
+     * Sphere is in front of a 3x3 grid of rays but smaller, so not every ray intersects
+     */
     @Test
     void testIntegrationSphere3() {
         Camera camera3 = cameraBuilder.setVpSize(3, 3).setLocation(new Point(0, 0, 0.5)).build();
@@ -70,7 +82,10 @@ class CameraSphereIntersections {
         assertEquals(10, intersections.size(), "Wrong number of intersections with sphere3");
     }
 
-    //Fourth Test Case
+    /**
+     * Fourth test case
+     * Sphere envelops the camera, so every ray intersects only once
+     */
     @Test
     void testIntegrationSphere4() {
         Camera camera4 = cameraBuilder.setVpSize(3, 3).build();
@@ -87,7 +102,10 @@ class CameraSphereIntersections {
         assertEquals(9, intersections.size(), "Wrong number of intersections with sphere4");
     }
 
-    //Fifth Test Case
+    /**
+     * Fifth test case
+     * Sphere is behind the camera, so no rays intersect
+     */
     @Test
     void testIntegrationSphere5() {
         Camera camera5 = cameraBuilder.setVpSize(3, 3).setLocation(new Point(0, 0, 0.5)).build();

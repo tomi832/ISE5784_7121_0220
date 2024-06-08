@@ -10,6 +10,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Testing the integration of Camera and Triangle
+ * Authors: Tomer Kalman, Yosef Kornfeld
+ */
 public class CameraTriangleIntersections {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setRayTracer(new SimpleRayTracer(new Scene("Test")))
@@ -18,7 +22,10 @@ public class CameraTriangleIntersections {
             .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
             .setVpDistance(1);
 
-    //First Test Case
+    /**
+     * First test case
+     * Triangle is in front of a single pixel's ray
+     */
     @Test
     void testIntegrationTriangle1() {
         Camera camera1 = cameraBuilder.setVpSize(3, 3).build();
@@ -35,7 +42,10 @@ public class CameraTriangleIntersections {
         assertEquals(1, intersections.size(), "Wrong number of intersections with triangle1");
     }
 
-    //Second Test Case
+    /**
+     * Second test case
+     * Triangle is in front of two pixels' rays
+     */
     @Test
     void testIntegrationTriangle2() {
         Camera camera2 = cameraBuilder.setVpSize(3, 3).build();

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testing Spheres
- * @author Tomere Kalman and Yosef Kornfield
+ * @author Tomere Kalman and Yosef Kornfeld
  */
 class SphereTests {
 
