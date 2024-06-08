@@ -63,20 +63,20 @@ class PlaneTests {
      */
     @Test
     void testFindIntersections() {
-        //TODO: don't use point Zero
         final Vector v001 = new Vector(0,0,1);
-        final Plane plane = new Plane(Point.ZERO, v001);
+        final Point p0 = new Point(1,0,0);
+        final Plane plane = new Plane(p0, v001);
 
         //expected intersection points:
-        final Point gp01 = new Point(1,0,0);
+        final Point gp01 = new Point(2,0,0);
 
         //vectors for rays:
         final Vector v101 = new Vector(1,0,1);
         final Vector v100 = new Vector(1,0,0);
 
         //ray starting points:
-        final Point p01 = new Point(0,0,-1);
-        final Point p02 = new Point(0,0,1);
+        final Point p01 = new Point(1,0,-1);
+        final Point p02 = new Point(1,0,1);
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Ray starts outside the plane and intersects it at a sharp-angle (1 point)
@@ -95,12 +95,12 @@ class PlaneTests {
         final var result12 = plane.findIntersections(new Ray(gp01, v100));
         assertNull(result12, "Ray is parallel to the plane and is included in it");
         //TC13: Ray is orthogonal to the plane and starts at it (0 points)
-        final var result13 = plane.findIntersections(new Ray(Point.ZERO, v001));
+        final var result13 = plane.findIntersections(new Ray(p0, v001));
         assertNull(result13, "Ray is orthogonal to the plane and starts at it");
         //TC14: Ray is orthogonal to the plane and starts before the plane (1 point)
         final var result14 = plane.findIntersections(new Ray(p01, v001));
         assertEquals(1, result14.size(), "ray should pass only 1 point");
-        assertEquals(Point.ZERO, result14.getFirst(), "Ray is orthogonal to the plane and starts before the plane");
+        assertEquals(p0, result14.getFirst(), "Ray is orthogonal to the plane and starts before the plane");
         //TC15: Ray is orthogonal to the plane and starts after the plane (0 points)
         final var result15 = plane.findIntersections(new Ray(p02, v001));
         assertNull(result15, "Ray is orthogonal to the plane and starts after the plane");
@@ -108,7 +108,7 @@ class PlaneTests {
         final var result16 = plane.findIntersections(new Ray(gp01, v101));
         assertNull(result16, "Ray isn't orthogonal to the plane and starts at it");
         //TC17: Ray isn't orthogonal to the plane and starts at the reference point (0 points)
-        final var result17 = plane.findIntersections(new Ray(Point.ZERO, v101));
+        final var result17 = plane.findIntersections(new Ray(p0, v101));
         assertNull(result17, "Ray isn't orthogonal to the plane and starts at reference point");
     }
 }

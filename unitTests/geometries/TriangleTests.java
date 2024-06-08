@@ -58,10 +58,9 @@ class TriangleTests {
      */
     @Test
     void testFindIntersections() {
-        //TODO: don't use point Zero
         final Triangle triangle = new Triangle(
-                new Point(0, 0, 0),
-                new Point(4, 0, 0),
+                new Point(-2, 0, 0),
+                new Point(2, 0, 0),
                 new Point(0, 4, 0));
 
         //expected intersection points:
@@ -75,11 +74,11 @@ class TriangleTests {
         //EP:
         final Point p01 = new Point(1, 1, 1);
         final Point p02 = new Point(4, 4,  1);
-        final Point p03 = new Point(-1, -1, 1);
+        final Point p03 = new Point(-2.5, -0.5, 1);
         //BVA:
-        final Point p11 = new Point(2, 2, 1);
-        final Point p12 = new Point(0, 0, 1);
-        final Point p13 = new Point(5, 0, 1);
+        final Point p11 = new Point(1, 0, 1);
+        final Point p12 = new Point(2, 0, 1);
+        final Point p13 = new Point(3, 0, 1);
         
         // ============ Equivalence Partitions Tests ==============
         // TC01: Inside triangle
