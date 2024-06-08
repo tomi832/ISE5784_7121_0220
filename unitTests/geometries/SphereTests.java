@@ -19,7 +19,6 @@ class SphereTests {
      */
     @Test
     void testGetNormal() {
-        //TODO: don't use point Zero
         // ============ Equivalence Partitions Tests ==============
         Sphere s = new Sphere(Point.ZERO, 12);
         Point pt = new Point(0, 0, 12);
