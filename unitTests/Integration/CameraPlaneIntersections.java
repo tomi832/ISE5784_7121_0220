@@ -28,7 +28,7 @@ class CameraPlaneIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = plane1.findIntersections(camera1.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -45,7 +45,7 @@ class CameraPlaneIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = plane2.findIntersections(camera2.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -62,7 +62,7 @@ class CameraPlaneIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = plane3.findIntersections(camera3.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }

@@ -28,7 +28,7 @@ public class CameraTriangleIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = triangle1.findIntersections(camera1.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -45,7 +45,7 @@ public class CameraTriangleIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = triangle2.findIntersections(camera2.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }

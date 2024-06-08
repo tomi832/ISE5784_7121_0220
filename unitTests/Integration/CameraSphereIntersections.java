@@ -29,7 +29,7 @@ class CameraSphereIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = sphere1.findIntersections(camera1.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -46,7 +46,7 @@ class CameraSphereIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = sphere2.findIntersections(camera2.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -63,7 +63,7 @@ class CameraSphereIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = sphere3.findIntersections(camera3.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -80,7 +80,7 @@ class CameraSphereIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = sphere4.findIntersections(camera4.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }
@@ -97,7 +97,7 @@ class CameraSphereIntersections {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 temp = sphere5.findIntersections(camera5.constructRay(3,3, j, i));
-                if (!temp.isEmpty())
+                if (temp != null)
                     intersections.addAll(temp);
             }
         }

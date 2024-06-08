@@ -14,8 +14,6 @@ import static primitives.Util.isZero;
  * Camera class represents a camera in the scene
  */
 public class Camera implements Cloneable {
-
-
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
     private Point location;
@@ -86,22 +84,22 @@ public class Camera implements Cloneable {
      * @return Ray from the camera to the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-//        Point pC = location.add(vTo.scale(distance));
-//        double rY = height / imageWriter.getNy();
-//        double rX = width / imageWriter.getNx();
-//
-//        double yi = (i - nY / 2d) * rY + rY / 2d;
-//        double xj = (j - nX / 2d) * rX + rX / 2d;
-//        Point pIJ = pC;
-//        if (yi != 0) {
-//            pIJ = pIJ.add(vUp.scale(-yi));
-//        }
-//        if (xj != 0) {
-//            pIJ = pIJ.add(vRight.scale(xj));
-//        }
-//        Vector vIJ = pIJ.subtract(location).normalize();
-//        return new Ray(location, vIJ);
-        return null;
+        Point pC = location.add(vTo.scale(distance));
+        double rY = height / nY;
+        double rX = width / nX;
+
+        double yi = -(i - ((nY-1) / 2d)) * rY;
+        double xj = (j - ((nX - 1) / 2d)) * rX;
+
+        Point pIJ = pC;
+        if (yi != 0) {
+            pIJ = pIJ.add(vUp.scale(yi));
+        }
+        if (xj != 0) {
+            pIJ = pIJ.add(vRight.scale(xj));
+        }
+        Vector vIJ = pIJ.subtract(location).normalize();
+        return new Ray(location, vIJ);
     }
 
     /**
@@ -140,8 +138,8 @@ public class Camera implements Cloneable {
         public Builder setLocation(Point point) {
             if (point == null)
                 throw new IllegalArgumentException("Location cannot be null");
-            if (point.equals(Point.ZERO))
-                throw new IllegalArgumentException("Location cannot be zero");
+//            if (point.equals(Point.ZERO))
+//                throw new IllegalArgumentException("Location cannot be zero");
             camera.location = point;
             return this;
         }
