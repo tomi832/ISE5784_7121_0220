@@ -92,10 +92,10 @@ public class Camera implements Cloneable {
         double xj = (j - ((nX - 1) / 2d)) * rX;
 
         Point pIJ = pC;
-        if (yi != 0) {
+        if (!isZero(yi)) {
             pIJ = pIJ.add(vUp.scale(yi));
         }
-        if (xj != 0) {
+        if (!isZero(xj)) {
             pIJ = pIJ.add(vRight.scale(xj));
         }
         Vector vIJ = pIJ.subtract(location).normalize();
