@@ -3,7 +3,7 @@ package renderer;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
+import primitives.Color;
 import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.security.cert.CertPathBuilder;
@@ -98,8 +98,42 @@ public class Camera implements Cloneable {
         if (!isZero(xj)) {
             pIJ = pIJ.add(vRight.scale(xj));
         }
-        Vector vIJ = pIJ.subtract(location).normalize();
+        Vector vIJ = pIJ.subtract(location);
         return new Ray(location, vIJ);
+    }
+
+    /**
+     * Render the image
+     * @param interval interval for the grid
+     * @param color color of the grid
+     */
+    public void renderImage(int interval, Color color){
+        for(int i = 0; i < imageWriter.getNx(); i++){
+            for(int j = 0; j < imageWriter.getNy(); j++){
+                Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
+                Color pixelColor = rayTracer.traceRay(ray);
+                imageWriter.writePixel(i, j, pixelColor);
+            }
+        }
+    }
+
+    /**
+     * Print the grid
+     */
+    public void printGrid(int interval, Color color){
+        for (int i = 0; i < imageWriter.getNx(); i++)
+            for (int j = 0; j < imageWriter.getNy(); j++)
+                if (i % interval == 0 || j % 50 == 0)
+                    imageWriter.writePixel(i, j, color);
+
+        imageWriter.writeToImage();
+    }
+
+    /**
+     * Write the image to a file
+     */
+    public void writeToImage(){
+        imageWriter.writeToImage();
     }
 
     /**
@@ -215,6 +249,7 @@ public class Camera implements Cloneable {
             return (Camera) camera.clone();
         }
     }
+
 
     /**
      * Clone the camera
