@@ -88,8 +88,8 @@ public class Camera implements Cloneable {
         double rY = height / nY;
         double rX = width / nX;
 
-        double yi = -(i - ((nY-1) / 2d)) * rY;
-        double xj = (j - ((nX - 1) / 2d)) * rX;
+        double yi = -(j - ((nY-1) / 2d)) * rY;
+        double xj = (i - ((nX - 1) / 2d)) * rX;
 
         Point pIJ = pC;
         if (!isZero(yi)) {
@@ -108,15 +108,15 @@ public class Camera implements Cloneable {
     public void renderImage(){
         for(int i = 0; i < imageWriter.getNx(); i++){
             for(int j = 0; j < imageWriter.getNy(); j++){
-                Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
-                Color pixelColor = rayTracer.traceRay(ray);
-                imageWriter.writePixel(i, j, pixelColor);
+                castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
             }
         }
     }
 
     private void castRay(int Nx, int Ny, int j, int i){
-
+        Ray ray = constructRay(Nx, Ny, j, i);
+        Color pixelColor = rayTracer.traceRay(ray);
+        imageWriter.writePixel(i, j, pixelColor);
     }
 
     /**
@@ -125,7 +125,7 @@ public class Camera implements Cloneable {
     public void printGrid(int interval, Color color){
         for (int i = 0; i < imageWriter.getNx(); i++)
             for (int j = 0; j < imageWriter.getNy(); j++)
-                if (i % interval == 0 || j % 50 == 0)
+                if (i % interval == 0 || j % interval == 0)
                     imageWriter.writePixel(i, j, color);
 
         imageWriter.writeToImage();
