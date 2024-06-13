@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 import renderer.*;
 import geometries.*;
+import scene.Scene;
 
 import java.util.LinkedList;
 import java.util.List;
