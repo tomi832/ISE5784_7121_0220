@@ -32,7 +32,6 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Point point)) return false;
-
         return xyz.equals(point.xyz);
     }
 
