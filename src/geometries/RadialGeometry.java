@@ -10,7 +10,7 @@ import java.util.List;
  * a class that implements the Geometry interface. it represents a radial shape in a
  * 3-dimensional space.
  */
-public class RadialGeometry implements Geometry{
+public abstract class RadialGeometry extends Geometry{
     /**
      * represents the radius of any radial shape (e.g: the radius of a cylinder)
      */
@@ -35,7 +35,5 @@ public class RadialGeometry implements Geometry{
         return null;
     }
 
-    public List<Point> findIntersections(Ray ray) {
-        return null;
-    }
+
 }

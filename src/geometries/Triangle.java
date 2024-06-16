@@ -27,8 +27,8 @@ public class Triangle extends Polygon {
      * @param ray the ray that intersects the Triangle
      * @return a list of the intersections
      */
-    public List<Point> findIntersections(Ray ray) {
-        var intersectionPoint = plane.findIntersections(ray);
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+        var intersectionPoint = plane.findGeoIntersections(ray, distance);
         // if the ray doesn't intersect the plane, return null
         if (intersectionPoint == null)
             return null;
@@ -45,7 +45,7 @@ public class Triangle extends Polygon {
                       alignZero(n3.dotProduct(rayDir))};
         //if the dot products aren't all positive or negative the intersected point of the plane isn't in the triangle
         if (s[0] > 0 && s[1] > 0 && s[2] > 0 || s[0] < 0 && s[1] < 0 && s[2] < 0)
-            return intersectionPoint;
+            return List.of(new GeoPoint(this, intersectionPoint.get(0).point));
         return null;
     }
 }

@@ -12,7 +12,7 @@ import static primitives.Util.alignZero;
  * a class that represents a plane (plane as in a 2-dimensional shape in 3-dimensions)
  * @author Yosef Kornfeld and Tomere Kalman
  */
-public class Plane implements Geometry{
+public class Plane extends Geometry{
     private final Point q;
     private final Vector normal;
 
@@ -66,13 +66,13 @@ public class Plane implements Geometry{
      * @param ray a ray that intersects the plane
      * @return a list of points that the ray intersects with the plane
      */
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         // if the ray starts on the plane or is parallel to the plane, there are no intersections
         if (ray.getHead().equals(q) || normal.dotProduct(ray.getDirection()) == 0) {
             return null;
         }
         Vector edge = q.subtract(ray.getHead());
         double t = alignZero(normal.dotProduct(edge) / normal.dotProduct(ray.getDirection()));
-        return t <= 0 ? null : List.of(ray.getPoint(t));
+        return (t <= 0 || t > distance) ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 }

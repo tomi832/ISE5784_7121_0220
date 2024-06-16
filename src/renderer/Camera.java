@@ -88,8 +88,8 @@ public class Camera implements Cloneable {
         double rY = height / nY;
         double rX = width / nX;
 
-        double yi = -(j - ((nY-1) / 2d)) * rY;
-        double xj = (i - ((nX - 1) / 2d)) * rX;
+        double yi = -(i - ((nY-1) / 2d)) * rY;
+        double xj = (j - ((nX - 1) / 2d)) * rX;
 
         Point pIJ = pC;
         if (!isZero(yi)) {
@@ -117,7 +117,7 @@ public class Camera implements Cloneable {
     private void castRay(int Nx, int Ny, int j, int i){
         Ray ray = constructRay(Nx, Ny, j, i);
         Color pixelColor = rayTracer.traceRay(ray);
-        imageWriter.writePixel(i, j, pixelColor);
+        imageWriter.writePixel(j, i, pixelColor);
     }
 
     /**

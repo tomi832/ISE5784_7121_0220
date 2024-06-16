@@ -14,7 +14,7 @@ import primitives.Vector;
  * system
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -98,8 +98,8 @@ public class Polygon implements Geometry {
      * @param ray the ray that intersects the polygon
      * @return a list of the intersection points
      */
-    public List<Point> findIntersections(Ray ray) {
-        var intersectionPoint = plane.findIntersections(ray);
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+        var intersectionPoint = plane.findGeoIntersections(ray, distance);
         //if the ray doesn't intersect the plane, it doesn't intersect the polygon
         if (intersectionPoint == null)
             return null;
@@ -127,12 +127,12 @@ public class Polygon implements Geometry {
             for (var i = 1; i < size; ++i)
                 if (s[i] >= 0)
                     return null;
-            return intersectionPoint;
+            return List.of(new GeoPoint(this, intersectionPoint.get(0).point));
         } else if (s[0] > 0) {
             for (var i = 1; i < size; ++i)
                 if (s[i] <= 0)
                     return null;
-            return intersectionPoint;
+            return List.of(new GeoPoint(this, intersectionPoint.get(0).point));
         }
         return  null;
     }
