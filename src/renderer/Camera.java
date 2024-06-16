@@ -105,12 +105,13 @@ public class Camera implements Cloneable {
     /**
      * Render the image
      */
-    public void renderImage(){
+    public Camera renderImage(){
         for(int i = 0; i < imageWriter.getNx(); i++){
             for(int j = 0; j < imageWriter.getNy(); j++){
                 castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
             }
         }
+        return this;
     }
 
     private void castRay(int Nx, int Ny, int j, int i){
@@ -122,20 +123,22 @@ public class Camera implements Cloneable {
     /**
      * Print the grid
      */
-    public void printGrid(int interval, Color color){
+    public Camera printGrid(int interval, Color color){
         for (int i = 0; i < imageWriter.getNx(); i++)
             for (int j = 0; j < imageWriter.getNy(); j++)
                 if (i % interval == 0 || j % interval == 0)
                     imageWriter.writePixel(i, j, color);
 
         imageWriter.writeToImage();
+        return this;
     }
 
     /**
      * Write the image to a file
      */
-    public void writeToImage(){
+    public Camera writeToImage(){
         imageWriter.writeToImage();
+        return this;
     }
 
     /**
