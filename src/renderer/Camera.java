@@ -23,7 +23,7 @@ public class Camera implements Cloneable {
     private double distance = 0;
     private double width = 0;
     private double height = 0;
-
+    private Point pC;
 
     /**
      * Camera constructor
@@ -84,7 +84,6 @@ public class Camera implements Cloneable {
      * @return Ray from the camera to the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        Point pC = location.add(vTo.scale(distance));
         double rY = height / nY;
         double rX = width / nX;
 
@@ -189,9 +188,10 @@ public class Camera implements Cloneable {
                 throw new IllegalArgumentException("Direction vectors cannot be null");
             if (vTo.equals(Vector.ZERO) || vUp.equals(Vector.ZERO))
                 throw new IllegalArgumentException("Direction vectors cannot be zero");
+            if (!isZero(vTo.dotProduct(vUp)))
+                throw new IllegalArgumentException("Direction vectors must be orthogonal");
             camera.vTo = vTo.normalize();
             camera.vUp = vUp.normalize();
-            camera.vRight = vTo.crossProduct(vUp).normalize();
             return this;
         }
 
@@ -220,19 +220,17 @@ public class Camera implements Cloneable {
             return this;
         }
 
+
         /**
          * Builder builds the camera
          */
         public Camera build() {
-            if (camera.distance == 0)
-                throw new MissingResourceException("missing rendering element", "Camera",
-                        "missing distance");
-            if (camera.height == 0)
-                throw new MissingResourceException("missing rendering element", "Camera",
-                        "missing height");
-            if (camera.width == 0)
-                throw new MissingResourceException("missing rendering element", "Camera",
-                        "missing width");
+            if (camera.distance <= 0)
+                throw new IllegalArgumentException("Distance cannot be zero or negative");
+            if (camera.height <= 0)
+                throw new IllegalArgumentException("Plane height cannot be zero or negative");
+            if (camera.width <= 0)
+                throw new IllegalArgumentException("Plane width cannot be zero or negative");
             if (camera.location == null)
                 throw new MissingResourceException("missing rendering element", "Camera",
                         "missing location");
@@ -251,6 +249,8 @@ public class Camera implements Cloneable {
             if (camera.rayTracer == null)
                 throw new MissingResourceException("missing rendering element", "Camera",
                         "missing rayTracer");
+            camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+            camera.pC = camera.location.add(camera.vTo.scale(camera.distance));
             return (Camera) camera.clone();
         }
     }
