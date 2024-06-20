@@ -66,7 +66,7 @@ public class Plane extends Geometry{
      * @param ray a ray that intersects the plane
      * @return a list of points that the ray intersects with the plane
      */
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         // if the ray starts on the plane or is parallel to the plane, there are no intersections
         if (ray.getHead().equals(q) || normal.dotProduct(ray.getDirection()) == 0) {
             return null;

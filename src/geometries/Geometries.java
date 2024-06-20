@@ -22,7 +22,7 @@ public class Geometries extends Intersectable{
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         List<GeoPoint> intersections = new LinkedList<>();
         List<GeoPoint> currentIntersections;
         for (Intersectable body : bodies) {

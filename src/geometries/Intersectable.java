@@ -53,11 +53,11 @@ public abstract class Intersectable {
                 .toList();
     }
 
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersectionsHelper(ray, Double.POSITIVE_INFINITY);
     }
 
-    public List<GeoPoint> findGeoIntersections(Ray ray, double distance) {
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double distance) {
         return findGeoIntersectionsHelper(ray, distance);
     }
 

@@ -98,7 +98,7 @@ public class Polygon extends Geometry {
      * @param ray the ray that intersects the polygon
      * @return a list of the intersection points
      */
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         var intersectionPoint = plane.findGeoIntersections(ray, distance);
         //if the ray doesn't intersect the plane, it doesn't intersect the polygon
         if (intersectionPoint == null)

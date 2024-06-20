@@ -33,7 +33,7 @@ public class Sphere extends RadialGeometry{
         return point.subtract(center).normalize();
     }
 
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         if (center == ray.getHead())
             return List.of(new GeoPoint(this, ray.getPoint(radius)));
         Vector u = center.subtract(ray.getHead());

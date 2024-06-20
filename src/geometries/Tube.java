@@ -45,7 +45,7 @@ public class Tube extends RadialGeometry{
     }
 
     //work in progress, doesn't fully work yet
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         Vector va = axis.getDirection();
         Vector v = ray.getDirection();
         Point p0 = ray.getHead();
