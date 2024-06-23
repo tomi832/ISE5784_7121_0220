@@ -196,6 +196,21 @@ public class Camera implements Cloneable {
         }
 
         /**
+         * Builder sets the direction vectors to the camera
+         */
+        public Builder setDirection(Point p0, Vector vUp) {
+            if (p0 == null || vUp == null)
+                throw new IllegalArgumentException("Direction vectors cannot be null");
+            if (vUp.equals(Vector.ZERO))
+                throw new IllegalArgumentException("Direction vectors cannot be zero");
+            Vector vTo = p0.subtract(camera.location);
+            Vector vRight = vTo.crossProduct(vUp);
+            camera.vTo = vTo.normalize();
+            camera.vUp = vRight.crossProduct(vTo).normalize();
+            return this;
+        }
+
+        /**
          * Builder sets the view plane distance to the camera
          */
         public Builder setVpDistance(double distance) {
@@ -225,6 +240,7 @@ public class Camera implements Cloneable {
          * Builder builds the camera
          */
         public Camera build() {
+            camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
             if (camera.distance <= 0)
                 throw new IllegalArgumentException("Distance cannot be zero or negative");
             if (camera.height <= 0)
@@ -249,7 +265,6 @@ public class Camera implements Cloneable {
             if (camera.rayTracer == null)
                 throw new MissingResourceException("missing rendering element", "Camera",
                         "missing rayTracer");
-            camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
             camera.pC = camera.location.add(camera.vTo.scale(camera.distance));
             return (Camera) camera.clone();
         }

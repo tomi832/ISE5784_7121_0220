@@ -16,7 +16,7 @@ class CameraTest {
             .setRayTracer(new SimpleRayTracer(new Scene("Test")))
             .setImageWriter(new ImageWriter("Test", 1, 1))
             .setLocation(Point.ZERO)
-            .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
+            .setDirection(new Point(0, 0, -1), new Vector(0, -1, 0))
             .setVpDistance(10);
 
     /**

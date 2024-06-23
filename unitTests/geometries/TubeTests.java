@@ -37,11 +37,13 @@ class TubeTests {
         Point gp2 = new Point(-1, 0, 1);
         Point gp3 = new Point(1, 0, 0);
         Point gp4 = new Point(-1, 0, 0);
+        Point gp5 = new Point(1, 0, 2);
         final var exp1 = List.of(gp1, gp2);
         final var exp2 = List.of(gp3, gp4);
 
         //Vectors for rays
         Vector v100 = new Vector(1, 0, 0);
+        Vector v101 = new Vector(1, 0, 1);
         Vector v001 = new Vector(0, 0, 1);
 
         //Ray starting points
@@ -62,9 +64,10 @@ class TubeTests {
         assertEquals(2, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses the tube");
         // TC03: Ray starts inside the tube (1 point)
-        final var result2 = tube.findIntersections(new Ray(p3, v100));
+        //TODO: check the gp5 point is right.
+        final var result2 = tube.findIntersections(new Ray(p3, v101));
         assertEquals(1, result2.size(), "Wrong number of points");
-        assertEquals(gp1, result2.getFirst(), "Ray starts inside the tube");
+        assertEquals(gp5, result2.getFirst(), "Ray starts inside the tube");
         // =============== Boundary Values Tests ==================
         // TC11: Ray is parallel to the tube (0 points)
         assertNull(tube.findIntersections(new Ray(p3, v001)), "Ray is parallel to the tube");
