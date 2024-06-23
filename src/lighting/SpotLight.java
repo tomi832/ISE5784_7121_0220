@@ -5,7 +5,7 @@ import primitives.Point;
 import primitives.Vector;
 
 public class SpotLight extends PointLight{
-    private Vector direction;
+    final private Vector direction;
 
     protected SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
