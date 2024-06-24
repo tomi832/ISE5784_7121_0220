@@ -13,18 +13,24 @@ public class SpotLight extends PointLight{
     }
 
     @Override
-    public PointLight setKc(double kc) {
+    public SpotLight setKc(double kc) {
         super.setKc(kc);
-        return (SpotLight) this;
+        return this;
     }
     @Override
-    public PointLight setKl(double kl) {
+    public SpotLight setKl(double kl) {
         super.setKc(kl);
-        return (SpotLight) this;
+        return this;
     }
-    public PointLight setKq(double kq) {
+    public SpotLight setKq(double kq) {
         super.setKc(kq);
-        return (SpotLight) this;
+        return this;
+    }
+
+    @Override
+    public Color getIntensity(Point p) {
+        double dot = direction.dotProduct(getL(p));
+        return dot <=0 ? Color.BLACK : super.getIntensity(p).scale(dot);
     }
 
 }
