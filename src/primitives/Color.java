@@ -102,11 +102,21 @@ public class Color {
     }
 
     /**
-     * Scale the color by (1 / reduction factor)
+     * Scale the color by (1 / reduction factor), using integer division
      * @param  k reduction factor
      * @return   new Color object which is the result of the operation
      */
     public Color reduce(int k) {
+        if (k < 1) throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
+        return new Color(rgb.reduce(k));
+    }
+
+    /**
+     * Scale the color by (1 / reduction factor), using floating point division
+     * @param  k reduction factor
+     * @return   new Color object which is the result of the operation
+     */
+    public Color reduce(double k) {
         if (k < 1) throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
         return new Color(rgb.reduce(k));
     }
