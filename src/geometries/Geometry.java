@@ -1,13 +1,12 @@
 package geometries;
-import primitives.Color;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
 public abstract class Geometry extends Intersectable {
     protected Color emission = Color.BLACK;
+    private Material material = new Material();
+
     /**
      * this function receives a point on the surface of the geometry
      * and returns a vector perpendicular to the surface at that point
@@ -25,6 +24,14 @@ public abstract class Geometry extends Intersectable {
     }
 
     /**
+     * this function returns the material of the geometry
+     * @return the material of the geometry
+     */
+    public Material getMaterial() {
+        return material;
+    }
+
+    /**
      * this function sets the emission color of the geometry.
      * the function is built in the style of a builder, returning the geometry.
      * @param emission the emission color of the geometry
@@ -32,6 +39,17 @@ public abstract class Geometry extends Intersectable {
      */
     public Geometry setEmission(Color emission) {
         this.emission = emission;
+        return this;
+    }
+
+    /**
+     * this function sets the material of the geometry.
+     * the function is built in the style of a builder, returning the geometry.
+     * @param material the material of the geometry
+     * @return the geometry with the new material
+     */
+    public Geometry setMaterial(Material material) {
+        this.material = material;
         return this;
     }
 }

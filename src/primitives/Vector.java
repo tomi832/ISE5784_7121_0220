@@ -9,7 +9,7 @@ import static primitives.Util.isZero;
  * @author Tomere Kalman and Yosef Kornfeld
  */
 public class Vector extends Point{
-
+    public static final Vector Y = new Vector(0, 1, 0);
     /**
      * Constructor for the class
      * @param x First coordinate
