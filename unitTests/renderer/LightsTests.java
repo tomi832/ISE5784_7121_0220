@@ -36,6 +36,13 @@ public class LightsTests {
       .setDirection(Point.ZERO, Vector.Y)
       .setVpSize(200, 200).setVpDistance(1000);
 
+   /** Third camera builder for some of tests */
+   private final Camera.Builder camera3                 = Camera.getBuilder()
+      .setRayTracer(new SimpleRayTracer(scene3))
+      .setLocation(new Point(0, 0, 1000))
+      .setDirection(Point.ZERO, Vector.Y)
+      .setVpSize(200, 200).setVpDistance(1000);
+
    /** Shininess value for most of the geometries in the tests */
    private static final int     SHININESS               = 301;
    /** Diffusion attenuation factor for some of the geometries in the tests */
@@ -56,6 +63,20 @@ public class LightsTests {
    private final Color          sphereLightColor        = new Color(800, 500, 0);
    /** Color of the sphere */
    private final Color          sphereColor             = new Color(BLUE).reduce(2);
+
+   /** Color for second set of lights
+       Light color for test with sphere */
+   private final Color          sphereLightColor2             = new Color(550, 120, 30);
+   /** Second light color for sphere*/
+   private final Color          sphereLightColor3             = new Color(300, 500, 30);
+   /** Light color for tests with triangles */
+   private final Color         trianglesLightColor2          = new Color(200, 10, 40);
+   /** Light color for tests with triangles */
+   private final Color         trianglesLightColor3          = new Color(150, 350, 510);
+   /** Light color for tests with triangles */
+   private final Color         trianglesLightColor4          = new Color(0, 0, 800);
+
+
 
    /** Center of the sphere */
    private final Point          sphereCenter            = new Point(0, 0, -50);
@@ -216,6 +237,7 @@ public class LightsTests {
          .writeToImage();
    }
 
+   /** Produce a picture of two triangles lighted by all the different kinds of light */
    @Test
    public void lightsScene2() {
       scene3.geometries.add(triangle1, triangle2);

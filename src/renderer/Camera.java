@@ -113,6 +113,13 @@ public class Camera implements Cloneable {
         return this;
     }
 
+    /**
+     * Cast a ray from the camera to a pixel in the view plane
+     * @param Nx number of pixels in the x axis
+     * @param Ny number of pixels in the y axis
+     * @param j y index of the pixel
+     * @param i x index of the pixel
+     */
     private void castRay(int Nx, int Ny, int j, int i){
         Ray ray = constructRay(Nx, Ny, j, i);
         Color pixelColor = rayTracer.traceRay(ray);

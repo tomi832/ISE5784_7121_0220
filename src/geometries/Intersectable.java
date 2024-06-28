@@ -53,13 +53,30 @@ public abstract class Intersectable {
                 .toList();
     }
 
+    /**
+     * a method that finds the intersection points of a ray with the geometry
+     * @param ray a ray that intersects with the geometry
+     * @return a list of intersection points
+     */
     public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersectionsHelper(ray, Double.POSITIVE_INFINITY);
     }
 
+    /**
+     * a method that finds the intersection points of a ray with the geometry
+     * @param ray a ray that intersects with the geometry
+     * @param distance the maximum distance to find intersections
+     * @return a list of intersection points
+     */
     public final List<GeoPoint> findGeoIntersections(Ray ray, double distance) {
         return findGeoIntersectionsHelper(ray, distance);
     }
 
+    /**
+     * a method that finds the intersection points of a ray with the geometry
+     * @param ray a ray that intersects with the geometry
+     * @param distance the maximum distance to find intersections
+     * @return a list of intersection points
+     */
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance);
 }
