@@ -6,6 +6,7 @@ import primitives.Vector;
 
 public class SpotLight extends PointLight{
     final private Vector direction;
+    private double beamAngle = 0;
 
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
@@ -27,10 +28,20 @@ public class SpotLight extends PointLight{
         return this;
     }
 
-    @Override
-    public Color getIntensity(Point p) {
-        double dot = direction.dotProduct(getL(p));
-        return dot <=0 ? Color.BLACK : super.getIntensity(p).scale(dot);
+    public SpotLight setNarrowBeam(double angle) {
+        beamAngle = angle;
+        return this;
     }
 
+    @Override
+    public Color getIntensity(Point p) {
+//        double dot = direction.dotProduct(getL(p));
+//        return dot <=0 ? Color.BLACK : super.getIntensity(p).scale(dot);
+
+
+        double dot = direction.dotProduct(getL(p));
+        if (beamAngle <= 1)
+            return dot <= 0 ? Color.BLACK : super.getIntensity(p).scale(dot);
+        return dot <=0 ? Color.BLACK : super.getIntensity(p).scale(Math.pow(dot, beamAngle));
+    }
 }
