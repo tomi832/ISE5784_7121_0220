@@ -4,9 +4,6 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 import primitives.Color;
-import javax.swing.plaf.basic.BasicArrowButton;
-import java.awt.*;
-import java.security.cert.CertPathBuilder;
 import java.util.MissingResourceException;
 import static primitives.Util.isZero;
 

@@ -1,7 +1,6 @@
 package geometries;
 import primitives.*;
 
-import java.util.List;
 
 /**
  * Geometry is an abstract class representing a geometry in a 3-dimensional space
