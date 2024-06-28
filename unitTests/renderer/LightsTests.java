@@ -19,6 +19,8 @@ public class LightsTests {
    /** Second scene for some of tests */
    private final Scene          scene2                  = new Scene("Test scene")
       .setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
+   private final Scene          sceneFinal1             = new Scene("Final test 1");
+   private final Scene          sceneFinal2             = new Scene("Final test 2");
 
    /** First camera builder for some of tests */
    private final Camera.Builder camera1                 = Camera.getBuilder()
@@ -193,4 +195,13 @@ public class LightsTests {
          .writeToImage();
    }
 
+   @Test
+   public void lightsScene1() {
+      
+   }
+
+   @Test
+   public void lightsScene2() {
+
+   }
 }
