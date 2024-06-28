@@ -35,10 +35,6 @@ public class SpotLight extends PointLight{
 
     @Override
     public Color getIntensity(Point p) {
-//        double dot = direction.dotProduct(getL(p));
-//        return dot <=0 ? Color.BLACK : super.getIntensity(p).scale(dot);
-
-
         double dot = direction.dotProduct(getL(p));
         if (beamAngle <= 1)
             return dot <= 0 ? Color.BLACK : super.getIntensity(p).scale(dot);
