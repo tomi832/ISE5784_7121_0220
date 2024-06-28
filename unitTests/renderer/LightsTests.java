@@ -19,8 +19,9 @@ public class LightsTests {
    /** Second scene for some of tests */
    private final Scene          scene2                  = new Scene("Test scene")
       .setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
-   private final Scene          sceneFinal1             = new Scene("Final test 1");
-   private final Scene          sceneFinal2             = new Scene("Final test 2");
+   private final Scene          scene3                  = new Scene("Test scene")
+           .setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.05)));
+
 
    /** First camera builder for some of tests */
    private final Camera.Builder camera1                 = Camera.getBuilder()
@@ -81,6 +82,8 @@ public class LightsTests {
    private final Point          trianglesLightPosition  = new Point(30, 10, -100);
    /** Light direction (directional and spot) in tests with triangles */
    private final Vector         trianglesLightDirection = new Vector(-2, -2, -2);
+
+   private final Vector         trianglesLightDirection2 = new Vector(-3, 3, -3);
 
    /** The sphere in appropriate tests */
    private final Geometry       sphere                  = new Sphere(sphereCenter, SPHERE_RADIUS)
@@ -195,13 +198,35 @@ public class LightsTests {
          .writeToImage();
    }
 
+   /** Produce a picture of a sphere lighted by all the different kinds of light */
    @Test
    public void lightsScene1() {
-      
+      scene1.geometries.add(sphere);
+      scene1.lights.add(new DirectionalLight(sphereLightColor2, new Vector(3,1,2)));
+      scene1.lights.add(new PointLight(sphereLightColor2, new Point(50,100,50)).setKl(0.0005).setKq(0.0002));
+      scene1.lights.add(
+              new SpotLight(sphereLightColor3, new Point(60,-130,100), new Vector(0,1.2,-1))
+                      .setKl(0.001)
+                      .setKq(0.00003)
+                      .setNarrowBeam(8));
+
+      camera1.setImageWriter(new ImageWriter("MultipleTest", 1000, 1000))
+         .build()
+         .renderImage()
+         .writeToImage();
    }
 
    @Test
    public void lightsScene2() {
+      scene3.geometries.add(triangle1, triangle2);
+      scene3.lights.add(new DirectionalLight(trianglesLightColor2, trianglesLightDirection2));
+      scene3.lights.add(new PointLight(trianglesLightColor3, new Point(70,50,-50)).setKl(0.001).setKq(0.0001));
+      scene3.lights.add(new SpotLight(trianglesLightColor4, new Point(50,-200,50), new Vector(0,1.2,-1))
+              .setKl(0.001).setKq(0.0001).setNarrowBeam(10));
 
+      camera3.setImageWriter(new ImageWriter("MultipleTestTriangle", 500, 500))
+         .build()
+         .renderImage()
+         .writeToImage();
    }
 }
