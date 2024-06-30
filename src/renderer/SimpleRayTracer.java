@@ -15,6 +15,8 @@ import static primitives.Util.alignZero;
  * @author Yosef Kornfeld and Tomere Kalman
  */
 public class SimpleRayTracer extends RayTracerBase{
+    /** displacement value for shadow ray calculations */
+    private static final double DELTA = 0.1;
 
     /**
      * Constructor for SimpleRayTracer
@@ -62,7 +64,7 @@ public class SimpleRayTracer extends RayTracerBase{
         for (LightSource lightSource : scene.lights) {
             Vector l = lightSource.getL(geoPoint.point);
             double nl = alignZero(n.dotProduct(l));
-            if (nl * nv > 0) {
+            if (nl * nv > 0 && unshaded(geoPoint, l, n, lightSource , nl)) {
                 Color Il = lightSource.getIntensity(geoPoint.point);
                 color = color.add(
                         Il.scale(calcDiffusive(material.kD, nl).add(
@@ -99,5 +101,24 @@ public class SimpleRayTracer extends RayTracerBase{
             return Double3.ZERO;
         }
         return kS.scale(Math.pow(minusVR, nShininess));
+    }
+
+    /**
+     * Check if the intersection point is shaded
+     * @param gp the intersection point
+     * @param l the light vector
+     * @param n the normal vector
+     * @param lightSource the light source
+     * @param nl the dot product of n and l
+     * @return true if the intersection point is unshaded, false otherwise
+     */
+    private boolean unshaded(GeoPoint gp, Vector l, Vector n, LightSource lightSource, double nl) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector DELTAVector = n.scale(nl < 0 ? DELTA : -DELTA);
+        Point point = gp.point.add(DELTAVector);
+        Ray ray = new Ray(point, lightDirection);
+        double lightDistance = lightSource.getDistance(gp.point);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray, lightDistance);
+        return intersections == null;
     }
 }

@@ -231,7 +231,7 @@ public class LightsTests {
                       .setKq(0.00003)
                       .setNarrowBeam(8));
 
-      camera1.setImageWriter(new ImageWriter("MultipleTest", 1000, 1000))
+      camera1.setImageWriter(new ImageWriter("MultipleTest", 500, 500))
          .build()
          .renderImage()
          .writeToImage();

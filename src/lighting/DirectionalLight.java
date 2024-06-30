@@ -32,5 +32,13 @@ public class DirectionalLight extends Light implements LightSource {
         return direction;
     }
 
-
+    /**
+     * it will return the distance from the light source to the point, here it's infinity
+     * @param point the point to get the distance to
+     * @return infinity
+     */
+    @Override
+    public double getDistance(Point point) {
+        return Double.POSITIVE_INFINITY;
+    }
 }
