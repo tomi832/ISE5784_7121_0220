@@ -118,4 +118,42 @@ class SphereTests {
         assertNull(result22, "Ray's line orthogonal to sphere");
 
     }
+
+    @Test
+    public void testFindGeoIntersectionsHelper() {
+        final Sphere sphere = new Sphere(new Point(1,0,0), 1d);
+        Point p01 = new Point(-1,0,0);
+        final Ray ray = new Ray(p01, new Vector(1,0,0));
+
+        //expected intersections
+        GeoPoint gp01 = new GeoPoint(sphere, Point.ZERO);
+        GeoPoint gp02 = new GeoPoint(sphere, new Point(2,0,0));
+        final var exp = List.of(gp01, gp02);
+        // ============ Equivalence Partitions Tests ===============
+        //TC01: distance smaller than the sphere (0 points)
+        assertNull(sphere.findGeoIntersectionsHelper(ray, 0.5), "Ray doesn't intersect the sphere");
+
+        //TC02: distance greater than the sphere
+        final var result1 = sphere.findGeoIntersectionsHelper(ray, 5)
+                .stream()
+                .sorted(Comparator.comparingDouble(geoP -> geoP.point.distance(p01)))
+                .toList();
+
+        assertEquals(2, result1.size(), "Wrong number of intersection points");
+        assertEquals(exp, result1, "Wrong intersection with sphere");
+
+        // =============== Boundary Values Tests ==================
+        //TC11: distance equal to the close edge of the sphere (1 point)
+        final var result2 = sphere.findGeoIntersectionsHelper(ray, 1);
+        assertEquals(1, result2.size(), "Ray touches the sphere");
+        assertEquals(gp01, result2.getFirst(), "Wrong intersection with sphere");
+
+        //TC12: distance equal to the far edge of the sphere (2 points)
+        final var result3 = sphere.findGeoIntersectionsHelper(ray, 3)
+                .stream()
+                .sorted(Comparator.comparingDouble(geoP -> geoP.point.distance(p01)))
+                .toList();
+        assertEquals(2, result3.size(), "Ray should have 2 points");
+        assertEquals(exp, result3, "Wrong intersection with sphere");
+    }
 }
