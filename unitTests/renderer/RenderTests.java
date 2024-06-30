@@ -20,7 +20,8 @@ public class RenderTests {
    /** Camera builder of the tests */
    private final Camera.Builder camera = Camera.getBuilder()
       .setRayTracer(new SimpleRayTracer(scene))
-      .setLocation(Point.ZERO).setDirection(new Point(0, 0, -1), Vector.Y)
+      .setLocation(Point.ZERO)
+      .setDirection(new Point(0, 0, -100), Vector.Y)
       .setVpDistance(100)
       .setVpSize(500, 500);
 
