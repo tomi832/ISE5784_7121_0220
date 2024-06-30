@@ -5,6 +5,7 @@ import primitives.*;
 
 import java.util.Comparator;
 import java.util.List;
+import geometries.Intersectable.GeoPoint;
 
 import static org.junit.jupiter.api.Assertions.*;
 

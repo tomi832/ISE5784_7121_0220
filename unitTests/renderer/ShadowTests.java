@@ -85,7 +85,7 @@ public class ShadowTests {
                 new Point(-80, -80, 50));
     }
 
-    /** Produce a picture of a two triangles lighted by a spot light with a Sphere
+    /** Produce a picture of two triangles lighted by a spot-light with a Sphere
      * producing a shading */
     @Test
     public void trianglesSphere() {
@@ -109,5 +109,4 @@ public class ShadowTests {
                 .renderImage()
                 .writeToImage();
     }
-
 }

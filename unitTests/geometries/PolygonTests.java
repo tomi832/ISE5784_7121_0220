@@ -8,6 +8,7 @@ import geometries.Polygon;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * Testing Polygons
@@ -135,5 +136,37 @@ public class PolygonTests {
         // TC13: On edge's continuation
         final var result13 = polygon.findIntersections(new Ray(p06, v001));
         assertNull(result13, "Ray intersects on edge's continuation of polygon");
+    }
+
+    @Test
+    void testFindGeoIntersectionsHelper() {
+        Polygon polygon = new Polygon(new Point(0, 0, 0),
+                new Point(4, 0, 0),
+                new Point(4, 4, 0),
+                new Point(0, 4, 0));
+
+        // Expected intersection points
+        final Point gp1 = new Point(2, 2, 0);
+
+        // Vectors for rays
+        final Vector v001 = new Vector(0, 0, -1);
+
+        // Ray starting points
+        //EP:
+        final Point p01 = new Point(2, 2, 2);
+
+        // ============ Equivalence Partitions Tests ==============
+        //TC01: distance greater than Polygon (1 point)
+        final var result01 = polygon.findGeoIntersectionsHelper(new Ray(p01, v001), 3);
+        assertEquals(1, result01.size(), "ray should pass only 1 point");
+        assertEquals(new GeoPoint(polygon, gp1), result01.getFirst(), "Ray starts outside the polygon");
+        //TC02: distance smaller than Polygon (0 points)
+        final var result02 = polygon.findGeoIntersectionsHelper(new Ray(p01, v001), 1);
+        assertNull(result02, "Ray starts outside the polygon and doesn't intersect it");
+        // ================= Boundary Values Tests ==================
+        // TC11: distance equal to Polygon (1 point)
+        final var result11 = polygon.findGeoIntersectionsHelper(new Ray(p01, v001), 2);
+        assertEquals(1, result11.size(), "ray should pass only 1 point");
+        assertEquals(new GeoPoint(polygon, gp1), result11.getFirst(), "Ray starts outside the polygon");
     }
 }

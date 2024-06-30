@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * Testing Planes
@@ -110,5 +111,35 @@ class PlaneTests {
         //TC17: Ray isn't orthogonal to the plane and starts at the reference point (0 points)
         final var result17 = plane.findIntersections(new Ray(p0, v101));
         assertNull(result17, "Ray isn't orthogonal to the plane and starts at reference point");
+    }
+
+    @Test
+    void testFindGeoIntersectionsHelper() {
+        final Vector v001 = new Vector(0,0,1);
+        final Point p0 = new Point(1,0,0);
+        final Plane plane = new Plane(p0, v001);
+
+        //expected intersection points:
+        final Point gp01 = new Point(2,0,0);
+
+        //vectors for rays:
+        final Vector v = new Vector(0,0,-1);
+
+        //ray starting points:
+        final Point p01 = new Point(2,0,1);
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: distance greater than Plane (1 point)
+        final var result01 = plane.findGeoIntersectionsHelper(new Ray(p01, v), 2);
+        assertEquals(1, result01.size(), "ray should pass only 1 point");
+        assertEquals(new GeoPoint(plane, gp01), result01.getFirst(), "Ray starts outside the plane");
+        //TC02: distance smaller than Plane (0 points)
+        final var result02 = plane.findGeoIntersectionsHelper(new Ray(p01, v), 0.5);
+        assertNull(result02, "Ray starts outside the plane and doesn't intersect it");
+        // ================= Boundary Values Tests ==================
+        //TC11: distance equals to Plane (1 point)
+        final var result11 = plane.findGeoIntersectionsHelper(new Ray(p01, v), 1);
+        assertEquals(1, result01.size(), "ray should pass only 1 point");
+        assertEquals(new GeoPoint(plane, gp01), result01.getFirst(), "Ray starts outside the plane");
     }
 }
