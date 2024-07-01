@@ -17,6 +17,8 @@ import static primitives.Util.alignZero;
 public class SimpleRayTracer extends RayTracerBase{
     /** displacement value for shadow ray calculations */
     private static final double DELTA = 0.1;
+    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    private static final double MIN_CALC_COLOR_K = 0.001;
 
     /**
      * Constructor for SimpleRayTracer
