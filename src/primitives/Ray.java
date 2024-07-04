@@ -12,6 +12,7 @@ import static primitives.Util.isZero;
 public class Ray {
     private final Point head;
     private final Vector direction;
+    private static final double DELTA = 0.1;
 
     /**
      * constructor for Ray
@@ -20,6 +21,13 @@ public class Ray {
      */
     public Ray(Point head, Vector direction) {
         this.head = head;
+        this.direction = direction.normalize();
+    }
+
+    public Ray(Point head, Vector direction, Vector normal) {
+        double nl = normal.dotProduct(direction);
+        Vector deltaVector = normal.scale(nl > 0 ? DELTA : -DELTA);
+        this.head = head.add(deltaVector);
         this.direction = direction.normalize();
     }
 
@@ -65,7 +73,7 @@ public class Ray {
      * @return the closest point to the head of the ray from the list of geoPoints
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints) {
-        if (geoPoints.isEmpty())
+        if (geoPoints == null || geoPoints.isEmpty())
             return null;
         GeoPoint closest = null;
         double distance = Double.POSITIVE_INFINITY;
