@@ -29,11 +29,21 @@ public class SimpleRayTracer extends RayTracerBase{
         super(scene);
     }
 
+    /**
+     * Find the closest intersection point of a ray with the scene
+     * @param ray the ray to intersect with the scene
+     * @return the closest intersection point
+     */
     private GeoPoint findClosestIntersection(Ray ray) {
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
         return ray.findClosestGeoPoint(intersections);
     }
 
+    /**
+     * Trace a ray in the scene and return the color of the intersection point
+     * @param ray the ray to trace
+     * @return the color of the intersection point
+     */
     @Override
     public Color traceRay(Ray ray) {
         GeoPoint closestPoint = findClosestIntersection(ray);
@@ -43,20 +53,30 @@ public class SimpleRayTracer extends RayTracerBase{
     /**
      * Calculate the color of the intersection point
      * @param geoPoint the closest intersection point
+     * @param ray the ray that intersects the point
      * @return the color of the intersection point
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
         return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(scene.ambientLight.getIntensity());
     }
 
+    /**
+     * Calculate the color of the intersection point (called from calcColor version without the level and k parameters)
+     * @param geoPoint the closest intersection point
+     * @param ray the ray that intersects the point
+     * @param level the level of recursion
+     * @param k the attenuation factor
+     * @return the color of the intersection point
+     */
     private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k) {
         Color color = calcLocalEffects(geoPoint, ray);
         return level == 1 ? color : color.add(calcGlobalEffects(geoPoint, ray, level, k));
     }
 
     /**
-     * Calculate the local effects of the intersection point
+     * Calculate the diffusive and specular effects of the intersection point
      * @param geoPoint the closest intersection point
+     * @param ray the ray that intersects the point
      * @return the color of the intersection point
      */
     private Color calcLocalEffects(GeoPoint geoPoint, Ray ray) {

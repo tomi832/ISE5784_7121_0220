@@ -4,20 +4,20 @@ package primitives;
  * Material class represents the material of a geometry
  */
 public class Material {
-    /**  The diffuse coefficient  */
+    //** The diffuse coefficient */
     public Double3 kD = Double3.ZERO;
-    /**  The specular coefficient  */
+    //** The specular coefficient */
     public Double3 kS = Double3.ZERO;
-    /**  The reflection coefficient  */
+    //** The transparency coefficient */
     public Double3 kT = Double3.ZERO;
-    /**  The refraction coefficient  */
+    //** The reflection coefficient */
     public Double3 kR = Double3.ZERO;
     /** The shininess coefficient  */
     public int nShininess = 0;
 
     /**
      * Material setter for diffuse coefficient, using a Double3 object
-     * @param kD the diffuse coefficient
+     * @param kD the diffuse coefficient (can be Double3 or double)
      * @return the material
      */
     public Material setKd(Double3 kD) {
@@ -27,7 +27,7 @@ public class Material {
 
     /**
      * Material setter for diffuse coefficient, using a double
-     * @param kd the diffuse coefficient
+     * @param kd the diffuse coefficient (can be Double3 or double)
      * @return the material
      */
     public Material setKd(double kd) {
@@ -37,7 +37,7 @@ public class Material {
 
     /**
      * Material setter for specular coefficient, using a Double3 object
-     * @param ks the specular coefficient
+     * @param ks the specular coefficient (can be Double3 or double)
      * @return the material
      */
     public Material setKs(Double3 ks) {
@@ -47,51 +47,11 @@ public class Material {
 
     /**
      * Material setter for specular coefficient, using a double
-     * @param ks the specular coefficient
+     * @param ks the specular coefficient (can be Double3 or double)
      * @return the material
      */
     public Material setKs(double ks) {
         this.kS = new Double3(ks, ks, ks);
-        return this;
-    }
-
-    /**
-     * Material setter for reflection coefficient, using a Double3 object
-     * @param kt the reflection coefficient
-     * @return the material
-     */
-    public Material setKt(Double3 kt) {
-        this.kT = kt;
-        return this;
-    }
-
-    /**
-     * Material setter for reflection coefficient, using a double
-     * @param kt the reflection coefficient
-     * @return the material
-     */
-    public Material setKt(double kt) {
-        this.kT = new Double3(kt);
-        return this;
-    }
-
-    /**
-     * Material setter for refraction coefficient, using a Double3 object
-     * @param kr the refraction coefficient
-     * @return the material
-     */
-    public Material setKr(Double3 kr) {
-        this.kR = kr;
-        return this;
-    }
-
-    /**
-     * Material setter for refraction coefficient, using a double
-     * @param kr the refraction coefficient
-     * @return the material
-     */
-    public Material setKr(double kr) {
-        this.kR = new Double3(kr);
         return this;
     }
 
@@ -102,6 +62,46 @@ public class Material {
      */
     public Material setShininess(int n) {
         this.nShininess = n;
+        return this;
+    }
+
+    /**
+     * Material setter for transparency coefficient
+     * @param kT the transparency coefficient (can be Double3 or double)
+     * @return the material
+     */
+    public Material setKt(Double3 kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    /**
+     * Material setter for reflection coefficient
+     * @param kR the reflection coefficient (can be Double3 or double)
+     * @return the material
+     */
+    public Material setKr(Double3 kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    /**
+     * Material setter for transparency coefficient
+     * @param kT the transparency coefficient (can be Double3 or double)
+     * @return the material
+     */
+    public Material setKt(double kT) {
+        this.kT = new Double3(kT, kT, kT);
+        return this;
+    }
+
+    /**
+     * Material setter for reflection coefficient
+     * @param kR the reflection coefficient (can be Double3 or double)
+     * @return the material
+     */
+    public Material setKr(double kR) {
+        this.kR = new Double3(kR, kR, kR);
         return this;
     }
 }
