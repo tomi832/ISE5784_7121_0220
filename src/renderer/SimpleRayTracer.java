@@ -28,14 +28,15 @@ public class SimpleRayTracer extends RayTracerBase{
         super(scene);
     }
 
+    private GeoPoint findClosestIntersection(Ray ray) {
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+        return ray.findClosestGeoPoint(intersections);
+    }
+
     @Override
     public Color traceRay(Ray ray) {
-        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
-        if (intersections == null) {
-            return scene.background;
-        }
-        GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
-        return calcColor(closestPoint, ray);
+        GeoPoint closestPoint = findClosestIntersection(ray);
+        return closestPoint == null ? scene.background : calcColor(closestPoint, ray);
     }
 
     /**
@@ -44,8 +45,12 @@ public class SimpleRayTracer extends RayTracerBase{
      * @return the color of the intersection point
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
-        return scene.ambientLight.getIntensity()
-                .add(calcLocalEffects(geoPoint, ray));
+        return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(scene.ambientLight.getIntensity());
+    }
+
+    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k) {
+        Color color = calcLocalEffects(geoPoint, ray);
+        return level == 1 ? color : color.add(calcGlobalEffects(geoPoint, ray, level, k));
     }
 
     /**
@@ -115,6 +120,8 @@ public class SimpleRayTracer extends RayTracerBase{
      * @return true if the intersection point is unshaded, false otherwise
      */
     private boolean unshaded(GeoPoint gp, Vector l, Vector n, LightSource lightSource, double nl) {
+        if (gp.geometry.getMaterial().kT != Double3.ZERO)
+            return true;
         Vector lightDirection = l.scale(-1); // from point to light source
         Vector DELTAVector = n.scale(nl < 0 ? DELTA : -DELTA);
         Point point = gp.point.add(DELTAVector);
