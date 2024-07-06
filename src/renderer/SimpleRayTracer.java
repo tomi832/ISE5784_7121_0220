@@ -134,27 +134,9 @@ public class SimpleRayTracer extends RayTracerBase{
         return kS.scale(Math.pow(minusVR, nShininess));
     }
 
-    /**
-     * Check if the intersection point is shaded
-     * @param gp the intersection point
-     * @param l the light vector
-     * @param n the normal vector
-     * @param lightSource the light source
-     * @param nl the dot product of n and l
-     * @return true if the intersection point is unshaded, false otherwise
-     */
-    private boolean unshaded(GeoPoint gp, Vector l, Vector n, LightSource lightSource, double nl) {
-        if (gp.geometry.getMaterial().kT != Double3.ZERO)
-            return true;
-        Vector lightDirection = l.scale(-1); // from point to light source
-        Ray ray = new Ray(gp.point, lightDirection, n);
-        double lightDistance = lightSource.getDistance(gp.point);
-        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray, lightDistance);
-        return intersections == null;
-    }
 
     /**
-     * Calculate the global effects of the intersection point
+     * Calculate the global effects of the intersection point (calls calcGlobalEffect 2 times, for refracted/reflected rays)
      * @param geoPoint the closest intersection point
      * @param ray the ray that intersects the point
      * @param level the level of recursion

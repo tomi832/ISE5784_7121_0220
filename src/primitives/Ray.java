@@ -15,7 +15,7 @@ public class Ray {
     private static final double DELTA = 0.1;
 
     /**
-     * constructor for Ray
+     * constructor for Ray (without moving it along the normal axis)
      * @param head a point representing the start of the ray
      * @param direction a vector representing the direction of the ray
      */
