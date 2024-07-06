@@ -149,6 +149,14 @@ public class SimpleRayTracer extends RayTracerBase{
             .add(calcGlobalEffect(constructReflectedRay(geoPoint, ray), material.kR, level, k));
     }
 
+    /**
+     * Calculate the global effect (refracted/reflected) of the intersection point
+     * @param ray the ray to trace
+     * @param kx the attenuation factor
+     * @param level the level of recursion
+     * @param k the attenuation factor
+     * @return the color of the intersection point
+     */
     private Color calcGlobalEffect(Ray ray, Double3 kx, int level, Double3 k) {
         Double3 kkx = kx.product(k);
         if (kkx.lowerThan(MIN_CALC_COLOR_K))
@@ -157,6 +165,12 @@ public class SimpleRayTracer extends RayTracerBase{
         return gp == null ? scene.background : calcColor(gp, ray, level - 1, kkx).scale(kx);
     }
 
+    /**
+     * Construct a reflected ray from the intersection point
+     * @param geoPoint the closest intersection point
+     * @param ray the ray that intersects the point
+     * @return the reflected ray
+     */
     private Ray constructReflectedRay(GeoPoint geoPoint, Ray ray) {
         Vector v = ray.getDirection();
         Vector n = geoPoint.geometry.getNormal(geoPoint.point);
@@ -164,10 +178,24 @@ public class SimpleRayTracer extends RayTracerBase{
         return new Ray(geoPoint.point, r, n);
     }
 
+    /**
+     * Construct a refracted ray from the intersection point
+     * @param geoPoint the closest intersection point
+     * @param ray the ray that intersects the point
+     * @return the refracted ray
+     */
     private Ray constructRefractedRay(GeoPoint geoPoint, Ray ray) {
         return new Ray(geoPoint.point, ray.getDirection(), geoPoint.geometry.getNormal(geoPoint.point));
     }
 
+    /**
+     * Calculate the transparency of the intersection point
+     * @param geoPoint the closest intersection point
+     * @param ls the light source
+     * @param l the light vector
+     * @param n the normal vector
+     * @return the transparency of the intersection point
+     */
     private Double3 transparency(GeoPoint geoPoint, LightSource ls, Vector l, Vector n) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n);

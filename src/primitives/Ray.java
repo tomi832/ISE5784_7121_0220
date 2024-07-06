@@ -24,6 +24,14 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
+    /**
+     * constructor for Ray
+     * the constructor creates a new ray with a head, direction, but uses tal to calculate a new head,
+     * that is in the direction outside the geometry, to prevent self-intersection.
+     * @param head a point representing the start of the ray
+     * @param direction a vector representing the direction of the ray
+     * @param normal a vector representing the normal to the ray
+     */
     public Ray(Point head, Vector direction, Vector normal) {
         double nl = normal.dotProduct(direction);
         Vector deltaVector = normal.scale(nl > 0 ? DELTA : -DELTA);
@@ -31,10 +39,18 @@ public class Ray {
         this.direction = direction.normalize();
     }
 
+    /**
+     * getter for the head of the ray
+     * @return the head of the ray
+     */
     public Point getHead() {
         return head;
     }
 
+    /**
+     * getter for the direction of the ray
+     * @return the direction of the ray
+     */
     public Vector getDirection() {
          return direction;
     }
