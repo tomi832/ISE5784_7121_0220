@@ -13,7 +13,7 @@ import static primitives.Util.isZero;
 public class Camera implements Cloneable {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
-    private Point location;
+    private Point location = null;
     private Vector vTo;
     private Vector vUp;
     private Vector vRight;
@@ -21,6 +21,7 @@ public class Camera implements Cloneable {
     private double width = 0;
     private double height = 0;
     private Point pC;
+    private Point dirPoint = null;
 
     /**
      * Camera constructor
@@ -181,6 +182,8 @@ public class Camera implements Cloneable {
             if (point == null)
                 throw new IllegalArgumentException("Location cannot be null");
             camera.location = point;
+            if (camera.dirPoint != null)
+                return setDirection(camera.dirPoint, camera.vUp);
             return this;
         }
 
@@ -207,6 +210,9 @@ public class Camera implements Cloneable {
                 throw new IllegalArgumentException("Direction vectors cannot be null");
             if (vUp.equals(Vector.ZERO))
                 throw new IllegalArgumentException("Direction vectors cannot be zero");
+            camera.dirPoint = p0;
+            if (camera.location == null)
+                return this;
             Vector vTo = p0.subtract(camera.location);
             Vector vRight = vTo.crossProduct(vUp);
             camera.vTo = vTo.normalize();
@@ -292,6 +298,8 @@ public class Camera implements Cloneable {
             camera.distance = this.distance;
             camera.width = this.width;
             camera.height = this.height;
+            camera.pC = this.pC;
+            camera.dirPoint = this.dirPoint;
             return camera;
         } catch (CloneNotSupportedException e) {
             throw new MissingResourceException("missing rendering element", "Camera",
