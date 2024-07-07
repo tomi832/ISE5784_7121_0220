@@ -37,9 +37,16 @@ public class Triangle extends Polygon {
         Vector v1 = vertices.getFirst().subtract(rayHead);
         Vector v2 = vertices.get(1).subtract(rayHead);
         Vector v3 = vertices.get(2).subtract(rayHead);
-        Vector n1 = v1.crossProduct(v2).normalize();
-        Vector n2 = v2.crossProduct(v3).normalize();
-        Vector n3 = v3.crossProduct(v1).normalize();
+        Vector n1 = null;
+        Vector n2 = null;
+        Vector n3 = null;
+        try {
+            n1 = v1.crossProduct(v2).normalize();
+            n2 = v2.crossProduct(v3).normalize();
+            n3 = v3.crossProduct(v1).normalize();
+        } catch (Exception e) {
+            return null;
+        }
         double[] s = {alignZero(n1.dotProduct(rayDir)),
                       alignZero(n2.dotProduct(rayDir)),
                       alignZero(n3.dotProduct(rayDir))};

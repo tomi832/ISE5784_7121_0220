@@ -114,7 +114,12 @@ public class Polygon extends Geometry {
         }
         //entering all the normals of the polygon into the n array
         for (var i = 0; i < size; ++i) {
-            n[i] = v[i].crossProduct(v[(i + 1) % size]).normalize();
+            //System.out.println("v[i] = " + v[i] + "V[i+1] " + v[(i + 1) % size]);
+            try {
+                n[i] = v[i].crossProduct(v[(i + 1) % size]).normalize();
+            } catch (Exception e) {
+                return null;
+            }
         }
         //entering all the dot products of the normals and the ray direction into the s array
         for (var i = 0; i < size; ++i) {

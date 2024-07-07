@@ -10,6 +10,7 @@ import static primitives.Util.isZero;
  */
 public class Vector extends Point{
     public static final Vector Y = new Vector(0, 1, 0);
+    public static int count = 0;
     /**
      * Constructor for the class
      * @param x First coordinate
@@ -97,8 +98,25 @@ public class Vector extends Point{
      * @return the perpendicular vector to both vectors
      */
     public Vector crossProduct(Vector vector) {
-        if (Math.abs(this.dotProduct(vector)) == Math.abs(this.length() * vector.length()))
+        // Calculate lengths
+        double length1 = this.length();
+        double length2 = vector.length();
+
+        // Check for zero-length vectors
+        if (isZero(length1)|| isZero(length2)) {
+            throw new IllegalArgumentException("Cannot create a cross product from zero-length vectors");
+        }
+
+        // Calculate dot product
+        double dotProduct = this.dotProduct(vector);
+
+        double abs = Math.abs(dotProduct);
+        double diff = alignZero(abs - length1 * length2);
+//        System.out.println(count++);
+//        System.out.println(length1 * length2);
+        if (isZero(Math.abs(dotProduct) - length1 * length2)) {
             throw new IllegalArgumentException("Cannot create a cross product from parallel vectors");
+        }
         return new Vector(
                 xyz.d2 * vector.xyz.d3 - xyz.d3 * vector.xyz.d2,
                 xyz.d3 * vector.xyz.d1 - xyz.d1 * vector.xyz.d3,

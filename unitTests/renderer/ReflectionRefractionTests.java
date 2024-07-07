@@ -62,7 +62,7 @@ public class ReflectionRefractionTests {
     }
 
     /**
-     * Produce a picture of a sphere lighted by a spot light
+     * Produce a picture of a sphere lighted by a spotlight
      */
     @Test
     public void twoSpheresOnMirrors() {
@@ -174,6 +174,11 @@ public class ReflectionRefractionTests {
                 new Triangle(new Point(0, 120, 0), new Point(-30, 60, 30), new Point(30, 60, 30))
                         .setEmission(colorTriBottom)
                         .setMaterial(materialTri),
+
+                new Sphere(new Point(-200, 220, -200), 200d)
+                        .setEmission(new Color(0, 40, 5))
+                        .setMaterial(new Material().setKd(0.4).setKs(0.6).setShininess(20).setKr(0.6)),
+
                 new Sphere(new Point(0, 60, 0), 20d)
                         .setEmission(new Color(100, 100, 100))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60).setKr(0.8)),
@@ -208,19 +213,21 @@ public class ReflectionRefractionTests {
                 new PointLight(new Color(100, 100, 100), new Point(40,13,40)).setKl(0.01).setKq(0.001));
         scene.lights.add(new DirectionalLight(new Color(25, 0, 45), new Vector(1, -1, 1)));
 
-        cameraBuilder.setLocation(new Point(100, 20, 150)).setVpDistance(180)
+//        cameraBuilder.setLocation(new Point(100, 20, 150)).setVpDistance(180)
+//                .setDirection(new Point(0, 60, 0), new Vector(0, 1, 0))
+//                .setVpSize(200, 200)
+//                .setImageWriter(new ImageWriter("allFeaturesTestFromBelow", 1200, 1200))
+//                .build()
+//                .renderImage()
+//                .writeToImage();
+
+         cameraBuilder.setLocation(new Point(90, 115, 200)).setVpDistance(180)
                 .setDirection(new Point(0, 60, 0), new Vector(0, 1, 0))
+                .setImageWriter(new ImageWriter("allFeaturesTestFromAbove", 1200, 1200))
                 .setVpSize(200, 200)
-                .setImageWriter(new ImageWriter("allFeaturesTestFromBelow", 1200, 1200))
                 .build()
                 .renderImage()
                 .writeToImage();
 
-         cameraBuilder.setLocation(new Point(90, 115, 200)).setVpDistance(180)
-                .setDirection(new Point(0, 60, 0), new Vector(0, 1, 0))
-                .setImageWriter(new ImageWriter("allFeaturesTestFromAbove", 600, 600))
-                .build()
-                .renderImage()
-                .writeToImage();
     }
 }

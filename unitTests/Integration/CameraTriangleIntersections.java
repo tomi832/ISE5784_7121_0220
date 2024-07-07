@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Testing the integration of Camera and Triangle
@@ -62,4 +63,5 @@ public class CameraTriangleIntersections {
         }
         assertEquals(2, intersections.size(), "Wrong number of intersections with triangle2");
     }
+
 }
