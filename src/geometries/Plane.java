@@ -7,6 +7,7 @@ import primitives.Point;
 import java.util.List;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * a class that represents a plane (plane as in a 2-dimensional shape in 3-dimensions)
@@ -68,7 +69,7 @@ public class Plane extends Geometry{
      */
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
         // if the ray starts on the plane or is parallel to the plane, there are no intersections
-        if (ray.getHead().equals(q) || normal.dotProduct(ray.getDirection()) == 0) {
+        if (ray.getHead().equals(q) || isZero(normal.dotProduct(ray.getDirection()))) {
             return null;
         }
         Vector edge = q.subtract(ray.getHead());

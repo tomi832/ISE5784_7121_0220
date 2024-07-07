@@ -148,8 +148,8 @@ public class ReflectionRefractionTests {
         Material materialPoly = new Material().setKt(0.45).setKs(0.3).setKd(0.5);
         scene.geometries.add(
                 new Plane(new Point(0, 0, 0), new Vector(0, 1, 0))
-                        .setEmission(new Color(20, 30, 60))
-                        .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60).setKr(0.7)),
+                        .setEmission(new Color(30, 40, 70))
+                        .setMaterial(new Material().setKd(0.9).setShininess(30).setKr(0.05)),
                 new Triangle(Point.ZERO, new Point(30, 60, 30), new Point(30, 60, -30))
                         .setEmission(colorTriTop)
                         .setMaterial(materialTri),
@@ -175,9 +175,9 @@ public class ReflectionRefractionTests {
                         .setEmission(colorTriBottom)
                         .setMaterial(materialTri),
 
-                new Sphere(new Point(-200, 220, -200), 200d)
-                        .setEmission(new Color(0, 40, 5))
-                        .setMaterial(new Material().setKd(0.4).setKs(0.6).setShininess(20).setKr(0.6)),
+                new Sphere(new Point(-170, 30, -200), 20d)
+                        .setEmission(new Color(10, 50, 15))
+                        .setMaterial(new Material().setKd(0.4).setKs(0.6).setShininess(10).setKr(0.55)),
 
                 new Sphere(new Point(0, 60, 0), 20d)
                         .setEmission(new Color(100, 100, 100))
@@ -209,19 +209,19 @@ public class ReflectionRefractionTests {
         scene.lights.add(
                 new SpotLight(new Color(100, 180, 210), new Point(100, 80, 0), new Vector(-100, -30, 0))
                         .setKl(4E-5).setKq(2E-7));
-        scene.lights.add(
-                new PointLight(new Color(100, 100, 100), new Point(40,13,40)).setKl(0.01).setKq(0.001));
+//        scene.lights.add(
+//                new PointLight(new Color(100, 100, 100), new Point(40,13,40)).setKl(0.01).setKq(0.001));
         scene.lights.add(new DirectionalLight(new Color(25, 0, 45), new Vector(1, -1, 1)));
 
-//        cameraBuilder.setLocation(new Point(100, 20, 150)).setVpDistance(180)
-//                .setDirection(new Point(0, 60, 0), new Vector(0, 1, 0))
-//                .setVpSize(200, 200)
-//                .setImageWriter(new ImageWriter("allFeaturesTestFromBelow", 1200, 1200))
-//                .build()
-//                .renderImage()
-//                .writeToImage();
+        cameraBuilder.setLocation(new Point(100, 20, 1000)).setVpDistance(1000)
+                .setDirection(new Point(0, 60, 0), new Vector(0, 1, 0))
+                .setVpSize(200, 200)
+                .setImageWriter(new ImageWriter("allFeaturesTestFromBelow", 1200, 1200))
+                .build()
+                .renderImage()
+                .writeToImage();
 
-         cameraBuilder.setLocation(new Point(90, 115, 200)).setVpDistance(180)
+         cameraBuilder.setLocation(new Point(250, 300, 1000)).setVpDistance(700)
                 .setDirection(new Point(0, 60, 0), new Vector(0, 1, 0))
                 .setImageWriter(new ImageWriter("allFeaturesTestFromAbove", 1200, 1200))
                 .setVpSize(200, 200)
