@@ -5,6 +5,8 @@ import primitives.Ray;
 import primitives.Vector;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 import java.util.List;
 
 /**
@@ -40,7 +42,7 @@ public class Sphere extends RadialGeometry{
      * @return a list of the intersections of the ray with the sphere
      */
     protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
-        if (center == ray.getHead())
+        if (center.equals(ray.getHead()))
             return List.of(new GeoPoint(this, ray.getPoint(radius)));
         Vector u = center.subtract(ray.getHead());
         double tm = alignZero(ray.getDirection().dotProduct(u));

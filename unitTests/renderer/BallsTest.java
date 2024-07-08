@@ -33,7 +33,7 @@ public class BallsTest {
 
     @Test
     public void GalaxyTest() {
-        Material ballsMaterial = new Material().setKd(0.1);
+        Material ballsMaterial = new Material().setKd(0.2).setKs(0.33).setShininess(10);
         Material wallsMaterial = new Material().setKd(0.35).setKs(0.4).setKt(0.85).setKr(0.2).setShininess(10);
         Color wallColor = new Color(20, 25, 25); //glass
         Color midGalaxy = new Color(255, 110, 70); //orange
@@ -46,7 +46,7 @@ public class BallsTest {
         Color oldStarsColor = new Color(200, 40, 0); //deep red
         scene.geometries.add(
                 new Plane(new Point(0, 0, 0), new Vector(0, 1, 0))
-                        .setEmission(new Color(120, 100, 40))
+                        .setEmission(new Color(30, 40, 70))
                         .setMaterial(new Material().setKd(1)),
                 new Polygon(new Point(-1,0,-1),
                         new Point(-1,0,11),
@@ -125,10 +125,11 @@ public class BallsTest {
                 .setEmission(midGalaxy)
                 .setMaterial(ballsMaterial));
 
-        //scene.lights.add(new SpotLight())
+        scene.lights.add(new SpotLight(new Color(255, 255, 255), new Point(4, 30, 4), new Vector(0, -1, 0))
+                .setKl(0.002).setKq(0.002));
 
         cameraBuilder.setVpSize(250, 250)
-                .setImageWriter(new ImageWriter("Balls.txt", 600, 600))
+                .setImageWriter(new ImageWriter("Balls.txt", 1200, 1200))
                 .build()
                 .renderImage()
                 .writeToImage();
