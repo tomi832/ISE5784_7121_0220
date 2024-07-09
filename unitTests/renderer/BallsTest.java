@@ -1,6 +1,7 @@
 package renderer;
 
 import geometries.*;
+import lighting.PointLight;
 import lighting.SpotLight;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class BallsTest {
     private final Scene scene = new Scene("Test scene");
 
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
-            .setLocation(new Point(100, 20, 3))
+            .setLocation(new Point(100, 27, 3))
             .setVpDistance(900)
             .setDirection(new Point(0, 5, 3), Vector.Y)
             .setRayTracer(new SimpleRayTracer(scene));
@@ -82,15 +83,15 @@ public class BallsTest {
         );
 
         /** creating the arms of the galaxy */
-        double a = 2d; //Distance between spiral arms
+        double a = 1.7d; //Distance between spiral arms
         double b = 0.25; //tightness of the spiral
         double r;
         double x;
         double z;
         double y;
-        int numOfSpheres = 50;
+        int numOfSpheres = 35;
         double angleIncrement = 0.15;
-        int numArms = 10; //number of arms for the galaxy
+        int numArms = 21; //number of arms for the galaxy
         double theta;
         double angleOffset;
         for (int arm = 0; arm < numArms; arm++) {
@@ -101,44 +102,50 @@ public class BallsTest {
                 x = r * Math.cos(theta + angleOffset);
                 z = r * Math.sin(theta + angleOffset);
                 y = Math.random() * 0.2 - 0.1;
-                if (arm == 0)
+                arm %= 7;
+                if (arm == 4)
                     scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.2)
-                        .setEmission(sunColor2)
-                        .setMaterial(ballsMaterial));
-                else if (arm == 1) {
-                    scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.3)
-                            .setEmission(sunColor1)
+                            .setEmission(sunColor2)
                             .setMaterial(ballsMaterial));
-                }  else if (arm % 2 == 0){
-                    scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.1)
-                            .setEmission(starColor1)
+//                else if (arm % 3 == 0) {
+//                    scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.3)
+//                            .setEmission(sunColor1)
+//                            .setMaterial(ballsMaterial));
+            //}
+                else if (arm == 3 || arm == 5) {
+                    scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.05)
+                            .setEmission(dustColor1)
                             .setMaterial(ballsMaterial));
                 }
                 else {
-                    scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.1)
-                            .setEmission(starColor2)
+                    scene.geometries.add(new Sphere(new Point(x + 4, y + 4, z + 4), 0.05)
+                            .setEmission(starColor1)
                             .setMaterial(ballsMaterial));
                 }
             }
         }
-        scene.geometries.add(new Sphere(new Point(4, 4, 4), 2)
+        scene.geometries.add(new Sphere(new Point(4, 4, 4), 1)
                 .setEmission(midGalaxy)
                 .setMaterial(ballsMaterial));
+        scene.geometries.add(new Sphere(new Point(4, 4, 4), 1.22)
+                .setEmission(midGalaxy.scale(0.5))
+                .setMaterial(new Material().setKt(0.9)));
+
 
         scene.lights.add(new SpotLight(new Color(255, 255, 255), new Point(4, 30, 4), new Vector(0, -1, 0))
                 .setKl(0.002).setKq(0.002));
 
         cameraBuilder.setVpSize(250, 250)
-                .setImageWriter(new ImageWriter("Balls.txt", 1200, 1200))
+                .setImageWriter(new ImageWriter("Balls.txt", 1000, 1000))
                 .build()
                 .renderImage()
                 .writeToImage();
 
-        cameraBuilder2.setVpSize(250,250)
-                .setImageWriter(new ImageWriter("Balls2.txt", 1200, 1200))
-                .build()
-                .renderImage()
-                .writeToImage();
+//        cameraBuilder2.setVpSize(250,250)
+//                .setImageWriter(new ImageWriter("Balls2.txt", 1200, 1200))
+//                .build()
+//                .renderImage()
+//                .writeToImage();
     }
 }
 
