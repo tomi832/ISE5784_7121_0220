@@ -54,15 +54,19 @@ public class Sphere extends RadialGeometry{
         double t1 = alignZero(tm + th);
         double t2 = alignZero(tm - th);
 
-        if (t1 > 0 && t2 > 0 && alignZero(t1 - distance) <= 0 && alignZero(t2 - distance) <= 0) {
-            return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
+        try {
+            if (t1 > 0 && t2 > 0 && alignZero(t1 - distance) <= 0 && alignZero(t2 - distance) <= 0) {
+                return List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
+            }
+
+            if (t1 > 0 && alignZero(t1 - distance) <= 0)
+                return List.of(new GeoPoint(this, ray.getPoint(t1)));
+
+            if (t2 > 0 && alignZero(t2 - distance) <= 0)
+                return List.of(new GeoPoint(this, ray.getPoint(t2)));
+        } catch (Exception e) {
+            return null;
         }
-
-        if (t1 > 0 && alignZero(t1 - distance) <= 0)
-            return List.of(new GeoPoint(this, ray.getPoint(t1)));
-
-        if (t2 > 0 && alignZero(t2 - distance) <= 0)
-            return List.of(new GeoPoint(this, ray.getPoint(t2)));
         return null;
     }
 }
