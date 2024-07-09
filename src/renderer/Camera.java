@@ -121,6 +121,7 @@ public class Camera implements Cloneable {
     private void castRay(int Nx, int Ny, int j, int i){
         Ray ray = constructRay(Nx, Ny, j, i);
         Color pixelColor = rayTracer.traceRay(ray);
+        //TODO: why do we need to swap j and i!
         imageWriter.writePixel(j, i, pixelColor);
     }
 

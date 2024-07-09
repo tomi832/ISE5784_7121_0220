@@ -200,8 +200,8 @@ public class ReflectionRefractionTests {
                 new Polygon(points[3], points[0], points[4], points[7])
                         .setEmission(colorPoly2)
                         .setMaterial(materialPoly),
-                new Sphere(new Point(40,13,40), 3d)
-                        .setEmission(new Color(50, 140, 50))
+                new Sphere(new Point(-20,3.5,40), 3d)
+                        .setEmission(new Color(120, 120, 120))
                         .setMaterial(new Material().setKt(0.8))
         );
 
@@ -209,8 +209,8 @@ public class ReflectionRefractionTests {
         scene.lights.add(
                 new SpotLight(new Color(100, 180, 210), new Point(100, 80, 0), new Vector(-100, -30, 0))
                         .setKl(4E-5).setKq(2E-7));
-//        scene.lights.add(
-//                new PointLight(new Color(100, 100, 100), new Point(40,13,40)).setKl(0.01).setKq(0.001));
+        scene.lights.add(
+                new PointLight(new Color(200, 200, 200), new Point(-20,3,40)).setKl(0.01).setKq(0.001));
         scene.lights.add(new DirectionalLight(new Color(25, 0, 45), new Vector(1, -1, 1)));
 
         cameraBuilder.setLocation(new Point(100, 20, 1000)).setVpDistance(1000)
