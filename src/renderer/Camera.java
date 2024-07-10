@@ -4,6 +4,9 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 import primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
 import static primitives.Util.isZero;
 
@@ -279,6 +282,47 @@ public class Camera implements Cloneable {
             camera.pC = camera.location.add(camera.vTo.scale(camera.distance));
             return (Camera) camera.clone();
         }
+    }
+
+    public List<Ray> generateRayBeam(Ray ray, Vector n, double radius, int numSamples) {
+        List<Ray> rays = new LinkedList<>();
+        Vector dir = ray.getDirection();
+        Point head = ray.getHead();
+
+        // the 2 vectors that create the virtual grid for the beam
+        Vector nX, nY;
+        if (dir.equals(Vector.Y)) {
+            nX = new Vector(1, 0, 0);
+            nY = new Vector(0, 0, 1);
+        } else {
+            nX = dir.crossProduct(Vector.Y);
+            nY = dir.crossProduct(nX).normalize();
+            nX = dir.crossProduct(nY).normalize();
+        }
+
+        Point centerCircle = head.add(dir.scale(distance));
+        rays.add(ray); // Add the main ray
+
+        for (int k = 0; k < numSamples; k++) {
+            Point randomPoint = centerCircle;
+            double randX = (Math.random() * 2 - 1) * radius;
+            double randY = (Math.random() * 2 - 1) * Math.sqrt(radius * radius - randX * randX);
+
+            try {
+                randomPoint = randomPoint.add(nX.scale(randX));
+            } catch (Exception ex) {
+            }
+
+            try {
+                randomPoint = randomPoint.add(nY.scale(randY));
+            } catch (Exception ex) {
+            }
+
+            Vector v12 = randomPoint.subtract(head).normalize();
+            rays.add(new Ray(head, v12));
+        }
+
+        return rays;
     }
 
 

@@ -21,6 +21,7 @@ public class SimpleRayTracer extends RayTracerBase{
     private static final double MIN_CALC_COLOR_K = 0.001;
     private static final Double3 INITIAL_K = Double3.ONE;
 
+
     /**
      * Constructor for SimpleRayTracer
      * @param scene the scene to be traced
