@@ -62,7 +62,6 @@ public class BallsTest {
         final double FRAME_WIDTH = 0.15;
         final double x11 = x1 - FRAME_WIDTH, x12 = x1 + FRAME_WIDTH;
         final double z11 = z1 - FRAME_WIDTH, z12 = z1 + FRAME_WIDTH;
-        final double y11 = y1 - FRAME_WIDTH, y12 = y1 + FRAME_WIDTH;
         final double x21 = x2 - FRAME_WIDTH, x22 = x2 + FRAME_WIDTH;
         final double z21 = z2 - FRAME_WIDTH, z22 = z2 + FRAME_WIDTH;
         final double y21 = y2 - FRAME_WIDTH, y22 = y2 + FRAME_WIDTH;
