@@ -32,7 +32,7 @@ public class BallsTest {
     public void GalaxyTest() {
         Material ballsMaterial = new Material().setKd(0.2).setKs(0.33).setShininess(10);
         Material glassMaterial = new Material().setKd(0.35).setKs(0.4).setKt(0.85).setKr(0.2).setShininess(10);
-        Material pedestalMaterial = new Material().setKd(0.5).setKs(0.3).setKr(0.05).setShininess(10);
+        Material pedestalMaterial = new Material().setKd(0.5).setKs(0.35).setKr(0.125).setShininess(10);
         Color glassColor = new Color(20, 25, 25); //glass
         Color pedestalColor = new Color(80, 40, 5); //brown
         Color midGalaxy = new Color(255, 220, 110); //light yellow
@@ -45,18 +45,18 @@ public class BallsTest {
         Color oldStarsColor = new Color(200, 40, 0); //deep red
 
         /** coordinates for the walls of the box */
-        double x1 =-6d, x2 = 14d;
-        double z1 =-6d, z2 = 14d;
+        double x1 =-6.5d, x2 = 14.5d;
+        double z1 =-6.5d, z2 = 14.5d;
         double y1 = 4d, y2 = 15d;
 
         /** coordinates for the top level of the pedestal */
-        double x3 = -6.5, x4 = 14.5;
-        double z3 = -6.5, z4 = 14.5;
+        double x3 = -7, x4 = 15;
+        double z3 = -7, z4 = 15;
         double y3 = 2d, y4 = 4d;
 
         /** coordinates for the bottom level of the pedestal */
-        double x5 = -7, x6 = 15;
-        double z5 = -7, z6 = 15;
+        double x5 = -7.5, x6 = 15.5;
+        double z5 = -7.5, z6 = 15.5;
         double y5 = 0, y6 = 2;
         scene.geometries.add(
                 new Plane(new Point(0, 0, 0), new Vector(0, 1, 0))
