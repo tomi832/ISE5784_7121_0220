@@ -297,7 +297,6 @@ public class Camera implements Cloneable {
         } else {
             nX = dir.crossProduct(Vector.Y);
             nY = dir.crossProduct(nX).normalize();
-            nX = dir.crossProduct(nY).normalize();
         }
 
         Point centerCircle = head.add(dir.scale(distance));

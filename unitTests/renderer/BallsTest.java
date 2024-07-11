@@ -29,48 +29,50 @@ public class BallsTest {
     }
 
     // currently not a good implementation, supposed to keep DRY and automate creating rectangles.
-    private Geometries boxCreate(double[] x, double[] y, double[] z, Color emission, Material material) {
+    private Geometries boxCreate(double x1, double x2, double y1,
+                                 double y2, double z1, double z2,
+                                 Color emission, Material material) {
         Geometries box = new Geometries();
         box.add(new Polygon(
-                            new Point(x[0],y[0],z[0]),
-                            new Point(x[0],y[0],z[1]),
-                            new Point(x[0],y[1],z[1]),
-                            new Point(x[0],y[1],z[0]))
+                            new Point(x1,y1,z1),
+                            new Point(x1,y1,z2),
+                            new Point(x1,y2,z2),
+                            new Point(x1,y2,z1))
                             .setEmission(emission)
                             .setMaterial(material),
                 new Polygon(
-                            new Point(x[1],y[0],z[0]),
-                            new Point(x[1],y[0],z[1]),
-                            new Point(x[1],y[1],z[1]),
-                            new Point(x[1],y[1],z[0]))
+                            new Point(x2,y1,z1),
+                            new Point(x2,y1,z2),
+                            new Point(x2,y2,z2),
+                            new Point(x2,y2,z1))
                             .setEmission(emission)
                             .setMaterial(material),
                 new Polygon(
-                            new Point(x[0],y[0],z[0]),
-                            new Point(x[1],y[0],z[0]),
-                            new Point(x[1],y[1],z[0]),
-                            new Point(x[0],y[1],z[0]))
+                            new Point(x1,y1,z1),
+                            new Point(x2,y1,z1),
+                            new Point(x2,y2,z1),
+                            new Point(x1,y2,z1))
                             .setEmission(emission)
                             .setMaterial(material),
                 new Polygon(
-                            new Point(x[0],y[0],z[1]),
-                            new Point(x[1],y[0],z[1]),
-                            new Point(x[1],y[1],z[1]),
-                            new Point(x[0],y[1],z[1]))
+                            new Point(x1,y1,z2),
+                            new Point(x2,y1,z2),
+                            new Point(x2,y2,z2),
+                            new Point(x1,y2,z2))
                             .setEmission(emission)
                             .setMaterial(material),
                 new Polygon(
-                            new Point(x[0],y[0],z[0]),
-                            new Point(x[1],y[0],z[0]),
-                            new Point(x[1],y[0],z[1]),
-                            new Point(x[0],y[0],z[1]))
+                            new Point(x1,y1,z1),
+                            new Point(x2,y1,z1),
+                            new Point(x2,y1,z2),
+                            new Point(x1,y1,z2))
                             .setEmission(emission)
                             .setMaterial(material),
                 new Polygon(
-                            new Point(x[0],y[1],z[0]),
-                            new Point(x[1],y[1],z[0]),
-                            new Point(x[1],y[1],z[1]),
-                            new Point(x[0],y[1],z[1]))
+                            new Point(x1,y2,z1),
+                            new Point(x2,y2,z1),
+                            new Point(x2,y2,z2),
+                            new Point(x1,y2,z2))
                             .setEmission(emission)
                             .setMaterial(material)
         );
@@ -99,7 +101,7 @@ public class BallsTest {
         /** geometries for the scene */
         Geometries galaxy = new Geometries();
         Geometries pedestal = new Geometries();
-        Geometries box = new Geometries();
+        Geometries glassBox = new Geometries();
         Geometries frame = new Geometries();
 
         /** coordinates for the walls of the box */
@@ -125,380 +127,42 @@ public class BallsTest {
         final double z21 = z2 - FRAME_WIDTH, z22 = z2 + FRAME_WIDTH;
         final double y21 = y2 - FRAME_WIDTH, y22 = y2 + FRAME_WIDTH;
 
-        /**
-         *
-         *
-         * FRAME
-         *
-         *
-         */
-        //first frame
         frame.add(
-                new Polygon(
-                             new Point(x11,y1,z12),
-                             new Point(x12,y1,z12),
-                             new Point(x12,y22,z12),
-                             new Point(x11,y22,z12))
-                             .setEmission(frameColor)
-                             .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x11,y1,z11),
-                             new Point(x11,y1,z12),
-                             new Point(x11,y22,z12),
-                             new Point(x11,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x11,y22,z11),
-                             new Point(x12,y22,z11),
-                             new Point(x12,y22,z12),
-                             new Point(x11,y22,z12))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x12,y1,z11),
-                            new Point(x12,y1,z12),
-                            new Point(x12,y22,z12),
-                            new Point(x12,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x11,y1,z11),
-                            new Point(x12,y1,z11),
-                            new Point(x12,y22,z11),
-                            new Point(x11,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
+                //frame 1
+                boxCreate(x11, x12, y1, y22, z11, z12, frameColor, frameMaterial),
 
-                //Second Frame
-                 new Polygon(
-                             new Point(x21,y1,z12),
-                             new Point(x22,y1,z12),
-                             new Point(x22,y22,z12),
-                             new Point(x21,y22,z12))
-                             .setEmission(frameColor)
-                             .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x21,y1,z11),
-                             new Point(x21,y1,z12),
-                             new Point(x21,y22,z12),
-                             new Point(x21,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x21,y22,z11),
-                             new Point(x22,y22,z11),
-                             new Point(x22,y22,z12),
-                             new Point(x21,y22,z12))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x22,y1,z11),
-                            new Point(x22,y1,z12),
-                            new Point(x22,y22,z12),
-                            new Point(x22,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x21,y1,z11),
-                            new Point(x22,y1,z11),
-                            new Point(x22,y22,z11),
-                            new Point(x21,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
+                //frame 2
+                boxCreate(x21, x22, y1, y22, z11, z12, frameColor, frameMaterial),
 
-                 //third frame
-                 new Polygon(
-                             new Point(x11,y1,z22),
-                             new Point(x12,y1,z22),
-                             new Point(x12,y22,z22),
-                             new Point(x11,y22,z22))
-                             .setEmission(frameColor)
-                             .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x11,y1,z21),
-                             new Point(x11,y1,z22),
-                             new Point(x11,y22,z22),
-                             new Point(x11,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x11,y22,z21),
-                             new Point(x12,y22,z21),
-                             new Point(x12,y22,z22),
-                             new Point(x11,y22,z22))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x12,y1,z21),
-                            new Point(x12,y1,z22),
-                            new Point(x12,y22,z22),
-                            new Point(x12,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x11,y1,z21),
-                            new Point(x12,y1,z21),
-                            new Point(x12,y22,z21),
-                            new Point(x11,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
 
-                 //fourth frame
-                 new Polygon(
-                             new Point(x21,y1,z22),
-                             new Point(x22,y1,z22),
-                             new Point(x22,y22,z22),
-                             new Point(x21,y22,z22))
-                             .setEmission(frameColor)
-                             .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x21,y1,z21),
-                             new Point(x21,y1,z22),
-                             new Point(x21,y22,z22),
-                             new Point(x21,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                             new Point(x21,y22,z21),
-                             new Point(x22,y22,z21),
-                             new Point(x22,y22,z22),
-                             new Point(x21,y22,z22))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x22,y1,z21),
-                            new Point(x22,y1,z22),
-                            new Point(x22,y22,z22),
-                            new Point(x22,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                 new Polygon(
-                            new Point(x21,y1,z21),
-                            new Point(x22,y1,z21),
-                            new Point(x22,y22,z21),
-                            new Point(x21,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
+                 //frame 3
+                 boxCreate(x11, x12, y1, y22, z21, z22, frameColor, frameMaterial),
 
-                //TOP FRAMES
+                 //frame 4
+                 boxCreate(x21, x22, y1, y22, z21, z22, frameColor, frameMaterial),
+
                 //frame 5
-                new Polygon(
-                            new Point(x11,y21,z11),
-                            new Point(x11,y21,z12),
-                            new Point(x11,y22,z12),
-                            new Point(x11,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x22,y21,z11),
-                            new Point(x22,y21,z12),
-                            new Point(x22,y22,z12),
-                            new Point(x22,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y21,z11),
-                            new Point(x22,y21,z11),
-                            new Point(x22,y22,z11),
-                            new Point(x11,y22,z11))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y21,z12),
-                            new Point(x22,y21,z12),
-                            new Point(x22,y22,z12),
-                            new Point(x11,y22,z12))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y21,z11),
-                            new Point(x22,y21,z11),
-                            new Point(x22,y21,z12),
-                            new Point(x11,y21,z12))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(new Point(x11,y22,z11),
-                            new Point(x22,y22,z11),
-                            new Point(x22,y22,z12),
-                            new Point(x11,y22,z12))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
+                boxCreate(x11, x22, y21, y22, z11, z12, frameColor, frameMaterial),
 
                 //frame 6
-                new Polygon(
-                            new Point(x11,y21,z21),
-                            new Point(x11,y21,z22),
-                            new Point(x11,y22,z22),
-                            new Point(x11,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x22,y21,z21),
-                            new Point(x22,y21,z22),
-                            new Point(x22,y22,z22),
-                            new Point(x22,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y21,z21),
-                            new Point(x22,y21,z21),
-                            new Point(x22,y22,z21),
-                            new Point(x11,y22,z21))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y21,z22),
-                            new Point(x22,y21,z22),
-                            new Point(x22,y22,z22),
-                            new Point(x11,y22,z22))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y21,z21),
-                            new Point(x22,y21,z21),
-                            new Point(x22,y21,z22),
-                            new Point(x11,y21,z22))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial),
-                new Polygon(
-                            new Point(x11,y22,z21),
-                            new Point(x22,y22,z21),
-                            new Point(x22,y22,z22),
-                            new Point(x11,y22,z22))
-                            .setEmission(frameColor)
-                            .setMaterial(frameMaterial)
+                boxCreate(x11, x22, y21, y22, z21, z22, frameColor, frameMaterial),
 
                 //frame 7
-//                new Polygon(
-//                            new Point(x11,y21,z11),
-//                            new Point(x12,y21,z11),
-//                            new Point(x12,y21,z11),
-//                            new Point(x11,y21,z11))
-//                            .setEmission(frameColor)
-//                            .setMaterial(frameMaterial),
+                boxCreate(x11, x12, y21, y22, z11, z22, frameColor, frameMaterial),
+
+                //frame 8
+                boxCreate(x21, x22, y21, y22, z11, z22, frameColor, frameMaterial)
+
         );
 
-        /**
-         *
-         *
-         * GLASS
-         *
-         *
-         */
 
-        box.add(new Polygon(
-                        new Point(x1,y1,z2),
-                        new Point(x2,y1,z2),
-                        new Point(x2,y2,z2),
-                        new Point(x1,y2,z2))
-                        .setEmission(glassColor)
-                        .setMaterial(glassMaterial),
-                new Polygon(
-                        new Point(x1,y1, z1),
-                        new Point(x1,y1,z2),
-                        new Point(x1,y2,z2),
-                        new Point(x1,y2,z1))
-                        .setEmission(glassColor)
-                        .setMaterial(glassMaterial),
-                new Polygon(
-                        new Point(x1,y1,z1),
-                        new Point(x2,y1,z1),
-                        new Point(x2,y2,z1),
-                        new Point(x1,y2,z1))
-                        .setEmission(glassColor)
-                        .setMaterial(glassMaterial),
-                new Polygon(
-                        new Point(x2,y1,z1),
-                        new Point(x2,y1,z2),
-                        new Point(x2,y2,z2),
-                        new Point(x2,y2,z1))
-                        .setEmission(glassColor)
-                        .setMaterial(glassMaterial)
-        );
+        glassBox.add(boxCreate(x1, x2, y1, y2, z1, z2, glassColor, glassMaterial));
 
-        /**
-         *
-         *
-         * PEDESTAL
-         *
-         *
-         */
-
-        pedestal.add( new Polygon(
-                        new Point(x3,y3,z4),
-                        new Point(x4,y3,z4),
-                        new Point(x4,y4,z4),
-                        new Point(x3,y4,z4))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x3,y3,z3),
-                        new Point(x3,y3,z4),
-                        new Point(x3,y4,z4),
-                        new Point(x3,y4,z3))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x3,y3,z3),
-                        new Point(x4,y3,z3),
-                        new Point(x4,y4,z3),
-                        new Point(x3,y4,z3))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x4,y3,z3),
-                        new Point(x4,y3,z4),
-                        new Point(x4,y4,z4),
-                        new Point(x4,y4,z3))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x3,y4,z3),
-                        new Point(x3,y4,z4),
-                        new Point(x4,y4,z4),
-                        new Point(x4,y4,z3))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial.setKr(0)),
-
+        pedestal.add(
+                //top level of the pedestal
+                boxCreate(x3, x4, y3, y4, z3, z4, pedestalColor, pedestalMaterial),
                 //bottom level of the pedestal
-                new Polygon(
-                        new Point(x5,y5,z6),
-                        new Point(x6,y5,z6),
-                        new Point(x6,y6,z6),
-                        new Point(x5,y6,z6))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x5,y5,z5),
-                        new Point(x5,y5,z6),
-                        new Point(x5,y6,z6),
-                        new Point(x5,y6,z5))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x5,y5,z5),
-                        new Point(x6,y5,z5),
-                        new Point(x6,y6,z5),
-                        new Point(x5,y6,z5))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x6,y5,z5),
-                        new Point(x6,y5,z6),
-                        new Point(x6,y6,z6),
-                        new Point(x6,y6,z5))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial),
-                new Polygon(
-                        new Point(x5,y6,z5),
-                        new Point(x5,y6,z6),
-                        new Point(x6,y6,z6),
-                        new Point(x6,y6,z5))
-                        .setEmission(pedestalColor)
-                        .setMaterial(pedestalMaterial));
-
-
+                boxCreate(x5, x6, y5, y6, z5, z6, pedestalColor, pedestalMaterial));
 
 
         /** creating the arms of the galaxy */
@@ -559,7 +223,7 @@ public class BallsTest {
                 new Plane(new Point(0, 0, 0), new Vector(0, 1, 0))
                         .setEmission(new Color(30, 40, 70))
                         .setMaterial(new Material().setKd(1)),
-                galaxy, pedestal, box, frame
+                galaxy, pedestal, glassBox, frame
         );
 
         scene.lights.add(
