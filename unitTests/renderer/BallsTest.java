@@ -574,10 +574,10 @@ public class BallsTest {
 
         cameraBuilder.
                 setLocation(new Point(100, 27, 22))
-                .setVpDistance(550)
+                .setVpDistance(800)
                 .setDirection(new Point(4, 8, 4), Vector.Y)
-                .setVpSize(220, 220)
-                .setImageWriter(new ImageWriter("Galaxy.txt", 1000, 1000))
+                .setVpSize(384, 240)
+                .setImageWriter(new ImageWriter("Galaxy.txt", 1280, 800))
                 .build()
                 .renderImage()
                 .writeToImage();

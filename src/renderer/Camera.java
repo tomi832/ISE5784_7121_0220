@@ -80,16 +80,16 @@ public class Camera implements Cloneable {
      * Construct a ray from the camera to a pixel in the view plane
      * @param nX number of pixels in the x axis
      * @param nY number of pixels in the y axis
-     * @param j y index of the pixel
-     * @param i x index of the pixel
+     * @param j x index of the pixel
+     * @param i y index of the pixel
      * @return Ray from the camera to the pixel
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
         double rY = height / nY;
         double rX = width / nX;
 
-        double yi = -(i - ((nY-1) / 2d)) * rY;
         double xj = (j - ((nX - 1) / 2d)) * rX;
+        double yi = -(i - ((nY-1) / 2d)) * rY;
 
         Point pIJ = pC;
         if (!isZero(yi)) {
@@ -106,8 +106,8 @@ public class Camera implements Cloneable {
      * Render the image
      */
     public Camera renderImage(){
-        for(int i = 0; i < imageWriter.getNx(); i++){
-            for(int j = 0; j < imageWriter.getNy(); j++){
+        for(int i = 0; i < imageWriter.getNy(); i++){
+            for(int j = 0; j < imageWriter.getNx(); j++){
                 castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
             }
         }
@@ -118,13 +118,12 @@ public class Camera implements Cloneable {
      * Cast a ray from the camera to a pixel in the view plane
      * @param Nx number of pixels in the x axis
      * @param Ny number of pixels in the y axis
-     * @param j y index of the pixel
-     * @param i x index of the pixel
+     * @param j x index of the pixel
+     * @param i y index of the pixel
      */
     private void castRay(int Nx, int Ny, int j, int i){
         Ray ray = constructRay(Nx, Ny, j, i);
         Color pixelColor = rayTracer.traceRay(ray);
-        //TODO: why do we need to swap j and i!
         imageWriter.writePixel(j, i, pixelColor);
     }
 
@@ -288,6 +287,7 @@ public class Camera implements Cloneable {
         List<Ray> rays = new LinkedList<>();
         Vector dir = ray.getDirection();
         Point head = ray.getHead();
+        Vector v;
 
         // the 2 vectors that create the virtual grid for the beam
         Vector nX, nY;
@@ -302,6 +302,13 @@ public class Camera implements Cloneable {
 
         Point centerCircle = head.add(dir.scale(distance));
         rays.add(ray); // Add the main ray
+        numSamples = (int)Math.floor(Math.sqrt(numSamples));
+
+        for (int i = 0; i < numSamples; i++) {
+            for (int j = 0; j < numSamples; j++) {
+
+            }
+        }
 
         for (int k = 0; k < numSamples; k++) {
             Point randomPoint = centerCircle;
