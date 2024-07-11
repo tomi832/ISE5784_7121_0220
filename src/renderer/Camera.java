@@ -283,11 +283,39 @@ public class Camera implements Cloneable {
         }
     }
 
-    public List<Ray> generateRayBeam(Ray ray, Vector n, double radius, int numSamples) {
+    /**
+     * Generate a beam of rays from a point in a direction
+     * the function works in the way that it's a square that holds a circle from edge to edge.
+     * the function creates a grid of rays in the square and checks if they're inside the circle.
+     * the numEdgeSamples doesn't mean how many rays inside the circle, but how many rays on the edge of the square
+     * a circle is Pi/4 the area of a square that holds it from edge to edge
+     * that equals to about 78.5398% of the area of the square,(so about 78% of the rays will be inside the circle)
+     * that means it will return ~0.785 * numEdgeSamples^2 rays
+     * @param ray the main ray
+     * @param n the normal to the surface
+     * @param distance the distance from the point to the center of the circle
+     * @param radius the radius of the circle
+     * @param numEdgeSamples the number of rays on the edge of the square the holds the circle
+     * @return the list of rays that are the beam
+     */
+    public List<Ray> generateRayBeam(Ray ray, Vector n, double distance, double radius, int numEdgeSamples) {
+        if (numEdgeSamples < 1)
+            throw new IllegalArgumentException("Number of edge samples must be at least 1");
+        if (distance < 0)
+            throw new IllegalArgumentException("Distance cannot be negative");
+        if (radius < 0)
+            throw new IllegalArgumentException("Radius cannot be negative");
+
         List<Ray> rays = new LinkedList<>();
-        Vector dir = ray.getDirection();
+        rays.add(ray); // Add the main ray
+        if (isZero(radius) || isZero(distance) || numEdgeSamples == 1)
+            return rays;
+
+        Vector v, dir = ray.getDirection();
         Point head = ray.getHead();
-        Vector v;
+        double gridSpacing = radius * 2 / numEdgeSamples;
+        double x, y, radiusSquared = radius * radius;
+        Point randomPoint, centerCircle = head.add(dir.scale(distance));
 
         // the 2 vectors that create the virtual grid for the beam
         Vector nX, nY;
@@ -295,39 +323,36 @@ public class Camera implements Cloneable {
             nX = new Vector(1, 0, 0);
             nY = new Vector(0, 0, 1);
         } else {
-            nX = dir.crossProduct(Vector.Y);
+            nX = dir.crossProduct(Vector.Y).normalize();
             nY = dir.crossProduct(nX).normalize();
         }
 
-        Point centerCircle = head.add(dir.scale(distance));
-        rays.add(ray); // Add the main ray
-        numSamples = (int)Math.floor(Math.sqrt(numSamples));
+        double nd = n.dotProduct(dir); // Dot product of normal and original ray direction
 
-        for (int i = 0; i < numSamples; i++) {
-            for (int j = 0; j < numSamples; j++) {
+        //calculating each x and y in the grid and checking if they're inside the circle/
+        //if they are, we randomize them a bit inside their "zone" and then it creates the ray
+        for (int i = 0; i < numEdgeSamples; i++) {
+            for (int j = 0; j < numEdgeSamples; j++) {
+                // Calculate the x and y coordinates in the grid
+                x = (i - numEdgeSamples / 2d) * gridSpacing;
+                y = (j - numEdgeSamples / 2d) * gridSpacing;
 
+                // Check if the point (x, y) lies within the circle of given radius
+                if (x * x + y * y <= radiusSquared) {
+                    x += (Math.random() - 0.5) * gridSpacing;
+                    y += (Math.random() - 0.5) * gridSpacing;
+                    try {
+                        randomPoint = centerCircle.add(nX.scale(x)).add(nY.scale(y));
+                        v = randomPoint.subtract(head).normalize();
+                        double nv = n.dotProduct(v); // Dot product of normal and new ray direction
+                        if (nv * nd > 0)
+                            rays.add(new Ray(head, v));
+                    } catch (Exception e) {
+                        j--;
+                    }
+                }
             }
         }
-
-        for (int k = 0; k < numSamples; k++) {
-            Point randomPoint = centerCircle;
-            double randX = (Math.random() * 2 - 1) * radius;
-            double randY = (Math.random() * 2 - 1) * Math.sqrt(radius * radius - randX * randX);
-
-            try {
-                randomPoint = randomPoint.add(nX.scale(randX));
-            } catch (Exception ex) {
-            }
-
-            try {
-                randomPoint = randomPoint.add(nY.scale(randY));
-            } catch (Exception ex) {
-            }
-
-            Vector v12 = randomPoint.subtract(head).normalize();
-            rays.add(new Ray(head, v12));
-        }
-
         return rays;
     }
 
