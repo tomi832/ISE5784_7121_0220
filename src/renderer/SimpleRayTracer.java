@@ -17,7 +17,7 @@ import static primitives.Util.isZero;
  */
 public class SimpleRayTracer extends RayTracerBase{
     /** displacement value for shadow ray calculations */
-    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    private static final int MAX_CALC_COLOR_LEVEL = 5;
     private static final double MIN_CALC_COLOR_K = 0.001;
     private static final Double3 INITIAL_K = Double3.ONE;
 
@@ -146,8 +146,9 @@ public class SimpleRayTracer extends RayTracerBase{
      */
     private Color calcGlobalEffects(GeoPoint geoPoint, Ray ray, int level, Double3 k) {
         Material material = geoPoint.geometry.getMaterial();
-        return calcGlobalEffect(constructRefractedRay(geoPoint, ray), material.kT, level, k)
-            .add(calcGlobalEffect(constructReflectedRay(geoPoint, ray), material.kR, level, k));
+        Vector n = geoPoint.geometry.getNormal(geoPoint.point);
+        return calcGlobalEffect(constructRefractedRay(geoPoint, ray), material.kT, level, k, n, material)
+            .add(calcGlobalEffect(constructReflectedRay(geoPoint, ray), material.kR, level, k, n, material));
     }
 
     /**
@@ -158,12 +159,17 @@ public class SimpleRayTracer extends RayTracerBase{
      * @param k the attenuation factor
      * @return the color of the intersection point
      */
-    private Color calcGlobalEffect(Ray ray, Double3 kx, int level, Double3 k) {
+    private Color calcGlobalEffect(Ray ray, Double3 kx, int level, Double3 k, Vector n, Material m) {
         Double3 kkx = kx.product(k);
+        List rays;
         if (kkx.lowerThan(MIN_CALC_COLOR_K))
             return Color.BLACK;
-        GeoPoint gp = findClosestIntersection(ray);
-        return gp == null ? scene.background : calcColor(gp, ray, level - 1, kkx).scale(kx);
+        if (level == MAX_CALC_COLOR_LEVEL) {
+            rays = Camera.generateRayBeam(ray, n, m.blurDistance, m.blurRadius, m.numEdgeRays);
+        } else {
+            rays = List.of(ray);
+        }
+        return avgColors(rays, level, kkx).scale(kx);
     }
 
     /**
@@ -212,5 +218,21 @@ public class SimpleRayTracer extends RayTracerBase{
             }
         }
         return ktr;
+    }
+
+    /**
+     * Calculate the average color of the intersection point
+     * @param rays the rays to trace
+     * @param level the level of recursion
+     * @param k the attenuation factor
+     * @return the color of the intersection point
+     */
+    private Color avgColors(List<Ray> rays, int level, Double3 k) {
+        Color color = Color.BLACK;
+        for (Ray ray : rays) {
+            GeoPoint closestPoint = findClosestIntersection(ray);
+            color = color.add(closestPoint == null ? scene.background : calcColor(closestPoint, ray, level-1, k));
+        }
+        return color.reduce(rays.size());
     }
 }

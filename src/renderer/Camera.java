@@ -106,10 +106,13 @@ public class Camera implements Cloneable {
      * Render the image
      */
     public Camera renderImage(){
+        int numPixels = imageWriter.getNx();
         for(int i = 0; i < imageWriter.getNy(); i++){
             for(int j = 0; j < imageWriter.getNx(); j++){
                 castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
             }
+            if (i % 5 == 0)
+                System.out.println(i);
         }
         return this;
     }
@@ -298,7 +301,7 @@ public class Camera implements Cloneable {
      * @param numEdgeSamples the number of rays on the edge of the square the holds the circle
      * @return the list of rays that are the beam
      */
-    public List<Ray> generateRayBeam(Ray ray, Vector n, double distance, double radius, int numEdgeSamples) {
+    public static List<Ray> generateRayBeam(Ray ray, Vector n, double distance, double radius, int numEdgeSamples) {
         if (numEdgeSamples < 1)
             throw new IllegalArgumentException("Number of edge samples must be at least 1");
         if (distance < 0)

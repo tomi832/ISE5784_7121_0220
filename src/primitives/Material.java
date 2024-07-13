@@ -19,7 +19,7 @@ public class Material {
     /** The radius of the target area for the blur */
     public double blurRadius = 0;
     /** The number of rays for the blur on the edge of the square */
-    public double numEdgeRays = 0;
+    public int numEdgeRays = 1;
 
 
     /**
@@ -142,7 +142,7 @@ public class Material {
      * @param numEdgeRays the number of rays on the edge of the square
      * @return the material
      */
-    public Material setNumEdgeRays(double numEdgeRays) {
+    public Material setNumEdgeRays(int numEdgeRays) {
         this.numEdgeRays = numEdgeRays;
         return this;
     }
