@@ -8,6 +8,8 @@ import primitives.Color;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
+
 import static primitives.Util.isZero;
 
 /**
@@ -106,14 +108,19 @@ public class Camera implements Cloneable {
      * Render the image
      */
     public Camera renderImage(){
-        int numPixels = imageWriter.getNx();
-        for(int i = 0; i < imageWriter.getNy(); i++){
-            for(int j = 0; j < imageWriter.getNx(); j++){
-                castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
-            }
-            if (i % 5 == 0)
-                System.out.println(i);
-        }
+        final int Nx = imageWriter.getNx();
+        final int Ny = imageWriter.getNy();
+        IntStream.range(0, Ny).parallel()
+                .forEach(i -> IntStream.range(0, Nx).parallel()
+                        .forEach(j -> castRay(Nx, Ny, j, i)));
+
+//        for(int i = 0; i < imageWriter.getNy(); i++){
+//            for(int j = 0; j < imageWriter.getNx(); j++){
+//                castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
+//            }
+//            if (i % 5 == 0)
+//                System.out.println(i);
+//        }
         return this;
     }
 
@@ -310,9 +317,12 @@ public class Camera implements Cloneable {
             throw new IllegalArgumentException("Radius cannot be negative");
 
         List<Ray> rays = new LinkedList<>();
-        rays.add(ray); // Add the main ray
-        if (isZero(radius) || isZero(distance) || numEdgeSamples == 1)
+        rays.add(ray);
+        if (isZero(radius) || isZero(distance) || numEdgeSamples == 1) {
+            rays.add(ray);
             return rays;
+        }
+
 
         Vector v, dir = ray.getDirection();
         Point head = ray.getHead();
@@ -351,7 +361,7 @@ public class Camera implements Cloneable {
                         if (nv * nd > 0)
                             rays.add(new Ray(head, v));
                     } catch (Exception e) {
-                        j--;
+                        j--;  // Retry the same point, randomization can cause the point to become Vector.ZERO
                     }
                 }
             }

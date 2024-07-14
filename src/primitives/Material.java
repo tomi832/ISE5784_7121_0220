@@ -20,6 +20,10 @@ public class Material {
     public double blurRadius = 0;
     /** The number of rays for the blur on the edge of the square */
     public int numEdgeRays = 1;
+    /** The boolean for blurring when there's refraction */
+    public boolean ssTransparency = false;
+    /** The boolean for blurring when there's reflection */
+    public boolean ssReflection = false;
 
 
     /**
@@ -144,6 +148,26 @@ public class Material {
      */
     public Material setNumEdgeRays(int numEdgeRays) {
         this.numEdgeRays = numEdgeRays;
+        return this;
+    }
+
+    /**
+     * Material setter for a boolean that decided if there would be Super Sampling for refraction
+     * @param ssTransparency should there be a blurring when there's refraction
+     * @return the material
+     */
+    public Material setSsTransparency(boolean ssTransparency) {
+        this.ssTransparency = ssTransparency;
+        return this;
+    }
+
+    /**
+     * Material setter for a boolean that decided if there would be Super Sampling for reflection
+     * @param ssReflection should there be a blurring when there's reflection
+     * @return the material
+     */
+    public Material setSsReflection(boolean ssReflection) {
+        this.ssReflection = ssReflection;
         return this;
     }
 }

@@ -84,7 +84,7 @@ public class BallsTest {
     public void GalaxyTest() {
         final Material ballsMaterial = new Material().setKd(0.2).setKs(0.33).setShininess(10);
         final Material glassMaterial = new Material().setKd(0.35).setKs(0.4).setKt(0.85).setKr(0.2).setShininess(10)
-                .setNumEdgeRays(9).setBlurDistance(2).setBlurRadius(0.1);
+                .setNumEdgeRays(10).setBlurDistance(12).setBlurRadius(0.2).setSsTransparency(true);
         final Material frameMaterial = new Material().setKd(0.5).setKs(0.35).setKr(0.05).setShininess(10);
         final Material pedestalMaterial = new Material().setKd(0.5).setKs(0.35).setShininess(10);
         final Color glassColor = new Color(20, 25, 25); //glass
@@ -106,17 +106,17 @@ public class BallsTest {
         Geometries frame = new Geometries();
 
         /** coordinates for the walls of the box */
-        final double x1 =-6.5d, x2 = 14.5d;
+        final double x1 =-6.5d, x2 = 17.5d;
         final double z1 =-6.5d, z2 = 14.5d;
         final double y1 = 4d, y2 = 15d;
 
         /** coordinates for the top level of the pedestal */
-        final double x3 = -7, x4 = 15;
+        final double x3 = -7, x4 = 18;
         final double z3 = -7, z4 = 15;
         final double y3 = 2d, y4 = 4d;
 
         /** coordinates for the bottom level of the pedestal */
-        final double x5 = -7.5, x6 = 15.5;
+        final double x5 = -7.5, x6 = 18.5;
         final double z5 = -7.5, z6 = 15.5;
         final double y5 = 0, y6 = 2;
 
@@ -155,38 +155,6 @@ public class BallsTest {
                 boxCreate(x21, x22, y21, y22, z11, z22, frameColor, frameMaterial)
 
         );
-
-//        glassBox.add(
-//                //Glass box (with regards for galaxy.txt)
-//                new Polygon(
-//                        new Point(x1,y1,z2),
-//                        new Point(x2,y1,z2),
-//                        new Point(x2,y2,z2),
-//                        new Point(x1,y2,z2))
-//                        .setEmission(glassColor)
-//                        .setMaterial(glassMaterial),
-//                new Polygon(
-//                        new Point(x1,y1, z1),
-//                        new Point(x1,y1,z2),
-//                        new Point(x1,y2,z2),
-//                        new Point(x1,y2,z1))
-//                        .setEmission(glassColor)
-//                        .setMaterial(glassMaterial),
-//                new Polygon(
-//                        new Point(x1,y1,z1),
-//                        new Point(x2,y1,z1),
-//                        new Point(x2,y2,z1),
-//                        new Point(x1,y2,z1))
-//                        .setEmission(glassColor)
-//                        .setMaterial(glassMaterial),
-//                new Polygon(
-//                        new Point(x2,y1,z1),
-//                        new Point(x2,y1,z2),
-//                        new Point(x2,y2,z2),
-//                        new Point(x2,y2,z1))
-//                        .setEmission(glassColor)
-//                        .setMaterial(glassMaterial)
-//        );
 
         glassBox.add(boxCreate(x1, x2, y1, y2, z1, z2, glassColor, glassMaterial));
 
@@ -280,14 +248,15 @@ public class BallsTest {
 
 
 //        cameraBuilder
-//                .setLocation(new Point(4, 30, 6))
-//                .setVpDistance(300)
+//                .setLocation(new Point(2, 30, 6))
+//                .setDirection(new Point(4, 8, 4), new Vector(0.5, -1, 0))
+//                .setVpDistance(250)
 //                .setVpSize(250,250)
 //                .setImageWriter(new ImageWriter("Galaxy2.txt", 800, 800))
 //                .build()
 //                .renderImage()
 //                .writeToImage();
-//
+
 
 //        cameraBuilder
 //                .setLocation(new Point(7,4.7,3))
