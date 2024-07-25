@@ -31,6 +31,10 @@ public class Plane extends Geometry{
          * cross product of the two gives you the normal vector, and we need to normalize it.
          */
         this.normal = point1.subtract(point2).crossProduct(point1.subtract(point3)).normalize();
+        boundingBox = new BoundingBox(
+                new Point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY),
+                new Point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+        );
     }
 
     /**
@@ -42,6 +46,10 @@ public class Plane extends Geometry{
     public Plane(Point q, Vector normal) {
         this.q = q;
         this.normal = normal.normalize();
+        boundingBox = new BoundingBox(
+                new Point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY),
+                new Point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+        );
     }
 
     /**
@@ -79,6 +87,6 @@ public class Plane extends Geometry{
 
     @Override
     public BoundingBox getBoundingBox() {
-        return null;
+        return boundingBox;
     }
 }

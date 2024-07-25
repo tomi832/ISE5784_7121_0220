@@ -187,11 +187,11 @@ public class BallsTest {
                 if (arm % 7 == 4) {
                     rand = Math.random();
                     if (rand > 0.6) {
-                        scene.geometries.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.2 + Math.random() % 0.03)
+                        galaxy.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.2 + Math.random() % 0.03)
                                 .setEmission(sunColor1.scale(0.9 + (rand % 0.3)))
                                 .setMaterial(ballsMaterial));
                     } else if (rand > 0.1) {
-                        scene.geometries.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.16+ Math.random() % 0.03)
+                        galaxy.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.16+ Math.random() % 0.03)
                                 .setEmission(sunColor2.scale(0.9 + (rand % 0.3)))
                                 .setMaterial(ballsMaterial));
                     }
@@ -199,11 +199,11 @@ public class BallsTest {
                 }
                 else {
                     if (Math.random() < 0.5)
-                        scene.geometries.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.05)
+                        galaxy.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.05)
                             .setEmission(starColor1)
                             .setMaterial(ballsMaterial));
                     else
-                        scene.geometries.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.05)
+                        galaxy.add(new Sphere(new Point(tiltedCoords[0], tiltedCoords[1], tiltedCoords[2]), 0.05)
                                 .setEmission(starColor2)
                                 .setMaterial(ballsMaterial));
                 }
