@@ -61,4 +61,10 @@ public class Scene {
         this.lights = lights;
         return this;
     }
+
+    public void buildBVH() {
+        if (geometries != null) {
+            geometries.buildBVH();
+        }
+    }
 }

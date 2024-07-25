@@ -23,6 +23,9 @@ public class Sphere extends RadialGeometry{
     public Sphere(Point c, double r) {
         super(r);
         center = c;
+        Point min = new Point(center.getX() - radius, center.getY() - radius, center.getZ() - radius);
+        Point max = new Point(center.getX() + radius, center.getY() + radius, center.getZ() + radius);
+        boundingBox = new BoundingBox(min, max);
     }
 
     /**
@@ -68,5 +71,10 @@ public class Sphere extends RadialGeometry{
             return null;
         }
         return null;
+    }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
     }
 }

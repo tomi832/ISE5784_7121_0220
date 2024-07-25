@@ -106,17 +106,17 @@ public class BallsTest {
         Geometries frame = new Geometries();
 
         /** coordinates for the walls of the box */
-        final double x1 =-6.5d, x2 = 17.5d;
+        final double x1 =-6.5d, x2 = 18.5d;
         final double z1 =-6.5d, z2 = 14.5d;
         final double y1 = 4d, y2 = 15d;
 
         /** coordinates for the top level of the pedestal */
-        final double x3 = -7, x4 = 18;
+        final double x3 = -7, x4 = 19;
         final double z3 = -7, z4 = 15;
         final double y3 = 2d, y4 = 4d;
 
         /** coordinates for the bottom level of the pedestal */
-        final double x5 = -7.5, x6 = 18.5;
+        final double x5 = -7.5, x6 = 19.5;
         final double z5 = -7.5, z6 = 15.5;
         final double y5 = 0, y6 = 2;
 
@@ -236,6 +236,8 @@ public class BallsTest {
                 new SpotLight(new Color(120, 0, 120), new Point(0, 30, -20), new Vector(0, -3, 1.8))
                         .setKl(0.002).setKq(0.002));
 
+        scene.buildBVH();
+        System.out.println("BVH built");
         cameraBuilder.
                 setLocation(new Point(100, 27, 22))
                 .setVpDistance(800)

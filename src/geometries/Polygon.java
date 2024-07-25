@@ -60,6 +60,19 @@ public class Polygon extends Geometry {
         // polygon with this plane.
         // The plane holds the invariant normal (orthogonal unit) vector to the polygon
         plane = new Plane(vertices[0], vertices[1], vertices[2]);
+        // Creating the bounding box
+        double minX = Double.POSITIVE_INFINITY, minY = Double.POSITIVE_INFINITY, minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY, maxY = Double.NEGATIVE_INFINITY, maxZ = Double.NEGATIVE_INFINITY;
+
+        for (Point vertex : vertices) {
+            minX = Math.min(minX, vertex.getX());
+            minY = Math.min(minY, vertex.getY());
+            minZ = Math.min(minZ, vertex.getZ());
+            maxX = Math.max(maxX, vertex.getX());
+            maxY = Math.max(maxY, vertex.getY());
+            maxZ = Math.max(maxZ, vertex.getZ());
+        }
+        boundingBox = new BoundingBox(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
         if (size == 3) return; // no need for more tests for a Triangle
 
         Vector n = plane.getNormal();
@@ -140,5 +153,10 @@ public class Polygon extends Geometry {
             return List.of(new GeoPoint(this, intersectionPoint.get(0).point));
         }
         return  null;
+    }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
     }
 }

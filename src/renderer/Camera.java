@@ -110,17 +110,10 @@ public class Camera implements Cloneable {
     public Camera renderImage(){
         final int Nx = imageWriter.getNx();
         final int Ny = imageWriter.getNy();
+        //TODO: add the option to disable parallelism
         IntStream.range(0, Ny).parallel()
                 .forEach(i -> IntStream.range(0, Nx).parallel()
                         .forEach(j -> castRay(Nx, Ny, j, i)));
-
-//        for(int i = 0; i < imageWriter.getNy(); i++){
-//            for(int j = 0; j < imageWriter.getNx(); j++){
-//                castRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
-//            }
-//            if (i % 5 == 0)
-//                System.out.println(i);
-//        }
         return this;
     }
 
@@ -289,7 +282,12 @@ public class Camera implements Cloneable {
                 throw new MissingResourceException("missing rendering element", "Camera",
                         "missing rayTracer");
             camera.pC = camera.location.add(camera.vTo.scale(camera.distance));
-            return (Camera) camera.clone();
+
+            try {
+                return (Camera) camera.clone();
+            } catch (CloneNotSupportedException dontcare) {
+                return null;
+            }
         }
     }
 
@@ -367,32 +365,5 @@ public class Camera implements Cloneable {
             }
         }
         return rays;
-    }
-
-
-    /**
-     * Clone the camera
-     * @return new camera object
-     */
-    @Override
-    public Camera clone() {
-        try{
-            Camera camera = (Camera) super.clone();
-            camera.imageWriter = this.imageWriter;
-            camera.rayTracer = this.rayTracer;
-            camera.location = this.location;
-            camera.vTo = this.vTo;
-            camera.vUp = this.vUp;
-            camera.vRight = this.vRight;
-            camera.distance = this.distance;
-            camera.width = this.width;
-            camera.height = this.height;
-            camera.pC = this.pC;
-            camera.dirPoint = this.dirPoint;
-            return camera;
-        } catch (CloneNotSupportedException e) {
-            throw new MissingResourceException("missing rendering element", "Camera",
-                    "missing clone");
-        }
     }
 }

@@ -76,4 +76,9 @@ public class Plane extends Geometry{
         double t = alignZero(normal.dotProduct(edge) / normal.dotProduct(ray.getDirection()));
         return (t <= 0 || alignZero(t - distance) > 0) ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
     }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        return null;
+    }
 }

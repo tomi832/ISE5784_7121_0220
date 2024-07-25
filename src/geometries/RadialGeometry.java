@@ -35,5 +35,8 @@ public abstract class RadialGeometry extends Geometry{
         return null;
     }
 
-
+    @Override
+    public BoundingBox getBoundingBox() {
+        return null;
+    }
 }

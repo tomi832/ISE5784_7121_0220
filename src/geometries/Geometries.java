@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import renderer.BVH;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -9,11 +10,11 @@ import java.util.List;
 
 /**
  * Geometries class represents a collection of geometries.
- * It is an abstract class that extends Intersectable.
- * It contains a list of Intersectable objects.
+ * It extends Intersectable and contains a list of Intersectable objects.
  */
-public class Geometries extends Intersectable{
+public class Geometries extends Intersectable {
     private List<Intersectable> bodies = new LinkedList<>();
+    private BVH bvh;
 
     /**
      * Default constructor for Geometries
@@ -34,38 +35,69 @@ public class Geometries extends Intersectable{
      */
     public void add(Intersectable... geometries) {
         Collections.addAll(bodies, geometries);
+        bvh = null; // Invalidate BVH when new geometries are added
     }
 
     /**
-     * Find intersections of a ray with the geometries, it's for backwards compatibility
+     * Get the list of geometries
+     * @return the list of geometries
+     */
+    public List<Intersectable> getGeometries() {
+        return bodies;
+    }
+
+    /**
+     * Build the BVH for this Geometries object
+     */
+    public void buildBVH() {
+        if (bvh == null) {
+            bvh = new BVH(this);
+        }
+    }
+
+    /**
+     * Find intersections of a ray with the geometries
+     * this function will use the BVH, and in case it is null - will fall back to the default implementation
      * @param ray the ray to find intersections with
+     * @param maxDistance the maximum distance to check for intersections
      * @return a list of points of intersections
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance) {
-        List<GeoPoint> intersections = new LinkedList<>();
-        List<GeoPoint> currentIntersections;
-        for (Intersectable body : bodies) {
-            currentIntersections = body.findGeoIntersections(ray, distance);
-            if (currentIntersections != null)
-                intersections.addAll(currentIntersections);
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        if (bvh != null) {
+            return bvh.findGeoIntersectionsHelper(ray, maxDistance);
+        } else {
+            List<GeoPoint> intersections = new LinkedList<>();
+            for (Intersectable body : bodies) {
+                List<GeoPoint> currentIntersections = body.findGeoIntersections(ray, maxDistance);
+                if (currentIntersections != null)
+                    intersections.addAll(currentIntersections);
+            }
+            return intersections.isEmpty() ? null : intersections;
         }
-        return intersections.isEmpty() ? null : intersections;
     }
 
     /**
-     * Adds the intersections of a ray with the geometries to a list of points
-     * @param intersections the list of points to add the intersections to
-     * @param currentIntersections the list of points of the current intersections
-     * @return the list of points of intersections
+     * Get the bounding box for this Geometries object
+     * @return the bounding box
      */
-    private List<Point> addIntersection(List<Point> intersections, List<Point> currentIntersections) {
-        if (currentIntersections != null) {
-            if (intersections == null)
-                intersections = new LinkedList<>(currentIntersections);
-            else
-                intersections.addAll(currentIntersections);
-        }
-        return intersections;
+    @Override
+    public BoundingBox getBoundingBox() {
+//        if (boundingBox == null) {
+//            if (bodies.isEmpty()) {
+//                boundingBox = new BoundingBox(new Point(0, 0, 0), new Point(0, 0, 0));
+//            } else {
+//                BoundingBox bbox = bodies.get(0).getBoundingBox();
+//                for (int i = 1; i < bodies.size(); i++) {
+//                    bbox = BoundingBox.union(bbox, bodies.get(i).getBoundingBox());
+//                }
+//                boundingBox = bbox;
+//            }
+//        }
+        return boundingBox;
+    }
+
+    public void setBoundingBox(BoundingBox boundingBox) {
+        this.boundingBox = boundingBox;
     }
 }

@@ -157,4 +157,34 @@ class SphereTests {
         assertEquals(2, result3.size(), "Ray should have 2 points");
         assertEquals(exp, result3, "Wrong intersection with sphere");
     }
+
+    /**
+     * Test method for {@link geometries.Sphere#findGeoIntersections(primitives.Ray)}.
+     * the point is testing the bounding box of the sphere
+     */
+    @Test
+    public void testBVHGeoIntersections() {
+        final Sphere sphere = new Sphere(new Point(1,0,0), 1d);
+        final Ray ray1 = new Ray(new Point(-1,0,0), new Vector(1,0,0));
+        final Ray ray2 = new Ray(new Point(1,0,0), new Vector(1,0,0));
+        final Ray ray3 = new Ray(new Point(3,0,0), new Vector(1,0,0));
+
+        //building thee BVH
+        final Geometries geometries = new Geometries(sphere);
+        geometries.buildBVH();
+        //expected intersections
+        final var result1 = geometries.findGeoIntersections(ray1);
+        final var result2 = geometries.findGeoIntersections(ray2);
+        final var result3 = geometries.findGeoIntersections(ray3);
+        final var exp1 = sphere.findGeoIntersections(ray1);
+        final var exp2 = sphere.findGeoIntersections(ray2);
+
+        // ============ Equivalence Partitions Tests ==============
+        //TC01: ray intersects the sphere (2 points)
+        assertEquals(exp1, result1, "Wrong intersection with sphere");
+        //TC02: ray intersects the sphere (1 point)
+        assertEquals(exp2, result2, "Wrong intersection with sphere");
+        //TC03: ray doesn't intersect the sphere
+        assertNull(result3, "Ray doesn't intersect the sphere");
+    }
 }

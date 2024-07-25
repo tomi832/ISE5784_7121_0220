@@ -79,4 +79,10 @@ public abstract class Intersectable {
      * @return a list of intersection points
      */
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double distance);
+
+    /**
+     * a method that returns the bounding box of the geometry
+     * @return the bounding box of the geometry
+     */
+    public abstract BoundingBox getBoundingBox();
 }

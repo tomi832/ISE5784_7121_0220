@@ -137,4 +137,37 @@ class TriangleTests {
         assertEquals(1, result11.size(), "ray should pass only 1 point");
         assertEquals(List.of(new GeoPoint(triangle, gp01)), result11, "Wrong intersection with triangle");
     }
+
+    /**
+     * test method for {@link Triangle#findGeoIntersections(Ray)}
+     * the point is testing the bounding box of the triangle
+     */
+    @Test
+    public void testBVHGeoIntersections() {
+        final Triangle triangle = new Triangle(
+                new Point(-2, 0, 0),
+                new Point(2, 0, 0),
+                new Point(0, 4, 0));
+
+        final Ray ray1 = new Ray(new Point(1, 1, 1), new Vector(0,0,-1));
+        final Ray ray2 = new Ray(new Point(1.5, 3.5, 1), new Vector(0,0,-1));
+        final Ray ray3 = new Ray(new Point(3, 3.5, 1), new Vector(1,0,-1));
+
+        //building thee BVH
+        final Geometries geometries = new Geometries(triangle);
+        geometries.buildBVH();
+        //expected intersections
+        final var result1 = geometries.findGeoIntersections(ray1);
+        final var result2 = geometries.findGeoIntersections(ray2);
+        final var result3 = geometries.findGeoIntersections(ray3);
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Inside triangle
+        assertEquals(1, result1.size(), "ray should pass only 1 point");
+        assertEquals(List.of(new GeoPoint(triangle, new Point(1, 1, 0))), result1, "Wrong intersection with triangle");
+        // TC02: Inside box but outside triangle
+        assertNull(result2, "Ray starts inside the box but outside the triangle and doesn't intersect it");
+        // TC03: Outside box
+        assertNull(result3, "Ray starts outside the box and doesn't intersect the triangle");
+    }
 }
