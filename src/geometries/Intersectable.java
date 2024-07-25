@@ -9,6 +9,10 @@ import java.util.List;
  * an interface that represents an intersectable geometry
  */
 public abstract class Intersectable {
+
+    /** the bounding box of the geometry */
+    protected BoundingBox boundingBox;
+
     public static class GeoPoint {
         /** the point of intersection */
         public final Point point;
