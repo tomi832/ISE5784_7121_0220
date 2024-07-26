@@ -62,6 +62,9 @@ public class Scene {
         return this;
     }
 
+    /**
+     * builds the BVH tree for the geometries in the scene
+     */
     public void buildBVH() {
         if (geometries != null) {
             geometries.buildBVH();

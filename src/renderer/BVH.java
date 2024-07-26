@@ -8,6 +8,9 @@ import geometries.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * BVH class represents a bounding volume hierarchy for a collection of geometries.
+ */
 public class BVH extends Intersectable {
     private final Geometries root;
 

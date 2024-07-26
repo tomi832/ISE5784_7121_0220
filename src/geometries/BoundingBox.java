@@ -7,30 +7,52 @@ import primitives.Vector;
 import static primitives.Util.isZero;
 import static primitives.Util.alignZero;
 
+/**
+ * a class that represents a bounding box for rendering optimization
+ */
 public class BoundingBox {
-    private Point min;
-    private Point max;
+    /**
+     * the two points represent two opposing corners of the box,
+     * one with the lowest coordinates and the other with the highest
+     */
+    private final Point minBoxPoint;
+    private final Point maxBoxPoint;
 
-    public BoundingBox(Point min, Point max) {
-        this.min = min;
-        this.max = max;
+    /**
+     * a constructor for a BoundingBox for the geometry
+     * @param minBoxPoint the point with the lowest coordinates
+     * @param maxBoxPoint the point with the highest coordinates
+     */
+    public BoundingBox(Point minBoxPoint, Point maxBoxPoint) {
+        this.minBoxPoint = minBoxPoint;
+        this.maxBoxPoint = maxBoxPoint;
     }
 
+    /**
+     * @return the center of the box
+     */
     public Point getCenter() {
         return new Point(
-            (min.getX() + max.getX()) / 2,
-            (min.getY() + max.getY()) / 2,
-            (min.getZ() + max.getZ()) / 2
+            (minBoxPoint.getX() + maxBoxPoint.getX()) / 2,
+            (minBoxPoint.getY() + maxBoxPoint.getY()) / 2,
+            (minBoxPoint.getZ() + maxBoxPoint.getZ()) / 2
         );
     }
 
+    /**
+     * a method that checks if a ray intersects the box
+     * @param ray the ray in question
+     * @param maxDistance the maximum distance the ray can travel
+     * @return true if the ray intersects the box, false otherwise
+     */
     public boolean intersects(Ray ray, double maxDistance) {
         Vector dir = ray.getDirection();
         Point origin = ray.getHead();
+        //the arrays represent coordinates like so: [0] = x, [1] = y, [2] = z
         double[] dirValues = {dir.getX(), dir.getY(), dir.getZ()};
         double[] originValues = {origin.getX(), origin.getY(), origin.getZ()};
-        double[] minValues = {min.getX(), min.getY(), min.getZ()};
-        double[] maxValues = {max.getX(), max.getY(), max.getZ()};
+        double[] minValues = {minBoxPoint.getX(), minBoxPoint.getY(), minBoxPoint.getZ()};
+        double[] maxValues = {maxBoxPoint.getX(), maxBoxPoint.getY(), maxBoxPoint.getZ()};
 
         double tmin = Double.NEGATIVE_INFINITY;
         double tmax = Double.POSITIVE_INFINITY;
@@ -56,16 +78,21 @@ public class BoundingBox {
         return tmin < maxDistance && tmax > 0;
     }
 
+    /**
+     * a method that creates a bounding box that is the union of two bounding boxes.
+     * parametes are two bounding boxes
+     * @return a new bounding box that is the union of the two
+     */
     public static BoundingBox union(BoundingBox a, BoundingBox b) {
         Point newMin = new Point(
-            Math.min(a.min.getX(), b.min.getX()),
-            Math.min(a.min.getY(), b.min.getY()),
-            Math.min(a.min.getZ(), b.min.getZ())
+            Math.min(a.minBoxPoint.getX(), b.minBoxPoint.getX()),
+            Math.min(a.minBoxPoint.getY(), b.minBoxPoint.getY()),
+            Math.min(a.minBoxPoint.getZ(), b.minBoxPoint.getZ())
         );
         Point newMax = new Point(
-            Math.max(a.max.getX(), b.max.getX()),
-            Math.max(a.max.getY(), b.max.getY()),
-            Math.max(a.max.getZ(), b.max.getZ())
+            Math.max(a.maxBoxPoint.getX(), b.maxBoxPoint.getX()),
+            Math.max(a.maxBoxPoint.getY(), b.maxBoxPoint.getY()),
+            Math.max(a.maxBoxPoint.getZ(), b.maxBoxPoint.getZ())
         );
         return new BoundingBox(newMin, newMax);
     }
