@@ -1,6 +1,5 @@
 package geometries;
 
-import primitives.Point;
 import primitives.Ray;
 import renderer.BVH;
 
@@ -99,9 +98,9 @@ public class Geometries extends Intersectable {
 
     /**
      * @param index the index of the geometry in the list
-     * @return the bounding box of the geometry
+     * @return the bounding box of that geometry
      */
-    public BoundingBox getBoundingBoxOf(int index) {
+    public BoundingBox getBoundingBoxOfGeometry(int index) {
         return bodies.get(index).getBoundingBox();
     }
 
