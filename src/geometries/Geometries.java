@@ -97,6 +97,14 @@ public class Geometries extends Intersectable {
         return boundingBox;
     }
 
+    /**
+     * @param index the index of the geometry in the list
+     * @return the bounding box of the geometry
+     */
+    public BoundingBox getBoundingBoxOf(int index) {
+        return bodies.get(index).getBoundingBox();
+    }
+
     public void setBoundingBox(BoundingBox boundingBox) {
         this.boundingBox = boundingBox;
     }
