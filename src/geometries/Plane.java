@@ -31,6 +31,7 @@ public class Plane extends Geometry{
          * cross product of the two gives you the normal vector, and we need to normalize it.
          */
         this.normal = point1.subtract(point2).crossProduct(point1.subtract(point3)).normalize();
+        //an infinite bounding box to represent the plane
         boundingBox = new BoundingBox(
                 new Point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY),
                 new Point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
