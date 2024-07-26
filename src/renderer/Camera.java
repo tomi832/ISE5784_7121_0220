@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.MissingResourceException;
 import java.util.stream.IntStream;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -26,7 +27,7 @@ public class Camera implements Cloneable {
     private double width = 0;
     private double height = 0;
     private Point pC;
-    private Point dirPoint = null;
+    private boolean isParallel = false;
 
     /**
      * Camera constructor
@@ -92,8 +93,9 @@ public class Camera implements Cloneable {
 
         double xj = (j - ((nX - 1) / 2d)) * rX;
         double yi = -(i - ((nY-1) / 2d)) * rY;
-
         Point pIJ = pC;
+
+        // If xj or yi are not zero, add the corresponding vector to the point
         if (!isZero(yi)) {
             pIJ = pIJ.add(vUp.scale(yi));
         }
@@ -110,10 +112,15 @@ public class Camera implements Cloneable {
     public Camera renderImage(){
         final int Nx = imageWriter.getNx();
         final int Ny = imageWriter.getNy();
-        //TODO: add the option to disable parallelism
-        IntStream.range(0, Ny).parallel()
-                .forEach(i -> IntStream.range(0, Nx).parallel()
-                        .forEach(j -> castRay(Nx, Ny, j, i)));
+        if (isParallel) {
+            IntStream.range(0, Ny).parallel()
+                    .forEach(i -> IntStream.range(0, Nx).parallel()
+                            .forEach(j -> castRay(Nx, Ny, j, i)));
+        } else {
+            IntStream.range(0, Ny)
+                    .forEach(i -> IntStream.range(0, Nx)
+                            .forEach(j -> castRay(Nx, Ny, j, i)));
+        }
         return this;
     }
 
@@ -134,6 +141,15 @@ public class Camera implements Cloneable {
      * Print the grid
      */
     public Camera printGrid(int interval, Color color){
+        // Check if the interval is valid
+        if (interval <= 0)
+            throw new IllegalArgumentException("Interval must be positive");
+
+        // Check if the color is valid
+        if (color == null)
+            throw new IllegalArgumentException("Color cannot be null");
+
+        // Writing the grid
         for (int i = 0; i < imageWriter.getNx(); i++)
             for (int j = 0; j < imageWriter.getNy(); j++)
                 if (i % interval == 0 || j % interval == 0)
@@ -161,6 +177,7 @@ public class Camera implements Cloneable {
          * Builder sets the rayTracer to the camera
          */
         public Builder setRayTracer(RayTracerBase  rayTracer) {
+            // Check if the rayTracer is valid
             if (rayTracer == null)
                 throw new IllegalArgumentException("RayTracer cannot be null");
             camera.rayTracer = rayTracer;
@@ -171,12 +188,12 @@ public class Camera implements Cloneable {
          * Builder sets the imageWriter to the camera
          */
         public Builder setImageWriter(ImageWriter imageWriter) {
+            // Check if the imageWriter is valid
             if (imageWriter == null)
                 throw new IllegalArgumentException("ImageWriter cannot be null");
-            if (isZero(imageWriter.getNx()) || isZero(imageWriter.getNy()))
-                throw new IllegalArgumentException("ImageWriter dimensions cannot be zero");
-            if (imageWriter.getNx() < 0 || imageWriter.getNy() < 0)
-                throw new IllegalArgumentException("ImageWriter dimensions cannot be negative");
+            // Check if the dimensions are valid
+            if (alignZero(imageWriter.getNx()) <= 0 || alignZero(imageWriter.getNy()) <= 0)
+                throw new IllegalArgumentException("ImageWriter dimensions must be positive");
             camera.imageWriter = imageWriter;
             return this;
         }
@@ -185,11 +202,10 @@ public class Camera implements Cloneable {
          * Builder sets the location to the camera
          */
         public Builder setLocation(Point point) {
+            // Check if the point is valid
             if (point == null)
                 throw new IllegalArgumentException("Location cannot be null");
             camera.location = point;
-            if (camera.dirPoint != null)
-                return setDirection(camera.dirPoint, camera.vUp);
             return this;
         }
 
@@ -197,12 +213,16 @@ public class Camera implements Cloneable {
          * Builder sets the direction vectors to the camera
          */
         public Builder setDirection(Vector vTo, Vector vUp) {
+            // Check if the vectors are valid
             if (vTo == null || vUp == null)
                 throw new IllegalArgumentException("Direction vectors cannot be null");
+            // Check if the vectors are valid
             if (vTo.equals(Vector.ZERO) || vUp.equals(Vector.ZERO))
                 throw new IllegalArgumentException("Direction vectors cannot be zero");
+            // Check if the vectors are orthogonal
             if (!isZero(vTo.dotProduct(vUp)))
                 throw new IllegalArgumentException("Direction vectors must be orthogonal");
+
             camera.vTo = vTo.normalize();
             camera.vUp = vUp.normalize();
             return this;
@@ -212,13 +232,13 @@ public class Camera implements Cloneable {
          * Builder sets the direction vectors to the camera
          */
         public Builder setDirection(Point p0, Vector vUp) {
+            // Check if the vectors are valid
             if (p0 == null || vUp == null)
                 throw new IllegalArgumentException("Direction vectors cannot be null");
+            // Check if the vectors are valid
             if (vUp.equals(Vector.ZERO))
                 throw new IllegalArgumentException("Direction vectors cannot be zero");
-            camera.dirPoint = p0;
-            if (camera.location == null)
-                return this;
+
             Vector vTo = p0.subtract(camera.location);
             Vector vRight = vTo.crossProduct(vUp);
             camera.vTo = vTo.normalize();
@@ -230,9 +250,8 @@ public class Camera implements Cloneable {
          * Builder sets the view plane distance to the camera
          */
         public Builder setVpDistance(double distance) {
-            if (isZero(distance))
-                throw new IllegalArgumentException("Distance cannot be zero");
-            if (distance < 0)
+            // Check if the distance is valid
+            if (alignZero(distance) <= 0)
                 throw new IllegalArgumentException("Distance cannot be negative");
             camera.distance = distance;
             return this;
@@ -242,22 +261,28 @@ public class Camera implements Cloneable {
          * Builder sets the view plane size to the camera
          */
         public Builder setVpSize(double width, double height) {
-            if (isZero(width) || isZero(height))
-                throw new IllegalArgumentException("Width and height cannot be zero");
-            if (width < 0 || height < 0)
-                throw new IllegalArgumentException("Width and height cannot be negative");
+            // Check if the dimensions are valid
+            if (alignZero(width) <= 0 || alignZero(height) <= 0)
+                throw new IllegalArgumentException("Width and height must be positive");
             camera.width = width;
             camera.height = height;
             return this;
         }
 
+        /**
+         * Builder sets the parallel flag to the camera
+         */
+        public Builder setParallel(boolean isParallel) {
+            camera.isParallel = isParallel;
+            return this;
+        }
 
         /**
          * Builder builds the camera
          */
         public Camera build() {
             camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
-            if (camera.distance <= 0)
+            if (alignZero(camera.distance) <= 0)
                 throw new IllegalArgumentException("Distance cannot be zero or negative");
             if (camera.height <= 0)
                 throw new IllegalArgumentException("Plane height cannot be zero or negative");
@@ -307,33 +332,39 @@ public class Camera implements Cloneable {
      * @return the list of rays that are the beam
      */
     public static List<Ray> generateRayBeam(Ray ray, Vector n, double distance, double radius, int numEdgeSamples) {
+        // Check if the normal is valid
+        if (n == null)
+            throw new IllegalArgumentException("Normal cannot be null");
+        // Check if the number of edge samples is valid
         if (numEdgeSamples < 1)
             throw new IllegalArgumentException("Number of edge samples must be at least 1");
+        // Check if the distance and radius are valid
         if (distance < 0)
             throw new IllegalArgumentException("Distance cannot be negative");
+        // Check if the radius is valid
         if (radius < 0)
             throw new IllegalArgumentException("Radius cannot be negative");
 
         List<Ray> rays = new LinkedList<>();
         rays.add(ray);
+        // If the radius, distance or number of edge samples is zero, return the main ray
         if (isZero(radius) || isZero(distance) || numEdgeSamples == 1) {
             rays.add(ray);
             return rays;
         }
-
 
         Vector v, dir = ray.getDirection();
         Point head = ray.getHead();
         double gridSpacing = radius * 2 / numEdgeSamples;
         double x, y, radiusSquared = radius * radius;
         Point randomPoint, centerCircle = head.add(dir.scale(distance));
-
         // the 2 vectors that create the virtual grid for the beam
         Vector nX, nY;
+        // if the direction of the ray is Y, the nX will be X and nY will be Z
         if (dir.equals(Vector.Y)) {
             nX = new Vector(1, 0, 0);
             nY = new Vector(0, 0, 1);
-        } else {
+        } else { // if the direction of the ray is not Y, the nX will be the cross product of the direction and Y
             nX = dir.crossProduct(Vector.Y).normalize();
             nY = dir.crossProduct(nX).normalize();
         }

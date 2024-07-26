@@ -242,6 +242,7 @@ public class BallsTest {
                 setLocation(new Point(100, 27, 22))
                 .setVpDistance(800)
                 .setDirection(new Point(4, 8, 4), Vector.Y)
+                .setParallel(true)
                 .setVpSize(384, 216)
                 .setImageWriter(new ImageWriter("Glassed Galaxy", 2560, 1440))
                 .build()
