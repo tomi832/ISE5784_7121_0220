@@ -2,7 +2,6 @@ package renderer;
 
 import primitives.Point;
 import primitives.Ray;
-import primitives.Vector;
 import geometries.*;
 
 import java.util.LinkedList;
@@ -34,14 +33,19 @@ public class BVH extends Intersectable {
         geometries.setBoundingBox(bbox);
     }
 
+    /**
+     * @param geometries the collection of geometries
+     * @return the bounding box of the geometries
+     */
     private BoundingBox computeBoundingBox(Geometries geometries) {
         if (geometries.getGeometries().isEmpty()) {
             return new BoundingBox(new Point(0, 0, 0), new Point(0, 0, 0));
         }
-        BoundingBox bbox = geometries.getGeometries().get(0).getBoundingBox();
+        //BoundingBox bbox = geometries.getGeometries().get(0).getBoundingBox();
+        BoundingBox bbox = geometries.getBoundingBoxOfGeometry(0);
         BoundingBox temp;
         for (int i = 1; i < geometries.getGeometries().size(); i++) {
-            temp = geometries.getGeometries().get(i).getBoundingBox();
+            temp = geometries.getBoundingBoxOfGeometry(i);
             if (temp != null)
                 bbox = BoundingBox.union(bbox, temp);
         }
