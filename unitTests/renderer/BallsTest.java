@@ -7,9 +7,13 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.Scene;
 
+import java.util.PriorityQueue;
+
 public class BallsTest {
 
     private final Scene scene = new Scene("Test scene");
+
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setRayTracer(new SimpleRayTracer(scene));
@@ -82,6 +86,7 @@ public class BallsTest {
 
     @Test
     public void GalaxyTest() {
+        //TODO: remove all the hard coded values and replace them with variables
         final Material ballsMaterial = new Material().setKd(0.2).setKs(0.33).setShininess(10);
         final Material glassMaterial = new Material().setKd(0.35).setKs(0.4).setKt(0.85).setKr(0.2).setShininess(10)
                 .setNumEdgeRays(10).setBlurDistance(12).setBlurRadius(0.2).setSsTransparency(true);

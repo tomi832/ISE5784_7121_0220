@@ -82,17 +82,6 @@ public class Geometries extends Intersectable {
      */
     @Override
     public BoundingBox getBoundingBox() {
-//        if (boundingBox == null) {
-//            if (bodies.isEmpty()) {
-//                boundingBox = new BoundingBox(new Point(0, 0, 0), new Point(0, 0, 0));
-//            } else {
-//                BoundingBox bbox = bodies.get(0).getBoundingBox();
-//                for (int i = 1; i < bodies.size(); i++) {
-//                    bbox = BoundingBox.union(bbox, bodies.get(i).getBoundingBox());
-//                }
-//                boundingBox = bbox;
-//            }
-//        }
         return boundingBox;
     }
 

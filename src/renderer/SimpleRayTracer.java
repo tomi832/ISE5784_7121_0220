@@ -8,7 +8,6 @@ import scene.Scene;
 import java.util.List;
 
 import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
 
 /**
  * SimpleRayTracer class is a basic ray tracer that traces rays in a scene
