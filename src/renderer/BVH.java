@@ -18,6 +18,10 @@ public class BVH extends Intersectable {
         buildBVH(root);
     }
 
+    /**
+     * Builds the BVH for a collection of geometries. works recursively.
+     * @param geometries the collection of geometries
+     */
     private void buildBVH(Geometries geometries) {
         if (geometries == null || geometries.getGeometries().isEmpty()) {
             return;

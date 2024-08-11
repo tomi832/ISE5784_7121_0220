@@ -129,7 +129,7 @@ public class Material {
 
     /**
      * Material setter for the radius of the circle target area
-     * it's for the blurriness - the bigger it is, the more blur
+final     * it's for the blurriness - the bigger it is, the blurrier it gets
      * @param blurRadius the radius of the target area
      * @return the material
      */
@@ -142,7 +142,7 @@ public class Material {
      * Material setter for the number of rays on the edge of the square
      * the target area is the circle that is from edge to edge inside the square
      * it doesn't mean how many inside the target area, but in the rectangle that has the target area as a circle
-     * it's for the blurriness - the more rays, the more blur //TODO: correct this
+     * it's for the blurriness - more edge rays means more details
      * @param numEdgeRays the number of rays on the edge of the square
      * @return the material
      */

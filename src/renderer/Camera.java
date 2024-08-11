@@ -126,8 +126,8 @@ public class Camera implements Cloneable {
 
     /**
      * Cast a ray from the camera to a pixel in the view plane
-     * @param Nx number of pixels in the x axis
-     * @param Ny number of pixels in the y axis
+     * @param Nx number of pixels in the x-axis
+     * @param Ny number of pixels in the y-axis
      * @param j x index of the pixel
      * @param i y index of the pixel
      */
@@ -352,12 +352,14 @@ public class Camera implements Cloneable {
             rays.add(ray);
             return rays;
         }
-
-        Vector v, dir = ray.getDirection();
-        Point head = ray.getHead();
-        double gridSpacing = radius * 2 / numEdgeSamples;
+//////////////////////////
+        Vector v;
+        final Vector dir = ray.getDirection();
+        final Point head = ray.getHead();
+        final double gridSpacing = radius * 2 / numEdgeSamples;
         double x, y, radiusSquared = radius * radius;
-        Point randomPoint, centerCircle = head.add(dir.scale(distance));
+        Point randomPoint;
+        final Point centerCircle = head.add(dir.scale(distance));
         // the 2 vectors that create the virtual grid for the beam
         Vector nX, nY;
         // if the direction of the ray is Y, the nX will be X and nY will be Z

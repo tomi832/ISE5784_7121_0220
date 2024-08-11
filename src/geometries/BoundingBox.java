@@ -46,25 +46,25 @@ public class BoundingBox {
      * @return true if the ray intersects the box, false otherwise
      */
     public boolean intersects(Ray ray, double maxDistance) {
-        Vector dir = ray.getDirection();
-        Point origin = ray.getHead();
+        final Vector direction = ray.getDirection();
+        final Point origin = ray.getHead();
         //the arrays represent coordinates like so: [0] = x, [1] = y, [2] = z
-        double[] dirValues = {dir.getX(), dir.getY(), dir.getZ()};
-        double[] originValues = {origin.getX(), origin.getY(), origin.getZ()};
-        double[] minValues = {minBoxPoint.getX(), minBoxPoint.getY(), minBoxPoint.getZ()};
-        double[] maxValues = {maxBoxPoint.getX(), maxBoxPoint.getY(), maxBoxPoint.getZ()};
+        final double[] directionValues = {direction.getX(), direction.getY(), direction.getZ()};
+        final double[] originValues = {origin.getX(), origin.getY(), origin.getZ()};
+        final double[] minValues = {minBoxPoint.getX(), minBoxPoint.getY(), minBoxPoint.getZ()};
+        final double[] maxValues = {maxBoxPoint.getX(), maxBoxPoint.getY(), maxBoxPoint.getZ()};
 
         double tmin = Double.NEGATIVE_INFINITY;
         double tmax = Double.POSITIVE_INFINITY;
 
 
         for (int i = 0; i < 3; i++) {
-            if (isZero(dirValues[i])) {
+            if (isZero(directionValues[i])) {
                 if (originValues[i] < minValues[i] || originValues[i] > maxValues[i])
                     return false;
             } else {
-                double t1 = alignZero((minValues[i] - originValues[i]) / dirValues[i]);
-                double t2 = alignZero((maxValues[i] - originValues[i]) / dirValues[i]);
+                double t1 = alignZero((minValues[i] - originValues[i]) / directionValues[i]);
+                double t2 = alignZero((maxValues[i] - originValues[i]) / directionValues[i]);
                 if (t1 > t2) {
                     double temp = t1;
                     t1 = t2;
