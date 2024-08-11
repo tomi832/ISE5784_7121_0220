@@ -7,13 +7,9 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.Scene;
 
-import java.util.PriorityQueue;
-
 public class BallsTest {
 
     private final Scene scene = new Scene("Test scene");
-
-    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setRayTracer(new SimpleRayTracer(scene));
@@ -25,11 +21,14 @@ public class BallsTest {
             .setRayTracer(new SimpleRayTracer(scene));
 
     private static double[] tilt(double x, double z, double y, double angle) {
+        final double xCenter = 4;
+        final double yCenter = 8;
+        final double zCenter = 4;
         double cosA = Math.cos(angle);
         double sinA = Math.sin(angle);
         double yNew = y * cosA - z * sinA;
         double zNew = y * sinA + z * cosA;
-        return new double[]{x + 4, yNew + 8, zNew + 4};
+        return new double[]{x + xCenter, yNew + yCenter, zNew + zCenter};
     }
 
     // currently not a good implementation, supposed to keep DRY and automate creating rectangles.
@@ -249,7 +248,7 @@ public class BallsTest {
                 .setDirection(new Point(4, 8, 4), Vector.Y)
                 .setParallel(true)
                 .setVpSize(384, 216)
-                .setImageWriter(new ImageWriter("Glassed Galaxy", 2560, 1440))
+                .setImageWriter(new ImageWriter("testingTime", 1280, 720))
                 .build()
                 .renderImage()
                 .writeToImage();
@@ -261,17 +260,6 @@ public class BallsTest {
 //                .setVpDistance(250)
 //                .setVpSize(250,250)
 //                .setImageWriter(new ImageWriter("Galaxy2.txt", 800, 800))
-//                .build()
-//                .renderImage()
-//                .writeToImage();
-
-
-//        cameraBuilder
-//                .setLocation(new Point(7,4.7,3))
-//                .setVpDistance(1)
-//                .setDirection(new Point(4.6,3.6,4), new Vector(0,1,0.3))
-//                .setVpSize(3,3)
-//                .setImageWriter(new ImageWriter("Galaxy3.txt", 800, 800))
 //                .build()
 //                .renderImage()
 //                .writeToImage();

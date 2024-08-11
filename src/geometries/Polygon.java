@@ -145,12 +145,12 @@ public class Polygon extends Geometry {
             for (var i = 1; i < size; ++i)
                 if (s[i] >= 0)
                     return null;
-            return List.of(new GeoPoint(this, intersectionPoint.get(0).point));
+            return List.of(new GeoPoint(this, intersectionPoint.getFirst().point));
         } else if (s[0] > 0) {
             for (var i = 1; i < size; ++i)
                 if (s[i] <= 0)
                     return null;
-            return List.of(new GeoPoint(this, intersectionPoint.get(0).point));
+            return List.of(new GeoPoint(this, intersectionPoint.getFirst().point));
         }
         return  null;
     }
