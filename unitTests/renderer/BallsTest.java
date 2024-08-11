@@ -257,7 +257,7 @@ public class BallsTest {
                         .setKl(0.002).setKq(0.002));
 
         scene.buildBVH();
-        System.out.println("starting rendering the image");
+        System.out.println("began rendering the image");
         cameraBuilder.
                 setLocation(new Point(100, 27, 22))
                 .setVpDistance(750)
