@@ -85,7 +85,6 @@ public class BallsTest {
 
     @Test
     public void GalaxyTest() {
-        //TODO: remove all the hard coded values and replace them with variables
         final Material ballsMaterial = new Material().setKd(0.2).setKs(0.33).setShininess(10);
         final Material glassMaterial = new Material().setKd(0.35).setKs(0.4).setKt(0.85).setKr(0.2).setShininess(10)
                 .setNumEdgeRays(10).setBlurDistance(12).setBlurRadius(0.2).setSsTransparency(true);
@@ -99,9 +98,6 @@ public class BallsTest {
         final Color sunColor2 = new Color(255, 200, 50); //yellow
         final Color starColor1 = new Color(80, 255, 230); //light-blue
         final Color starColor2 = new Color (200, 250, 255); //almost-white blue
-        final Color dustColor1 = new Color(40, 20, 0); //dark brown
-        final Color dustColor2 = new Color(65, 10, 0); //reddish brown
-        final Color oldStarsColor = new Color(200, 40, 0); //deep red
 
         /** geometries for the scene */
         Geometries galaxy = new Geometries();
@@ -244,7 +240,7 @@ public class BallsTest {
         System.out.println("starting rendering the image");
         cameraBuilder.
                 setLocation(new Point(100, 27, 22))
-                .setVpDistance(800)
+                .setVpDistance(750)
                 .setDirection(new Point(4, 8, 4), Vector.Y)
                 .setParallel(true)
                 .setVpSize(384, 216)
