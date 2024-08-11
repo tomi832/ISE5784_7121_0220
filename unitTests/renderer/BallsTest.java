@@ -241,14 +241,14 @@ public class BallsTest {
                         .setKl(0.002).setKq(0.002));
 
         scene.buildBVH();
-        System.out.println("BVH built");
+        System.out.println("starting rendering the image");
         cameraBuilder.
                 setLocation(new Point(100, 27, 22))
                 .setVpDistance(800)
                 .setDirection(new Point(4, 8, 4), Vector.Y)
                 .setParallel(true)
                 .setVpSize(384, 216)
-                .setImageWriter(new ImageWriter("testingTime", 1280, 720))
+                .setImageWriter(new ImageWriter("Glassed Galaxy", 1280, 720))
                 .build()
                 .renderImage()
                 .writeToImage();
