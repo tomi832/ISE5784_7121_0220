@@ -244,7 +244,7 @@ public class BallsTest {
         System.out.println("starting rendering the image");
         cameraBuilder.
                 setLocation(new Point(100, 27, 22))
-                .setVpDistance(800)
+                .setVpDistance(750)
                 .setDirection(new Point(4, 8, 4), Vector.Y)
                 .setParallel(true)
                 .setVpSize(384, 216)
