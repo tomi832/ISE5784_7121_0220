@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 import scene.Scene;
 
+/**
+ * A test class for the creation of a galaxy
+ */
 public class BallsTest {
 
     private final Scene scene = new Scene("Test scene");
@@ -20,6 +23,9 @@ public class BallsTest {
     private final Camera.Builder cameraBuilder3 = Camera.getBuilder()
             .setRayTracer(new SimpleRayTracer(scene));
 
+    /**
+     * A method to tilt the galaxy
+     */
     private static double[] tilt(double x, double z, double y, double angle) {
         final double xCenter = 4;
         final double yCenter = 8;
@@ -31,7 +37,18 @@ public class BallsTest {
         return new double[]{x + xCenter, yNew + yCenter, zNew + zCenter};
     }
 
-    // currently not a good implementation, supposed to keep DRY and automate creating rectangles.
+    /**
+     * A method to create a box
+     * @param x1 the x coordinate of the first corner
+     * @param x2 the x coordinate of the second corner
+     * @param y1 the y coordinate of the first corner
+     * @param y2 the y coordinate of the second corner
+     * @param z1 the z coordinate of the first corner
+     * @param z2 the z coordinate of the second corner
+     * @param emission the color of the box
+     * @param material the material of the box
+     * @return the box
+     */
     private Geometries boxCreate(double x1, double x2, double y1,
                                  double y2, double z1, double z2,
                                  Color emission, Material material) {
@@ -83,6 +100,9 @@ public class BallsTest {
     }
 
 
+    /**
+     * A test to create our final product for the mini-project
+     */
     @Test
     public void GalaxyTest() {
         final Material ballsMaterial = new Material().setKd(0.2).setKs(0.33).setShininess(10);
